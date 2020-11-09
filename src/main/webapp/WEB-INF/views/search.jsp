@@ -22,15 +22,31 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
-                    $.get("${pageContext.request.contextPath}/map/sido"
-//                         ,{act:"sido"}
-                        ,function(data, status){
-                            $.each(data, function(index, vo) {
-                                $("#sido").append("<option value='"+vo.sido_code+"'>"+vo.sido_name+"</option>");
-                            });//each
-                        }//function
-                        , "json"
-                    );//get
+                	$.ajax({
+            			url:"${pageContext.request.contextPath}/map/sido",  
+            			type:'GET',
+            			contentType:'application/json;charset=utf-8',
+            			dataType:'json',
+            			success:function(list) {
+            				$(list).each(function(index, sido) {
+                      	  		$("#sido").append("<option value='"+sido.sidoCode+"'>"+sido.sidoName+"</option>");
+                        	});//each
+            			},
+            			error:function(xhr,status,msg){
+            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+            			}
+            		});
+                	
+//                     $.get("${pageContext.request.contextPath}/map/sido"
+// //                         ,{act:"sido"}
+//                         ,function(data, status){
+//                         	console.log(data);
+//                             $.each(data, function(index, vo) {
+//                                 $("#sido").append("<option value='"+vo.sidoCode+"'>"+vo.sidoName+"</option>");
+//                             });//each
+//                         }//function
+//                         , "json"
+//                     );//get
                 });//ready
                 $(document).ready(function(){
                     $("#sido").change(function() {

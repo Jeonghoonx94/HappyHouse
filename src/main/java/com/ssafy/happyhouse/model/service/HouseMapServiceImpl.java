@@ -27,6 +27,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 
 	@Override
 	public List<SidoGugunCodeDto> getSido() throws Exception {
+		for(SidoGugunCodeDto dto : dao.getSido())
+			System.out.println(dto.getSidoCode());
 		return dao.getSido();
 	}
 
