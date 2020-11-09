@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.MemberDao">
+
+	<select id="login" parameterType="map" resultType="MemberDto">
+		select username, userid, email, phone, address 
+		from member
+		where userid = #{userid}
+		and userpwd = #{userpwd}
+	</select>
+	
+	<select id="searchAll" parameterType="map" resultType="memberDto">
+		select *
+		from member
+		<if test="word != null and word != ''">
+			<if test="key == 'username'">
+				where username like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'userid'">
+				where userid like concat('%', #{word}, '%')
+			</if>
+		</if>
+		order by userid
+		limit #{start}, #{spp}
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="memberdto">
+		select *
+		from member
+		where userid = #{userid}
+	</select>
+	
+	<select id="totalCount" parameterType="map" resultType="int">
+		select count(*) as cnt
+		from member
+		<if test="word != null and word != ''">
+			<if test="key == 'username'">
+				where username like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'userid'">
+				where userid like concat('%', #{word}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="getForgotpwd" parameterType="map" resultType="String">
+		select userpwd
+		from member
+		where userid = #{userid}
+		and email = #{email}
+	</select>
+	
+	<insert id="insertMember" parameterType="MemberDto">
+		insert into member 
+		values (#{userid}, #{userpwd}, #{username}, #{email}, #{phone}, #{address})
+	</insert>
+	
+	<update id="updateMember" parameterType="MemberDto">
+		update member
+		set userpwd = #{userpwd}, username = #{username}, email = #{email}, phone = #{phone}, address = #{address}
+		where userid = #{userid}
+	</update>
+	
+	<delete id="removeMember" parameterType="String">
+		delete from member
+		where userid = #{userid}
+	</delete>
+</mapper>
