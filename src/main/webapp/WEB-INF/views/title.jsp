@@ -37,7 +37,7 @@ function login() {
 		alert("비밀번호 입력!!!");
 		return;
 	} else {
-		document.getElementById("loginform").action = "${root}/login.member";
+		document.getElementById("loginform").action = "${root}/login";
 		document.getElementById("loginform").submit();
 	}
 }
@@ -49,7 +49,7 @@ function forgotPwd() {
 		alert("이메일 입력!!!");
 		return;
 	} else {
-		document.getElementById("forgotform").action = "${root}/forgotpwd.member";
+		document.getElementById("forgotform").action = "${root}/forgotpwd";
 		document.getElementById("forgotform").submit();
 		alert("$(getpwd)")
 	}
@@ -82,15 +82,15 @@ function forgotPwd() {
 								<a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#loginModal">로그인</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href='${root}/join.member'>회원가입</a>
+								<a class="nav-link js-scroll-trigger" href='${root}/join'>회원가입</a>
 							</li>
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href='${root}/logout.member'>로그아웃</a>
+								<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href="${root}/listMember.member">회원정보</a>
+								<a class="nav-link js-scroll-trigger" href="${root}/listMember">회원정보</a>
 							</li>
 						</c:otherwise>
 					</c:choose>

@@ -33,7 +33,7 @@ function mdelete(){
 }
 $(function() {
 	$('#infoBtn').click(function () {   
-		location.href='${root}/infoMember.member?userid=${userinfo.userid}'
+		location.href='${root}/infoMember?userid=${userinfo.userid}'
 	})
 })
 $(function() {
@@ -47,13 +47,13 @@ $(function() {
 function pagelist(cpage){
 	$("#pageNo").val(cpage);
 	var searchform = $("#searchform");
-	searchform.attr('action',"${root}/listMember.member");
+	searchform.attr('action',"${root}/listMember");
 	searchform.submit();
 }
 </script>
 </head>
 <body id="page-top">
-<jsp:include page="/title.jsp"/>
+<jsp:include page="title.jsp"/>
 	<section class="page-section bg-light" id="team">
 		<div class="container">
 			<div class="text-center">
@@ -90,7 +90,7 @@ function pagelist(cpage){
 		     		<c:otherwise>
 		     			<c:forEach var='userinfo' items="${list}">
 		     			<tr>
-		     				<td><a href='${root}/infoMember.member?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
+		     				<td><a href='${root}/infoMember?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
 		     				<td>${userinfo.username}</td>
 		     				<td>${userinfo.email}</td>
 		     				<td>${userinfo.phone}</td>
@@ -160,6 +160,6 @@ function pagelist(cpage){
 			</div>
 		</div>
 	</div>
-<jsp:include page="/copyright.jsp"/>
+<jsp:include page="copyright.jsp"/>
 </body>
 </html>

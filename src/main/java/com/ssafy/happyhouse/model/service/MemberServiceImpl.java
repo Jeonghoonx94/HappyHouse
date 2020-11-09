@@ -1,13 +1,8 @@
 package com.ssafy.happyhouse.model.service;
 
 import com.ssafy.happyhouse.model.dao.MemberDao;
-import com.ssafy.happyhouse.util.DBUtil;
-import com.ssafy.happyhouse.util.PageUtility;
 import com.ssafy.happyhouse.model.PageBean;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +31,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberDto> searchAll(PageBean bean) {
 		return memberDao.searchAll(bean);
+	}
+	
+	@Override
+	public List<MemberDto> searchAllList() {
+		return memberDao.searchAllList();
 	}
 	
 	@Override

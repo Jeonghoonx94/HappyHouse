@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.dao.MemberDao">
 
-	<select id="login" parameterType="map" resultType="MemberDto">
+	<select id="login" parameterType="map" resultType="memberDto">
 		select username, userid, email, phone, address 
 		from member
 		where userid = #{userid}
@@ -23,7 +23,11 @@
 			</if>
 		</if>
 		order by userid
-		limit #{start}, #{spp}
+	</select>
+	
+	<select id="searchAllList" resultType="memberDto">
+		select *
+		from member
 	</select>
 	
 	<select id="getMember" parameterType="String" resultType="memberdto">
@@ -52,12 +56,12 @@
 		and email = #{email}
 	</select>
 	
-	<insert id="insertMember" parameterType="MemberDto">
+	<insert id="insertMember" parameterType="memberDto">
 		insert into member 
 		values (#{userid}, #{userpwd}, #{username}, #{email}, #{phone}, #{address})
 	</insert>
 	
-	<update id="updateMember" parameterType="MemberDto">
+	<update id="updateMember" parameterType="memberDto">
 		update member
 		set userpwd = #{userpwd}, username = #{username}, email = #{email}, phone = #{phone}, address = #{address}
 		where userid = #{userid}

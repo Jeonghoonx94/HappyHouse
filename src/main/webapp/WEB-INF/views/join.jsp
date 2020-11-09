@@ -99,10 +99,10 @@
 	        alert("주소 필수 입력!");
 	        return;
 	    } else {
-	        $("#joinform").attr("action", "${root}/mvJoin.member").submit();
+	        $("#joinform").attr("action", "${root}/mvJoin").submit();
 	    }
 	});
 </script>
-<jsp:include page="/copyright.jsp"/>
+<jsp:include page="copyright.jsp"/>
 </body>
 </html>

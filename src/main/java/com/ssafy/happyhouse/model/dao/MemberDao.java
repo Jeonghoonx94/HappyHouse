@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.PageBean;
 
-
 @Mapper
 public interface MemberDao {
 	public MemberDto login(Map<String, String> map) throws SQLException;
@@ -17,6 +16,7 @@ public interface MemberDao {
 	public void insertMember(MemberDto member);
 	public MemberDto getMember(String userid);
 	public List<MemberDto> searchAll(PageBean bean);
+	public List<MemberDto> searchAllList();
 	public int totalCount(PageBean bean);
 	public void removeMember(String userid);
 	public void updateMember(MemberDto member);

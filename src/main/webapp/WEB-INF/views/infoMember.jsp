@@ -30,10 +30,10 @@
 <script type="text/javascript">
 $(function() {
 	$('#updateBtn').click(function () {   
-		$("#updateform").attr("action", "${root}/updateMember.member").submit();
+		$("#updateform").attr("action", "${root}/updateMember").submit();
 	});
 	$('#removeBtn').click(function () {
-		location.href='${root}/removeMember.member?userid=${member.userid}';
+		location.href='${root}/removeMember?userid=${member.userid}';
 	});
 })
 </script>

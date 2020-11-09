@@ -12,6 +12,7 @@ public interface MemberService {
 	public void insertMember(MemberDto member);
 	public MemberDto searchMember(String userid) ;
 	public List<MemberDto> searchAll(PageBean bean) ;
+	public List<MemberDto> searchAllList() ;
 	public void removeMember(String userid);
 	public void updateMember(MemberDto member);
 	public String forgotpwd(Map<String, String> map);
