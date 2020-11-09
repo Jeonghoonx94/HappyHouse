@@ -27,8 +27,6 @@ public class HouseMapServiceImpl implements HouseMapService {
 
 	@Override
 	public List<SidoGugunCodeDto> getSido() throws Exception {
-		for(SidoGugunCodeDto dto : dao.getSido())
-			System.out.println(dto.getSidoCode());
 		return dao.getSido();
 	}
 
@@ -43,8 +41,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public List<HouseInfoDto> getAptInDong(Map<String, String> map) throws Exception {
-		return dao.getAptInDong(map);
+	public List<HouseInfoDto> getAptInDong(String dong, String type) throws Exception {
+		return dao.getAptInDong(dong, type);
 	}
 
 }

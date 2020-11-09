@@ -38,14 +38,14 @@ public class MemberController{
 	
 	@ExceptionHandler
 	public ModelAndView handler(Exception e) {
-		ModelAndView mav = new ModelAndView("Error");
+		ModelAndView mav = new ModelAndView("error/error");
 		mav.addObject("msg", e.getMessage());
 		e.printStackTrace();
 		return mav;
 	}
 
 	@PostMapping(value = "/login.member")
-	public String login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
+	public ModelAndView login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			MemberDto memberDto = memberService.login(map);
 			if(memberDto != null) {
@@ -66,15 +66,16 @@ public class MemberController{
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
-			return "error/error";
+//			return "error/error";
+			return handler(e);
 		}
-		return "index";
+		return new ModelAndView("redirect:/");
 	}
 
 	@GetMapping(value = "/logout.member")
-	public String logout(HttpSession session) {
+	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return new ModelAndView("redirect:/");
 	}
 
 	@GetMapping(value = "/listMember.member", headers = { "Content-type=application/json" })
@@ -88,14 +89,16 @@ public class MemberController{
 	}
 
 	@GetMapping(value = "/join.member")
-	public String login() {
-		return "/join.jsp";
+	public ModelAndView join() {
+		return new ModelAndView("redirect:join");
 	}
 	
 	@PostMapping(value = "/mvJoin.member", headers = { "Content-type=application/json" })
-	public List<MemberDto> insertMember(@RequestBody MemberDto MemberDto) {
+//	public List<MemberDto> insertMember(@RequestBody MemberDto MemberDto) {
+	public ModelAndView insertMember(@RequestBody MemberDto MemberDto) {
 		memberService.insertMember(MemberDto);
-		return memberService.searchAll(new PageBean());
+		return new ModelAndView("redirect:index");
+//		return memberService.searchAll(new PageBean());
 	}
 
 	@GetMapping(value = "/infoMember.member/{userid}", headers = { "Content-type=application/json" })

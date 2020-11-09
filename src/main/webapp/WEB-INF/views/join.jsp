@@ -103,6 +103,6 @@
 	    }
 	});
 </script>
-<jsp:include page="/copyright.jsp"/>
+<jsp:include page="copyright.jsp"/>
 </body>
 </html>

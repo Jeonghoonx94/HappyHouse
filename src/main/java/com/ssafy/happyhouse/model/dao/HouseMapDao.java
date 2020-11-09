@@ -14,6 +14,6 @@ public interface HouseMapDao {
 	List<SidoGugunCodeDto> getSido() throws Exception;
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
-	List<HouseInfoDto> getAptInDong(Map<String, String> map) throws Exception;
+	List<HouseInfoDto> getAptInDong(String dong, String type) throws Exception;
 	
 }

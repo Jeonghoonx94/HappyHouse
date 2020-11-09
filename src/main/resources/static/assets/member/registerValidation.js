@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$("#registForm").on("submit", function() {
+	$("#joinForm").on("submit", function() {
 		if(!checkId){
 			alert("아이디 중복체크 실패");
 			return;
@@ -9,7 +9,7 @@ $(document).ready(function() {
 	});
 	
 	//password 유효성 검사
-	var myInput = document.getElementById("pwd");
+	var myInput = document.getElementById("userPwd");
 	var letter = document.getElementById("pwdletter");
 	var number = document.getElementById("pwdnumber");
 	var length = document.getElementById("pwdlength");

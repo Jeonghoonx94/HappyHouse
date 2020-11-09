@@ -22,31 +22,31 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
-                	$.ajax({
-            			url:"${pageContext.request.contextPath}/map/sido",  
-            			type:'GET',
-            			contentType:'application/json;charset=utf-8',
-            			dataType:'json',
-            			success:function(list) {
-            				$(list).each(function(index, sido) {
-                      	  		$("#sido").append("<option value='"+sido.sidoCode+"'>"+sido.sidoName+"</option>");
-                        	});//each
-            			},
-            			error:function(xhr,status,msg){
-            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-            			}
-            		});
+//                 	$.ajax({
+//             			url:"${pageContext.request.contextPath}/map/sido",  
+//             			type:'GET',
+//             			contentType:'application/json;charset=utf-8',
+//             			dataType:'json',
+//             			success:function(list) {
+//             				$(list).each(function(index, sido) {
+//                       	  		$("#sido").append("<option value='"+sido.sidoCode+"'>"+sido.sidoName+"</option>");
+//                         	});//each
+//             			},
+//             			error:function(xhr,status,msg){
+//             				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+//             			}
+//             		});
                 	
-//                     $.get("${pageContext.request.contextPath}/map/sido"
-// //                         ,{act:"sido"}
-//                         ,function(data, status){
+                    $.get("${pageContext.request.contextPath}/map/sido"
+//                         ,{act:"sido"}
+                        ,function(data, status){
 //                         	console.log(data);
-//                             $.each(data, function(index, vo) {
-//                                 $("#sido").append("<option value='"+vo.sidoCode+"'>"+vo.sidoName+"</option>");
-//                             });//each
-//                         }//function
-//                         , "json"
-//                     );//get
+                            $.each(data, function(index, vo) {
+                                $("#sido").append("<option value='"+vo.sidoCode+"'>"+vo.sidoName+"</option>");
+                            });//each
+                        }//function
+                        , "json"
+                    );//get
                 });//ready
                 $(document).ready(function(){
                     $("#sido").change(function() {
@@ -56,7 +56,7 @@
                                     $("#gugun").empty();
                                     $("#gugun").append('<option value="0">선택</option>');
                                     $.each(data, function(index, vo) {
-                                        $("#gugun").append("<option value='"+vo.gugun_code+"'>"+vo.gugun_name+"</option>");
+                                        $("#gugun").append("<option value='"+vo.gugunCode+"'>"+vo.gugunName+"</option>");
                                     });//each
                                 }//function
                                 , "json"

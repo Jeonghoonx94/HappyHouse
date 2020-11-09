@@ -24,7 +24,7 @@
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <!-- Contact form JS-->
-<script src="assets/mail/jqBootstrapValidation.js"></script>
+<!-- <script src="assets/member/registerValidation.js"></script> -->
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
