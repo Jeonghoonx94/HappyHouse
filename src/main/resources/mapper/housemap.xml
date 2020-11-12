@@ -4,15 +4,16 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.dao.HouseMapDao">
 	<select id="getSido" resultType="SidoGugunCodeDto">
-		select left(sido_code,2) sido_code, sido_name
+		select left(sido_code,2) sidocode, sido_name sidoname
 		from sidocode
-		order by sido_code
+		order by sidocode
 	</select>
 	
 	<select id="getGugunInSido" parameterType="String" resultType="SidoGugunCodeDto">
-		SELECT left(gugun_code,5) gugun_code, gugun_name FROM guguncode
+		SELECT left(gugun_code,5) guguncode, gugun_name gugunname
+		FROM guguncode
 		where left(gugun_code,2) = #{sido}
-		order by gugun_code
+		order by guguncode
 	</select>
 	
 	<select id="getDongInGugun" parameterType="String" resultType="HouseInfoDto">
@@ -22,7 +23,7 @@
 		order by dong
 	</select>
 	
-	<select id="getAptInDong" parameterType="map" resultType="HouseInfoDto">
+	<select id="getAptInDong" parameterType="String" resultType="HouseInfoDto">
 	SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney 
 	FROM houseinfo i right join housedeal d using (aptname) 
 	WHERE d.dong = #{dong} and type = #{type}

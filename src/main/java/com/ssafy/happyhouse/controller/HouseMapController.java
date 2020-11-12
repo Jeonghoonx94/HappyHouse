@@ -3,10 +3,13 @@ package com.ssafy.happyhouse.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.HouseInfoDto;
@@ -26,18 +29,18 @@ public class HouseMapController {
 	}
 	
 	@GetMapping(value = "/gugun", headers = { "Content-type=application/json" })
-	public List<SidoGugunCodeDto> getGugun(@RequestBody String sido) throws Exception {
+	public List<SidoGugunCodeDto> getGugun(@RequestParam("sido") String sido) throws Exception {
 		return houseMapService.getGugunInSido(sido);
 	}
 	
 	@GetMapping(value = "/dong", headers = { "Content-type=application/json" })
-	public List<HouseInfoDto> getDong(@RequestBody String gugun) throws Exception {
+	public List<HouseInfoDto> getDong(@RequestParam("gugun") String gugun) throws Exception {
 		return houseMapService.getDongInGugun(gugun);
 	}
 	
 	@GetMapping(value = "/apt", headers = { "Content-type=application/json" })
-	public List<HouseInfoDto> getApt(@RequestBody Map<String, String> map) throws Exception {
-		return houseMapService.getAptInDong(map);
+	public List<HouseInfoDto> getApt(@RequestParam("dong") @Param("dong") String dong, @RequestParam("type") @Param("type") String type) throws Exception {
+		return houseMapService.getAptInDong(dong, type);
 	}
 
 }
