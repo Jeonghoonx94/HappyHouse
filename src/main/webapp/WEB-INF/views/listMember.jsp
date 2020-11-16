@@ -74,31 +74,11 @@ function makeList(users) {
 		+ "	<td>" + user.email + "</td>"
 		+ "	<td>" + user.phone + "</td>" 
 		+ "	<td>" + user.address + "</td>"
-		+ "	<td><button type=\"button\" class=\"modiBtn btn btn-outline-primary btn-sm\">수정</button> "
-		+ "		<button type=\"button\" class=\"delBtn btn btn-outline-danger btn-sm\">삭제</button></td>"
 		+ "</tr>"
-		+ "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" style=\"display: none;\">"
-		+ "	<td>" + user.userid + "</td>"
-		+ "	<td><input type=\"text\" name=\"userpwd\" id=\"userpwd" + user.userid + "\" value=\"" + user.userpwd + "\"></td>"
-		+ "	<td>" + user.username + "</td>"
-		+ "	<td><input type=\"text\" name=\"email\" id=\"email" + user.userid + "\" value=\"" + user.email + "\"></td>"
-		+ "	<td><input type=\"text\" name=\"phone\" id=\"phone" + user.userid + "\" value=\"" + user.phone + "\"></td>"
-		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>" 
-		+ "	<td><button type=\"button\" class=\"modifyBtn btn btn-primary btn-sm\">수정</button> "
-		+ "		<button type=\"button\" class=\"cancelBtn btn btn-danger btn-sm\">취소</button></td>"
-		+ "</tr>";
 		$("#userlist").append(str);
 	});//each
 }
 
-function mdelete(){
-	alert("정말 삭제하시겠습니까?");
-}
-$(function() {
-	$('#infoBtn').click(function () {   
-		location.href='${root}/infoMember?userid=${userinfo.userid}'
-	})
-})
 $(function() {
 	$('#searchbtn').click(function () {   
 		pagelist(1);
@@ -107,10 +87,11 @@ $(function() {
  		$('#key').val('${param.key}')
 	</c:if>
 })
+
 function pagelist(cpage){
 	$("#pageNo").val(cpage);
 	var searchform = $("#searchform");
-	searchform.attr('action',"${root}/listMember");
+	searchform.attr('action',"${root}/member/list");
 	searchform.submit();
 }
 </script>
@@ -123,7 +104,7 @@ function pagelist(cpage){
 				<h2 class="section-heading text-uppercase">회원 정보 목록</h2>
 				<h3 class="section-subheading text-muted">회원 정보 목록입니다.</h3>
 			</div>
-		<form id="searchform" class="searchUser" style="margin: auto; max-width: 50%">
+		<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
 			<select name='key' id='key'>
 			  	<option value='all'>--선택하세요--</option>
 			  	<option value='userid'>아이디</option>
@@ -131,7 +112,6 @@ function pagelist(cpage){
 		 	</select>
 		 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="word"  name='word' value='${bean.word}'>
 		  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
-		  	
 		</form>
 		<table class="table table-hover">
 		    <thead>

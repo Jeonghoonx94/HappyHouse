@@ -75,25 +75,13 @@ $(document).on("click", "#removeBtn", function(){
 function makeList(users) {
 	$("#userlist").empty();
 	$(users).each(function(index, user) {
-		let str = "<tr id=\"view_" + user.userid + "\" class=\"view\" data-id=\"" + user.userid + "\">"
-		+ "	<td>" + user.userid + "</td>"
-		+ "	<td>" + user.userpwd + "</td>"
-		+ "	<td>" + user.username + "</td>"
-		+ "	<td>" + user.email + "</td>"
-		+ "	<td>" + user.phone + "</td>" 
-		+ "	<td>" + user.address + "</td>"
-		+ "	<td><button type=\"button\" class=\"modiBtn btn btn-outline-primary btn-sm\">수정</button> "
-		+ "		<button type=\"button\" class=\"delBtn btn btn-outline-danger btn-sm\">삭제</button></td>"
-		+ "</tr>"
-		+ "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" style=\"display: none;\">"
+		let str = "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" + ">"
 		+ "	<td>" + user.userid + "</td>"
 		+ "	<td><input type=\"text\" name=\"userpwd\" id=\"userpwd" + user.userid + "\" value=\"" + user.userpwd + "\"></td>"
 		+ "	<td>" + user.username + "</td>"
 		+ "	<td><input type=\"text\" name=\"email\" id=\"email" + user.userid + "\" value=\"" + user.email + "\"></td>"
 		+ "	<td><input type=\"text\" name=\"phone\" id=\"phone" + user.userid + "\" value=\"" + user.phone + "\"></td>"
-		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>" 
-		+ "	<td><button type=\"button\" class=\"modifyBtn btn btn-primary btn-sm\">수정</button> "
-		+ "		<button type=\"button\" class=\"cancelBtn btn btn-danger btn-sm\">취소</button></td>"
+		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>"
 		+ "</tr>";
 		$("#userlist").append(str);
 	});//each
@@ -108,39 +96,39 @@ function makeList(users) {
 			<div>
 				<h1>회원 정보 수정</h1>
 			</div>
-			<form id="updateform" name="updateform" method="post" action="">
-		  	<div class="container" align="center">
-				<div class="col-lg-6" align="center">				
-					<div class="form-group" align="left">
-						<label for="">아이디</label>
-						<input type="text" class="form-control" id="userID" name="userID" placeholder=""  value="${member.userid}">
-					</div>
-					<div class="form-group" align="left">
-						<label for="">비밀번호</label>
-						<input type="text" class="form-control" id="userPWD" name="userPWD" placeholder=""  value="${member.userpwd}">
-					</div>
-					<div class="form-group" align="left">
-						<label for="">이름</label>
-						<input type="text" class="form-control" id="userNAME" name="userNAME" placeholder=""  value="${member.username}">
-					</div>
-					<div class="form-group" align="left">
-						<label for="">이메일</label>
-						<input type="text" class="form-control" id="userEMAIL" name="userEMAIL" placeholder=""  value="${member.email}">
-					</div>
-					<div class="form-group" align="left">
-						<label for="">연락처</label>
-						<input type="text" class="form-control" id="userPHONE" name="userPHONE" placeholder=""  value="${member.phone}">
-					</div>
-					<div class="form-group" align="left">
-						<label for="">주소</label>
-						<input type="text" class="form-control" id="userADDR" name="userADDR" placeholder=""  value="${member.address}">
-					</div>
-					<div class="form-group" align="left">
-						<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
-						<button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
+			<form id="updateform" name="updateform" action="">
+			  	<div class="container" align="center">
+					<div class="col-lg-6" align="center">				
+						<div class="form-group" align="left">
+							<label for="">아이디</label>
+							<input type="text" class="form-control" id="userID" name="userID" placeholder=""  value="${member.userid}">
+						</div>
+						<div class="form-group" align="left">
+							<label for="">비밀번호</label>
+							<input type="text" class="form-control" id="userPWD" name="userPWD" placeholder=""  value="${member.userpwd}">
+						</div>
+						<div class="form-group" align="left">
+							<label for="">이름</label>
+							<input type="text" class="form-control" id="userNAME" name="userNAME" placeholder=""  value="${member.username}">
+						</div>
+						<div class="form-group" align="left">
+							<label for="">이메일</label>
+							<input type="text" class="form-control" id="userEMAIL" name="userEMAIL" placeholder=""  value="${member.email}">
+						</div>
+						<div class="form-group" align="left">
+							<label for="">연락처</label>
+							<input type="text" class="form-control" id="userPHONE" name="userPHONE" placeholder=""  value="${member.phone}">
+						</div>
+						<div class="form-group" align="left">
+							<label for="">주소</label>
+							<input type="text" class="form-control" id="userADDR" name="userADDR" placeholder=""  value="${member.address}">
+						</div>
+						<div class="form-group" align="left">
+							<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
+							<button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
+						</div>
 					</div>
 				</div>
-			</div>
 			</form>
 		</div>
 	</div>
