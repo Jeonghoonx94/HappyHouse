@@ -15,8 +15,7 @@ public interface MemberDao {
 	
 	public void insertMember(MemberDto member);
 	public MemberDto getMember(String userid);
-	public List<MemberDto> searchAll(PageBean bean);
-	public List<MemberDto> searchAllList();
+	public List<MemberDto> searchAll(Map<String, String> map);
 	public int totalCount(PageBean bean);
 	public void removeMember(String userid);
 	public void updateMember(MemberDto member);

@@ -1,11 +1,11 @@
 package com.ssafy.happyhouse.model.service;
 
 import com.ssafy.happyhouse.model.dao.MemberDao;
-import com.ssafy.happyhouse.model.PageBean;
 
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,46 +15,41 @@ import com.ssafy.happyhouse.model.MemberDto;
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
-	private MemberDao memberDao;
+	private SqlSession sqlSession;
 
 	@Override
 	public MemberDto login(Map<String, String> map) throws Exception{
 		if (map.get("userid") == null || map.get("userpwd") == null) return null;
-		return memberDao.login(map);
+		return sqlSession.getMapper(MemberDao.class).login(map);
 	}
 	
 	@Override
 	public void insertMember(MemberDto member){
-		memberDao.insertMember(member);
+		sqlSession.getMapper(MemberDao.class).insertMember(member);
 	}
 
 	@Override
-	public List<MemberDto> searchAll(PageBean bean) {
-		return memberDao.searchAll(bean);
+	public List<MemberDto> searchAll(Map<String, String> map) {
+		return sqlSession.getMapper(MemberDao.class).searchAll(map);
 	}
-	
-	@Override
-	public List<MemberDto> searchAllList() {
-		return memberDao.searchAllList();
-	}
-	
+
 	@Override
 	public MemberDto searchMember(String userid){
-		return memberDao.getMember(userid);
+		return sqlSession.getMapper(MemberDao.class).getMember(userid);
 	}
 
 	@Override
 	public void removeMember(String userid) {
-		memberDao.removeMember(userid);
+		sqlSession.getMapper(MemberDao.class).removeMember(userid);
 	}
 
 	@Override
 	public void updateMember(MemberDto member) {
-		memberDao.updateMember(member);
+		sqlSession.getMapper(MemberDao.class).updateMember(member);
 	}
 
 	@Override
 	public String forgotpwd(Map<String, String> map) {
-		return memberDao.getForgotpwd(map);
+		return sqlSession.getMapper(MemberDao.class).getForgotpwd(map);
 	}
 }

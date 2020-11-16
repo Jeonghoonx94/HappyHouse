@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -37,7 +37,7 @@
 			<h2 class="section-heading text-uppercase">회원가입</h2>
 			<h3 class="section-subheading text-muted">다음 항목을 입력해주세요.</h3>
 		</div>
-		<form id="joinform" name="joinform" method="post" action="" novalidate="novalidate">
+		<form id="joinform" name="joinform" method="post" action="insertMember" novalidate="novalidate">
 			<div class="row align-items-stretch mb-5">
 				<div class="col-md-6">
 				    <div class="form-group">
@@ -79,6 +79,7 @@
 	</section>
 </div>
 <script>
+$(document).ready(function() {
 	$('#join').on("click", function() {
 		if($("#userId").val() == "") {
 	        alert("아이디 필수 입력!");
@@ -102,6 +103,7 @@
 	        $("#joinform").attr("action", "${root}/mvJoin").submit();
 	    }
 	});
+}
 </script>
 <jsp:include page="copyright.jsp"/>
 </body>
