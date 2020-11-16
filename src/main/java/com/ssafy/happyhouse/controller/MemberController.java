@@ -20,7 +20,7 @@ import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.MemberService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/member")
 public class MemberController{
 	
 	@Autowired
@@ -34,18 +34,18 @@ public class MemberController{
 		return mav;
 	}
 
-	@GetMapping(value = "/listMember", headers = { "Content-type=application/json" })
-	public List<MemberDto> searchAll(@RequestParam Map<String, String> map) {
+	@GetMapping(value = "/list", headers = { "Content-type=application/json" })
+	public List<MemberDto> searchAll(@RequestParam(required=false) Map<String, String> map) {
 		return memberService.searchAll(map);
 	}
 	
 	@PostMapping(value = "/mvJoin", headers = { "Content-type=application/json" })
-	public List<MemberDto> insertMember(MemberDto memberDto) {
+	public List<MemberDto> insertMember(@RequestBody MemberDto memberDto) {
 		memberService.insertMember(memberDto);
 		return memberService.searchAll(null);
 	}
 
-	@GetMapping(value = "/infoMember/{userid}", headers = { "Content-type=application/json" })
+	@GetMapping(value = "/info/{userid}", headers = { "Content-type=application/json" })
 	public MemberDto searchMember(@PathVariable("userid") String id) {
 		return memberService.searchMember(id);
 	}
@@ -55,13 +55,13 @@ public class MemberController{
 		return memberService.forgotpwd(map);
 	}
 
-	@PutMapping(value = "/updateMember", headers = { "Content-type=application/json" })
-	public MemberDto updateMember(@RequestParam MemberDto MemberDto) {
+	@PutMapping(value = "/update", headers = { "Content-type=application/json" })
+	public MemberDto updateMember(@RequestBody MemberDto MemberDto) {
 		memberService.updateMember(MemberDto);
 		return memberService.searchMember(MemberDto.getUserid());
 	}
 
-	@DeleteMapping(value = "/removeMember/{userid}", headers = { "Content-type=application/json" })
+	@DeleteMapping(value = "/remove/{userid}", headers = { "Content-type=application/json" })
 	public List<MemberDto> removeMember(@PathVariable("userid") String id) {
 		memberService.removeMember(id);
 		return memberService.searchAll(null);

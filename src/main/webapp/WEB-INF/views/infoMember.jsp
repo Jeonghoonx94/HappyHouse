@@ -28,14 +28,77 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script type="text/javascript">
-$(function() {
+$(document).ready(function() {
 	$('#updateBtn').click(function () {   
-		$("#updateform").attr("action", "${root}/updateMember").submit();
+		$("#updateform").attr("action", "${root}/member/update").submit();
 	});
 	$('#removeBtn').click(function () {
-		location.href='${root}/removeMember?userid=${member.userid}';
+		location.href='${root}/member/remove?userid=${member.userid}';
 	});
 })
+
+$(document).on("click", "#updateBtn", function(){
+	let modifyinfo = JSON.stringify({
+		"username" : $("#userNAME").val(), "userid" : $("#userID").val(), "userpwd" : $("#userPWD").val(),
+		"email" : $("#userEMAIL").val(), "phone" : $("#userPHONE").val(), "address" : $("#userADDR").val()
+	})
+	$.ajax({
+		url: '${root}/member/update',
+		type: 'PUT',
+		contentType: 'application/json;charset=utf-8',
+		dataType: 'json',
+		data: modifyinfo,
+		success: function(users){
+			makeList(users);
+		}
+	})
+})
+
+$(document).on("click", "#removeBtn", function(){
+	if(confirm("정말 삭제?")){
+		let delid = $("#userID")
+		$.ajax({
+			url: '${root}/member/remove' + delid,
+			type: 'DELETE',
+			contentType: 'application/json;charset=utf-8',
+			dataType: 'json',
+			success: function(users){
+				makeList(users);
+			},
+			error: function(xhr, status, msg){
+				console.log("상태값 : " + status + " Http 에러메세지" + msg);
+			}
+		})
+	}
+})
+
+function makeList(users) {
+	$("#userlist").empty();
+	$(users).each(function(index, user) {
+		let str = "<tr id=\"view_" + user.userid + "\" class=\"view\" data-id=\"" + user.userid + "\">"
+		+ "	<td>" + user.userid + "</td>"
+		+ "	<td>" + user.userpwd + "</td>"
+		+ "	<td>" + user.username + "</td>"
+		+ "	<td>" + user.email + "</td>"
+		+ "	<td>" + user.phone + "</td>" 
+		+ "	<td>" + user.address + "</td>"
+		+ "	<td><button type=\"button\" class=\"modiBtn btn btn-outline-primary btn-sm\">수정</button> "
+		+ "		<button type=\"button\" class=\"delBtn btn btn-outline-danger btn-sm\">삭제</button></td>"
+		+ "</tr>"
+		+ "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" style=\"display: none;\">"
+		+ "	<td>" + user.userid + "</td>"
+		+ "	<td><input type=\"text\" name=\"userpwd\" id=\"userpwd" + user.userid + "\" value=\"" + user.userpwd + "\"></td>"
+		+ "	<td>" + user.username + "</td>"
+		+ "	<td><input type=\"text\" name=\"email\" id=\"email" + user.userid + "\" value=\"" + user.email + "\"></td>"
+		+ "	<td><input type=\"text\" name=\"phone\" id=\"phone" + user.userid + "\" value=\"" + user.phone + "\"></td>"
+		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>" 
+		+ "	<td><button type=\"button\" class=\"modifyBtn btn btn-primary btn-sm\">수정</button> "
+		+ "		<button type=\"button\" class=\"cancelBtn btn btn-danger btn-sm\">취소</button></td>"
+		+ "</tr>";
+		$("#userlist").append(str);
+	});//each
+}
+
 </script>
 <body id="page-top">
 	<jsp:include page="title.jsp"/>

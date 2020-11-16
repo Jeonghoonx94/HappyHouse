@@ -8,7 +8,7 @@
 <meta name="viewport"	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Agency - Start Bootstrap Theme</title>
+<title>MemberList</title>
 <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"	crossorigin="anonymous"></script>
@@ -28,6 +28,69 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	//회원 목록
+	$.ajax({
+		url:'${root}/member/list',  
+		type:'GET',
+		contentType:'application/json;charset=utf-8',
+		dataType:'json',
+		success:function(users) {
+			makeList(users);
+		},
+		error:function(xhr,status,msg){
+			console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+		}
+	});
+}
+
+$(document).on("dblclick", "tr.view", function(){
+	let vid = $(this).attr("data-id");
+	$.ajax({
+		url: '${root}/member/info/' + vid,
+		type: 'GET',
+		contentType: 'application/json; charset=utf-8',
+		success: function(user){
+			$("#vid").text(user.userid);
+			$("#vpwd").text(user.userpwd);
+			$("#vname").text(user.username);
+			$("#vemail").text(user.email);
+			$("#vphone").text(user.phone);
+			$("#vaddress").text(user.address);
+		},
+		error: function(xhr, status, msg){
+			console.log("상태값 : " + status + " Http 에러메세지 : " + msg);
+		}
+	})
+})
+
+function makeList(users) {
+	$("#userlist").empty();
+	$(users).each(function(index, user) {
+		let str = "<tr id=\"view_" + user.userid + "\" class=\"view\" data-id=\"" + user.userid + "\">"
+		+ "	<td>" + user.userid + "</td>"
+		+ "	<td>" + user.userpwd + "</td>"
+		+ "	<td>" + user.username + "</td>"
+		+ "	<td>" + user.email + "</td>"
+		+ "	<td>" + user.phone + "</td>" 
+		+ "	<td>" + user.address + "</td>"
+		+ "	<td><button type=\"button\" class=\"modiBtn btn btn-outline-primary btn-sm\">수정</button> "
+		+ "		<button type=\"button\" class=\"delBtn btn btn-outline-danger btn-sm\">삭제</button></td>"
+		+ "</tr>"
+		+ "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" style=\"display: none;\">"
+		+ "	<td>" + user.userid + "</td>"
+		+ "	<td><input type=\"text\" name=\"userpwd\" id=\"userpwd" + user.userid + "\" value=\"" + user.userpwd + "\"></td>"
+		+ "	<td>" + user.username + "</td>"
+		+ "	<td><input type=\"text\" name=\"email\" id=\"email" + user.userid + "\" value=\"" + user.email + "\"></td>"
+		+ "	<td><input type=\"text\" name=\"phone\" id=\"phone" + user.userid + "\" value=\"" + user.phone + "\"></td>"
+		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>" 
+		+ "	<td><button type=\"button\" class=\"modifyBtn btn btn-primary btn-sm\">수정</button> "
+		+ "		<button type=\"button\" class=\"cancelBtn btn btn-danger btn-sm\">취소</button></td>"
+		+ "</tr>";
+		$("#userlist").append(str);
+	});//each
+}
+
 function mdelete(){
 	alert("정말 삭제하시겠습니까?");
 }
@@ -76,41 +139,11 @@ function pagelist(cpage){
 					<th>아이디</th>
 					<th>이름</th>
 					<th>이메일</th>
-					<th>해드폰</th>
+					<th>전화번호</th>
 					<th>주소</th>
 				</tr>
 		    </thead>
-		    <tbody>
-				<c:choose>
-	    			<c:when test='${empty list}'>
-				    	<div>
-				        	<p>조회 할 회원이 없습니다.</p>
-				        </div>
-	     			</c:when>
-		     		<c:otherwise>
-		     			<c:forEach var='userinfo' items="${list}">
-		     			<tr>
-		     				<td><a href='${root}/infoMember?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
-		     				<td>${userinfo.username}</td>
-		     				<td>${userinfo.email}</td>
-		     				<td>${userinfo.phone}</td>
-		     				<td>${userinfo.address}</td>
-		     			</tr>
-		     			<!-- 
-							<div class="col-lg-4">
-								<div class="team-member">
-									<input type="text" class="form-control" id="userid" name="userid" placeholder=""  value="${userinfo.userid}">
-								</div>
-								<div>
-									<input type="text" class="form-control" id="username" name="username" placeholder=""  value="${userinfo.username}">
-								</div>
-								<button type="button" class="btn btn-primary" id="infobtn" name="infobtn">회원 정보</button>
-							</div>
-						 -->
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
+		    <tbody id="userlist"></tbody>
 		</table>
 	</div>
 	</section>
@@ -130,27 +163,27 @@ function pagelist(cpage){
 					<form action="#">
 						<div class="form-group">
 							<label>아이디</label>
-							<input type="text" value="test1">
+							<input type="text">
 						</div>
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input type="password" value="z1z1z1">
+							<input type="password">
 						</div>
 						<div class="form-group">
 							<label>이름</label>
-							<input type="text" value="최다애">
+							<input type="text">
 						</div>
 						<div class="form-group">
 							<label>이메일</label>
-							<input type="email" value="zzzzddz@naver.com">
+							<input type="email">
 						</div>
 						<div class="form-group">
 							<label>전화번호</label>
-							<input type="tel" value="010-1234-5672">
+							<input type="tel">
 						</div>
 						<div class="form-group">
 							<label>주소</label>
-							<input type="text" value="서울특별시">
+							<input type="text">
 						</div>
 						<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
 						<button type="button" class="btn btn-secondary"
