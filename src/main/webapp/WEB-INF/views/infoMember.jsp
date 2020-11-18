@@ -30,10 +30,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#updateBtn').click(function () {   
-		$("#updateform").attr("action", "${root}/member/update").submit();
+		$("#updateform").attr("action", "${root}/updateMember").submit();
 	});
 	$('#removeBtn').click(function () {
-		location.href='${root}/member/remove?userid=${member.userid}';
+		location.href='${root}/removeMember?userid=${member.userid}';
 	});
 })
 
@@ -43,7 +43,7 @@ $(document).on("click", "#updateBtn", function(){
 		"email" : $("#userEMAIL").val(), "phone" : $("#userPHONE").val(), "address" : $("#userADDR").val()
 	})
 	$.ajax({
-		url: '${root}/member/update',
+		url: '${root}/updateMember',
 		type: 'PUT',
 		contentType: 'application/json;charset=utf-8',
 		dataType: 'json',
@@ -58,7 +58,7 @@ $(document).on("click", "#removeBtn", function(){
 	if(confirm("정말 삭제?")){
 		let delid = $("#userID")
 		$.ajax({
-			url: '${root}/member/remove' + delid,
+			url: '${root}/removeMember/userid=' + delid,
 			type: 'DELETE',
 			contentType: 'application/json;charset=utf-8',
 			dataType: 'json',
@@ -72,21 +72,6 @@ $(document).on("click", "#removeBtn", function(){
 	}
 })
 
-function makeList(users) {
-	$("#userlist").empty();
-	$(users).each(function(index, user) {
-		let str = "<tr id=\"mview_" + user.userid + "\" data-id=\"" + user.userid + "\" + ">"
-		+ "	<td>" + user.userid + "</td>"
-		+ "	<td><input type=\"text\" name=\"userpwd\" id=\"userpwd" + user.userid + "\" value=\"" + user.userpwd + "\"></td>"
-		+ "	<td>" + user.username + "</td>"
-		+ "	<td><input type=\"text\" name=\"email\" id=\"email" + user.userid + "\" value=\"" + user.email + "\"></td>"
-		+ "	<td><input type=\"text\" name=\"phone\" id=\"phone" + user.userid + "\" value=\"" + user.phone + "\"></td>"
-		+ "	<td><input type=\"text\" name=\"address\" id=\"address" + user.userid + "\" value=\"" + user.address + "\"></td>"
-		+ "</tr>";
-		$("#userlist").append(str);
-	});//each
-}
-
 </script>
 <body id="page-top">
 	<jsp:include page="title.jsp"/>
@@ -94,34 +79,34 @@ function makeList(users) {
 	<div class="container" align="center">
 		<div class="col-lg-6">
 			<div>
-				<h1>회원 정보 수정</h1>
+				<h1>회원 정보</h1>
 			</div>
 			<form id="updateform" name="updateform" action="">
 			  	<div class="container" align="center">
 					<div class="col-lg-6" align="center">				
 						<div class="form-group" align="left">
 							<label for="">아이디</label>
-							<input type="text" class="form-control" id="userID" name="userID" placeholder=""  value="${member.userid}">
+							<input type="text" class="form-control" id="userID" name="userID"  value="${member.userid}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">비밀번호</label>
-							<input type="text" class="form-control" id="userPWD" name="userPWD" placeholder=""  value="${member.userpwd}">
+							<input type="text" class="form-control" id="userPWD" name="userPWD"  value="${member.userpwd}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">이름</label>
-							<input type="text" class="form-control" id="userNAME" name="userNAME" placeholder=""  value="${member.username}">
+							<input type="text" class="form-control" id="userNAME" name="userNAME"  value="${member.username}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">이메일</label>
-							<input type="text" class="form-control" id="userEMAIL" name="userEMAIL" placeholder=""  value="${member.email}">
+							<input type="text" class="form-control" id="userEMAIL" name="userEMAIL"  value="${member.email}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">연락처</label>
-							<input type="text" class="form-control" id="userPHONE" name="userPHONE" placeholder=""  value="${member.phone}">
+							<input type="text" class="form-control" id="userPHONE" name="userPHONE"  value="${member.phone}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">주소</label>
-							<input type="text" class="form-control" id="userADDR" name="userADDR" placeholder=""  value="${member.address}">
+							<input type="text" class="form-control" id="userADDR" name="userADDR"  value="${member.address}">
 						</div>
 						<div class="form-group" align="left">
 							<button type="button" class="btn btn-primary" id="updateBtn">수정</button>

@@ -4,68 +4,73 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.MemberService;
 
-@RestController
-@RequestMapping("/member")
+@Controller
+@RequestMapping("/")
 public class MemberController{
-	
-	@Autowired
-	private MemberService memberService;
-	
-	@ExceptionHandler
-	public ModelAndView handler(Exception e) {
-		ModelAndView mav = new ModelAndView("Error");
-		mav.addObject("msg", e.getMessage());
-		e.printStackTrace();
-		return mav;
-	}
 
-	@GetMapping(value = "/list", headers = { "Content-type=application/json" })
-	public List<MemberDto> searchAll(@RequestParam(required=false) Map<String, String> map) {
-		return memberService.searchAll(map);
-	}
-	
-	@PostMapping(value = "/mvJoin", headers = { "Content-type=application/json" })
-	public List<MemberDto> insertMember(@RequestBody MemberDto memberDto) {
-		memberService.insertMember(memberDto);
-		return memberService.searchAll(null);
-	}
+    @Autowired
+    private MemberService memberService;
 
-	@GetMapping(value = "/info/{userid}", headers = { "Content-type=application/json" })
-	public MemberDto searchMember(@PathVariable("userid") String id) {
-		return memberService.searchMember(id);
-	}
+    @ExceptionHandler
+    public ModelAndView handler(Exception e) {
+        ModelAndView mav = new ModelAndView("Error");
+        mav.addObject("msg", e.getMessage());
+        e.printStackTrace();
+        return mav;
+    }
 
-	@GetMapping(value = "/forgotpwd", headers = { "Content-type=application/json" })
-	public String forgotpwd(@RequestParam Map<String, String> map) {
-		return memberService.forgotpwd(map);
-	}
+@RequestMapping(value = "/listMember", method = RequestMethod.GET)
+public String searchAll(Map<String, String> map, Model model) {
+    model.addAttribute("userlist", memberService.searchAll(map));
+    return "/listMember";
+}
 
-	@PutMapping(value = "/update", headers = { "Content-type=application/json" })
-	public MemberDto updateMember(@RequestBody MemberDto MemberDto) {
-		memberService.updateMember(MemberDto);
-		return memberService.searchMember(MemberDto.getUserid());
-	}
+@RequestMapping(value = "/join", method = RequestMethod.POST)
+public String insertMember(MemberDto memberDto) {
+    memberService.insertMember(memberDto);
+    return "index";
+}
 
-	@DeleteMapping(value = "/remove/{userid}", headers = { "Content-type=application/json" })
-	public List<MemberDto> removeMember(@PathVariable("userid") String id) {
-		memberService.removeMember(id);
-		return memberService.searchAll(null);
-	}
+@RequestMapping(value = "/join", method = RequestMethod.GET)
+public String insertMember() {
+    return "/join";
+}
 
-	
+@RequestMapping(value = "/infoMember/userid={userid}", method = RequestMethod.GET)
+public String searchMember(@PathVariable String userid, Model model) {
+    model.addAttribute("member", memberService.searchMember(userid));
+    return "/infoMember/userid=" + userid;
+}
+
+@RequestMapping(value = "/forgotpwd", method = RequestMethod.GET)
+public String forgotpwd(Map<String, String> map) {
+    memberService.forgotpwd(map);
+    return "index";
+}
+
+@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
+public String updateMember(MemberDto memberDto, Model model) {
+    memberService.updateMember(memberDto);
+    String userid = memberDto.getUserid();
+    return "/infoMember/userid=" + userid;
+}
+
+@RequestMapping(value = "/removeMember/userid={userid}", method = RequestMethod.GET)
+public String removeMember(@PathVariable("userid") String userid) {
+    memberService.removeMember(userid);
+    return "redirect:/";
+}
 }

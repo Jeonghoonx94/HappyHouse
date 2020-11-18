@@ -31,7 +31,7 @@
 $(document).ready(function() {
 	//회원 목록
 	$.ajax({
-		url:'${root}/member/list',  
+		url:'${root}/listMember',  
 		type:'GET',
 		contentType:'application/json;charset=utf-8',
 		dataType:'json',
@@ -47,7 +47,7 @@ $(document).ready(function() {
 $(document).on("dblclick", "tr.view", function(){
 	let vid = $(this).attr("data-id");
 	$.ajax({
-		url: '${root}/member/info/' + vid,
+		url: '${root}/infoMember' + vid,
 		type: 'GET',
 		contentType: 'application/json; charset=utf-8',
 		success: function(user){
@@ -64,21 +64,6 @@ $(document).on("dblclick", "tr.view", function(){
 	})
 })
 
-function makeList(users) {
-	$("#userlist").empty();
-	$(users).each(function(index, user) {
-		let str = "<tr id=\"view_" + user.userid + "\" class=\"view\" data-id=\"" + user.userid + "\">"
-		+ "	<td>" + user.userid + "</td>"
-		+ "	<td>" + user.userpwd + "</td>"
-		+ "	<td>" + user.username + "</td>"
-		+ "	<td>" + user.email + "</td>"
-		+ "	<td>" + user.phone + "</td>" 
-		+ "	<td>" + user.address + "</td>"
-		+ "</tr>"
-		$("#userlist").append(str);
-	});//each
-}
-
 $(function() {
 	$('#searchbtn').click(function () {   
 		pagelist(1);
@@ -91,7 +76,7 @@ $(function() {
 function pagelist(cpage){
 	$("#pageNo").val(cpage);
 	var searchform = $("#searchform");
-	searchform.attr('action',"${root}/member/list");
+	searchform.attr('action',"${root}/listMember");
 	searchform.submit();
 }
 </script>
@@ -123,7 +108,38 @@ function pagelist(cpage){
 					<th>주소</th>
 				</tr>
 		    </thead>
-		    <tbody id="userlist"></tbody>
+		    <tbody>
+				<c:choose>
+	    			<c:when test='${empty userlist}'>
+				    	<div>
+				        	<p>조회 할 회원이 없습니다.</p>
+				        </div>
+	     			</c:when>
+		     		<c:otherwise>
+		     			<c:forEach var='userinfo' items="${userlist}">
+		     			<tr>
+		     				<td><a href='${root}/infoMember?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
+		     				<td>${userinfo.username}</td>
+		     				<td>${userinfo.email}</td>
+		     				<td>${userinfo.phone}</td>
+		     				<td>${userinfo.address}</td>
+		     			</tr>
+		     			<!-- 
+							<div class="col-lg-4">
+								<div class="team-member">
+									<input type="text" class="form-control" id="userid" name="userid" placeholder=""  value="${userinfo.userid}">
+								</div>
+								<div>
+									<input type="text" class="form-control" id="username" name="username" placeholder=""  value="${userinfo.username}">
+								</div>
+								<button type="button" class="btn btn-primary" id="infobtn" name="infobtn">회원 정보</button>
+							</div>
+						 -->
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+
 		</table>
 	</div>
 	</section>

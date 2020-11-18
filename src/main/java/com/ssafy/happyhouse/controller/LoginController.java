@@ -32,17 +32,12 @@ public class LoginController {
 			return mav;
 		}
 
-		@RequestMapping(value = "/join", method = RequestMethod.GET)
-		public String login() {
-			return "/join";
-		}
-		
 		@RequestMapping(value = "/login", method = RequestMethod.POST)
 		public String login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
 			try {
 				MemberDto memberDto = memberService.login(map);
 				if(memberDto != null) {
-					session.setAttribute("userinfo", memberDto);				
+					session.setAttribute("userlogin", memberDto);				
 				} else {
 					model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 로그인해 주세요.");
 				}
