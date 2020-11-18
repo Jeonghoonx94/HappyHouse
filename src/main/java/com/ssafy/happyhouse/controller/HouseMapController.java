@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,18 +26,22 @@ public class HouseMapController {
 	}
 	
 	@GetMapping(value = "/gugun", headers = { "Content-type=application/json" })
-	public List<SidoGugunCodeDto> getGugun(@RequestParam("sido") String sido) throws Exception {
+	public List<SidoGugunCodeDto> getGugun(@RequestParam String sido) throws Exception {
 		return houseMapService.getGugunInSido(sido);
 	}
 	
 	@GetMapping(value = "/dong", headers = { "Content-type=application/json" })
-	public List<HouseInfoDto> getDong(@RequestParam("gugun") String gugun) throws Exception {
+	public List<HouseInfoDto> getDong(@RequestParam String gugun) throws Exception {
 		return houseMapService.getDongInGugun(gugun);
 	}
 	
 	@GetMapping(value = "/apt", headers = { "Content-type=application/json" })
-	public List<HouseInfoDto> getApt(@RequestParam("dong") @Param("dong") String dong, @RequestParam("type") @Param("type") String type) throws Exception {
+	public List<HouseInfoDto> getApt(@RequestParam String dong, @RequestParam String type) throws Exception {
 		return houseMapService.getAptInDong(dong, type);
 	}
 
+	@GetMapping(value = "/apt/{aptName}", headers = { "Content-type=application/json" })
+	public List<HouseInfoDto> getApt(@PathVariable("aptName") String aptName) throws Exception {
+		return houseMapService.getAptByName(aptName);
+	}
 }

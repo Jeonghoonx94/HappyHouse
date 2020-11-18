@@ -47,8 +47,6 @@
                         }//function
                         , "json"
                     );//get
-                });//ready
-                $(document).ready(function(){
                     $("#sido").change(function() {
                         $.get("${pageContext.request.contextPath}/map/gugun"
                                 ,{sido:$("#sido").val()}
@@ -87,7 +85,7 @@
                                         //let str = "<tr value='서울특별시+강남구+역삼동+테헤란로+212'>"
                                         let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
                                         +"<th scope='row'>"+vo.no+"</th>"
-                                        +"<td>" + vo.aptName
+                                        +"<td>" + vo.aptName + "</td><td>"
                                         +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
                                         +"</td>"
                                         +"</tr>"
@@ -98,6 +96,33 @@
                                 , "json"
                         );//get
                     });//change
+                    $("#searchBtn").click(function() {
+	                    $.ajax({
+	            			url:"${pageContext.request.contextPath}/map/apt/"+$("#searchName").val(),  
+	            			type:'GET',
+	            			contentType:'application/json;charset=utf-8',
+	            			dataType:'json',
+	            			success:function(data) {
+	            				console.log(data);
+	                            $("#searchResult").empty();
+	                            $.each(data, function(index, vo) {
+	                            	console.log(vo);
+	                            	console.log("vo : "+vo);
+	                            	console.log("rentMoney" + vo.rentMoney);
+	                                let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+	                                +"<th scope='row'>"+vo.no+"</th>"
+	                                +"<td>" + vo.aptName + "</td><td>"
+	                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
+	                                +"</td>"
+	                                +"</tr>"
+	                                $("#searchResult").append(str);
+	                            });//each
+	            			},
+	            			error:function(xhr,status,msg){
+	            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+	            			}
+	            		});
+                    });
                 });//ready
 
             </script>
@@ -136,20 +161,35 @@
                     </select>
                 </form>
             </div>
+            <div class="col-3 mt-2">
+                <div class="input-group">
+			      <input type="text" class="form-control" id="searchName" placeholder="아파트 이름" />
+			      <div class="input-group-append">
+			        <button class="btn btn-success" id="searchBtn">검색</button>
+			      </div>
+                </div>
+            </div>
         </div>
         <div class="row text-center d-flex justify-content-center">
             <div class="col-4">
                 <table class="table table-striped" id="table1">
+                	<colgroup>
+                		<col width="20%"/>
+                		<col width="50%"/>
+                		<col width="30%"/>
+                	</colgroup>
                     <thead>
                         <tr>
                             <th>번호</th>
                             <th>아파트이름</th>
+                            <th>세부정보</th>
                         </tr>
                     </thead>
                     <tbody id="searchResult">
                         <tr value="서울특별시+강남구+역삼동+테헤란로+212">
                             <th scope="row">1</th>
-                            <td>멀티캠퍼스
+                            <td>멀티캠퍼스</td>
+                            <td>
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     data-toggle="modal" data-target="#exampleModal">자세히</button>
                             </td>
