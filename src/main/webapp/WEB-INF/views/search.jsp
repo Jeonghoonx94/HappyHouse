@@ -22,25 +22,9 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
-//                 	$.ajax({
-//             			url:"${pageContext.request.contextPath}/map/sido",  
-//             			type:'GET',
-//             			contentType:'application/json;charset=utf-8',
-//             			dataType:'json',
-//             			success:function(list) {
-//             				$(list).each(function(index, sido) {
-//                       	  		$("#sido").append("<option value='"+sido.sidoCode+"'>"+sido.sidoName+"</option>");
-//                         	});//each
-//             			},
-//             			error:function(xhr,status,msg){
-//             				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-//             			}
-//             		});
                 	
                     $.get("${pageContext.request.contextPath}/map/sido"
-//                         ,{act:"sido"}
                         ,function(data, status){
-//                         	console.log(data);
                             $.each(data, function(index, vo) {
                                 $("#sido").append("<option value='"+vo.sidoCode+"'>"+vo.sidoName+"</option>");
                             });//each
@@ -97,31 +81,41 @@
                         );//get
                     });//change
                     $("#searchBtn").click(function() {
-	                    $.ajax({
-	            			url:"${pageContext.request.contextPath}/map/apt/"+$("#searchName").val(),  
-	            			type:'GET',
-	            			contentType:'application/json;charset=utf-8',
-	            			dataType:'json',
-	            			success:function(data) {
-	            				console.log(data);
-	                            $("#searchResult").empty();
-	                            $.each(data, function(index, vo) {
-	                            	console.log(vo);
-	                            	console.log("vo : "+vo);
-	                            	console.log("rentMoney" + vo.rentMoney);
-	                                let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
-	                                +"<th scope='row'>"+vo.no+"</th>"
-	                                +"<td>" + vo.aptName + "</td><td>"
-	                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
-	                                +"</td>"
-	                                +"</tr>"
-	                                $("#searchResult").append(str);
-	                            });//each
-	            			},
-	            			error:function(xhr,status,msg){
-	            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-	            			}
-	            		});
+                    	console.log($("#dong").val(),$("#searchName").val())
+                    	if($("#dong").val() !== "0") { // 선택했다면 
+//                     		if($("#searchName").val()) {
+			                    $.ajax({
+			            			url:"${pageContext.request.contextPath}/map/search",  
+			            			type:'GET',
+			            			contentType:'application/json;charset=utf-8',
+			            			dataType:'json',
+			            			data: {dong:$("#dong").val(), type:$("#type").val(), aptName:$("#searchName").val()},
+			            			success:function(data) {
+			            				console.log(data);
+			                            $("#searchResult").empty();
+			                            $.each(data, function(index, vo) {
+			                            	console.log(vo);
+			                            	console.log("vo : "+vo);
+			                            	console.log("rentMoney" + vo.rentMoney);
+			                                let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+			                                +"<th scope='row'>"+vo.no+"</th>"
+			                                +"<td>" + vo.aptName + "</td><td>"
+			                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
+			                                +"</td>"
+			                                +"</tr>"
+			                                $("#searchResult").append(str);
+			                            });//each
+			            			},
+			            			error:function(xhr,status,msg){
+			            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+			            			}
+			            		});
+//                     		} else {
+//                     			alert('아파트 이름을 입력해 주세요!');
+//                     		}
+                    	} else { // 선택하지 않았다면
+                    		alert('읍면동까지 선택해주세요!');
+                    	}
                     });
                 });//ready
 

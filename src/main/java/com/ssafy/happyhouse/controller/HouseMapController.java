@@ -40,8 +40,8 @@ public class HouseMapController {
 		return houseMapService.getAptInDong(dong, type);
 	}
 
-	@GetMapping(value = "/apt/{aptName}", headers = { "Content-type=application/json" })
-	public List<HouseInfoDto> getApt(@PathVariable("aptName") String aptName) throws Exception {
-		return houseMapService.getAptByName(aptName);
+	@GetMapping(value = "/search", headers = { "Content-type=application/json" })
+	public List<HouseInfoDto> getApt(@RequestParam String dong, @RequestParam String type, @RequestParam String aptName) throws Exception {
+		return houseMapService.getAptByName(dong, type, "%"+aptName+"%");
 	}
 }

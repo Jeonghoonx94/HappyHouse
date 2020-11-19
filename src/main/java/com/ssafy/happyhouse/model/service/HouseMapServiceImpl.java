@@ -38,8 +38,8 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public List<HouseInfoDto> getAptByName(String aptName) throws Exception {
-		return sqlSession.getMapper(HouseMapDao.class).getAptByName(aptName);
+	public List<HouseInfoDto> getAptByName(String dong, String type, String aptName) throws Exception {
+		return sqlSession.getMapper(HouseMapDao.class).getAptByName(dong, type, aptName);
 	}
 
 }

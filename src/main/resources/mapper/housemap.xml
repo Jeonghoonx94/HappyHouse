@@ -31,16 +31,17 @@
 		FROM houseinfo i right join housedeal d using (aptname)
 		WHERE d.dong = #{dong} and type = #{type}
 		order by d.no
+		limit 100
 	</select>
 
 	<select id="getAptByName" parameterType="String"
 		resultType="HouseInfoDto">
 		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
 		FROM houseinfo i right join housedeal d using (aptname)
-		<if test="aptName != null and aptName != ''">
-			where aptname like concat('%', #{aptName}, '%')
-		</if>
+		where d.dong = #{dong} and type = #{type} 
+			and aptname like #{aptName}
 		order by d.no
+		limit 100
 	</select>
 
 </mapper>
