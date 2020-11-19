@@ -26,7 +26,7 @@ public class LoginController {
 		
 		@ExceptionHandler
 		public ModelAndView handler(Exception e) {
-			ModelAndView mav = new ModelAndView("Error");
+			ModelAndView mav = new ModelAndView("error/error");
 			mav.addObject("msg", e.getMessage());
 			e.printStackTrace();
 			return mav;

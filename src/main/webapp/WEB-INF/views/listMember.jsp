@@ -28,42 +28,6 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	//회원 목록
-	$.ajax({
-		url:'${root}/listMember',  
-		type:'GET',
-		contentType:'application/json;charset=utf-8',
-		dataType:'json',
-		success:function(users) {
-			makeList(users);
-		},
-		error:function(xhr,status,msg){
-			console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-		}
-	});
-}
-
-$(document).on("dblclick", "tr.view", function(){
-	let vid = $(this).attr("data-id");
-	$.ajax({
-		url: '${root}/infoMember' + vid,
-		type: 'GET',
-		contentType: 'application/json; charset=utf-8',
-		success: function(user){
-			$("#vid").text(user.userid);
-			$("#vpwd").text(user.userpwd);
-			$("#vname").text(user.username);
-			$("#vemail").text(user.email);
-			$("#vphone").text(user.phone);
-			$("#vaddress").text(user.address);
-		},
-		error: function(xhr, status, msg){
-			console.log("상태값 : " + status + " Http 에러메세지 : " + msg);
-		}
-	})
-})
-
 $(function() {
 	$('#searchbtn').click(function () {   
 		pagelist(1);
@@ -124,17 +88,6 @@ function pagelist(cpage){
 		     				<td>${userinfo.phone}</td>
 		     				<td>${userinfo.address}</td>
 		     			</tr>
-		     			<!-- 
-							<div class="col-lg-4">
-								<div class="team-member">
-									<input type="text" class="form-control" id="userid" name="userid" placeholder=""  value="${userinfo.userid}">
-								</div>
-								<div>
-									<input type="text" class="form-control" id="username" name="username" placeholder=""  value="${userinfo.username}">
-								</div>
-								<button type="button" class="btn btn-primary" id="infobtn" name="infobtn">회원 정보</button>
-							</div>
-						 -->
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>

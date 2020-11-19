@@ -37,41 +37,6 @@ $(document).ready(function() {
 	});
 })
 
-$(document).on("click", "#updateBtn", function(){
-	let modifyinfo = JSON.stringify({
-		"username" : $("#userNAME").val(), "userid" : $("#userID").val(), "userpwd" : $("#userPWD").val(),
-		"email" : $("#userEMAIL").val(), "phone" : $("#userPHONE").val(), "address" : $("#userADDR").val()
-	})
-	$.ajax({
-		url: '${root}/updateMember',
-		type: 'PUT',
-		contentType: 'application/json;charset=utf-8',
-		dataType: 'json',
-		data: modifyinfo,
-		success: function(users){
-			makeList(users);
-		}
-	})
-})
-
-$(document).on("click", "#removeBtn", function(){
-	if(confirm("정말 삭제?")){
-		let delid = $("#userID")
-		$.ajax({
-			url: '${root}/removeMember/userid=' + delid,
-			type: 'DELETE',
-			contentType: 'application/json;charset=utf-8',
-			dataType: 'json',
-			success: function(users){
-				makeList(users);
-			},
-			error: function(xhr, status, msg){
-				console.log("상태값 : " + status + " Http 에러메세지" + msg);
-			}
-		})
-	}
-})
-
 </script>
 <body id="page-top">
 	<jsp:include page="title.jsp"/>
@@ -81,32 +46,32 @@ $(document).on("click", "#removeBtn", function(){
 			<div>
 				<h1>회원 정보</h1>
 			</div>
-			<form id="updateform" name="updateform" action="">
+			<form id="updateform" name="updateform" action="" method="post">
 			  	<div class="container" align="center">
 					<div class="col-lg-6" align="center">				
 						<div class="form-group" align="left">
 							<label for="">아이디</label>
-							<input type="text" class="form-control" id="userID" name="userID"  value="${member.userid}">
+							<input type="text" class="form-control" id="userID" name="userid"  value="${member.userid}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">비밀번호</label>
-							<input type="text" class="form-control" id="userPWD" name="userPWD"  value="${member.userpwd}">
+							<input type="text" class="form-control" id="userPWD" name="userpwd"  value="${member.userpwd}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">이름</label>
-							<input type="text" class="form-control" id="userNAME" name="userNAME"  value="${member.username}">
+							<input type="text" class="form-control" id="userNAME" name="username"  value="${member.username}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">이메일</label>
-							<input type="text" class="form-control" id="userEMAIL" name="userEMAIL"  value="${member.email}">
+							<input type="text" class="form-control" id="userEMAIL" name="email"  value="${member.email}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">연락처</label>
-							<input type="text" class="form-control" id="userPHONE" name="userPHONE"  value="${member.phone}">
+							<input type="text" class="form-control" id="userPHONE" name="phone"  value="${member.phone}">
 						</div>
 						<div class="form-group" align="left">
 							<label for="">주소</label>
-							<input type="text" class="form-control" id="userADDR" name="userADDR"  value="${member.address}">
+							<input type="text" class="form-control" id="userADDR" name="address"  value="${member.address}">
 						</div>
 						<div class="form-group" align="left">
 							<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
