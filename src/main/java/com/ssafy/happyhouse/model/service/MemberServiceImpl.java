@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String forgotpwd(Map<String, String> map) {
-		return sqlSession.getMapper(MemberDao.class).getForgotpwd(map);
+	public String getPwd(Map<String, String> map) {
+		return sqlSession.getMapper(MemberDao.class).getPwd(map);
 	}
 }

@@ -28,21 +28,19 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script type="text/javascript">
-$(function() {
+$(document).ready(function() {
 	$('#searchbtn').click(function () {   
 		pagelist(1);
 	})
 	<c:if test='${not empty param.key}'>
  		$('#key').val('${param.key}')
 	</c:if>
-})
 
-function pagelist(cpage){
-	$("#pageNo").val(cpage);
-	var searchform = $("#searchform");
-	searchform.attr('action',"${root}/listMember");
-	searchform.submit();
-}
+	function pagelist(cpage){
+		$("#pageNo").val(cpage);
+		$("#searchform").attr('action',"${root}/listMember?key=${searchKey}&word=${searchWord}").submit;
+	}
+})
 </script>
 </head>
 <body id="page-top">
@@ -54,12 +52,12 @@ function pagelist(cpage){
 				<h3 class="section-subheading text-muted">회원 정보 목록입니다.</h3>
 			</div>
 		<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
-			<select name='key' id='key'>
+			<select name='key' id='searchKey'>
 			  	<option value='all'>--선택하세요--</option>
 			  	<option value='userid'>아이디</option>
 			  	<option value='username'>이름</option>
 		 	</select>
-		 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="word"  name='word' value='${bean.word}'>
+		 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="searchWord"  name='word' value='${bean.word}'>
 		  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
 		</form>
 		<table class="table table-hover">
@@ -92,56 +90,9 @@ function pagelist(cpage){
 					</c:otherwise>
 				</c:choose>
 			</tbody>
-
 		</table>
 	</div>
 	</section>
-	<!-- The Modal -->
-	<div class="modal" id="memberUpdate">
-		<div class="modal-dialog">
-			<div class="modal-content">
-	
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">회원 정보 수정</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-	
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="#">
-						<div class="form-group">
-							<label>아이디</label>
-							<input type="text">
-						</div>
-						<div class="form-group">
-							<label>비밀번호</label>
-							<input type="password">
-						</div>
-						<div class="form-group">
-							<label>이름</label>
-							<input type="text">
-						</div>
-						<div class="form-group">
-							<label>이메일</label>
-							<input type="email">
-						</div>
-						<div class="form-group">
-							<label>전화번호</label>
-							<input type="tel">
-						</div>
-						<div class="form-group">
-							<label>주소</label>
-							<input type="text">
-						</div>
-						<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
 <jsp:include page="copyright.jsp"/>
 </body>
 </html>

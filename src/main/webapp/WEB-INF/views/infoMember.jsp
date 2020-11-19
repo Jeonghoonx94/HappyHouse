@@ -41,7 +41,7 @@ $(document).ready(function() {
 <body id="page-top">
 	<jsp:include page="title.jsp"/>
 	<section class="page-section bg-light">
-	<div class="container" align="center">
+		<div class="container" align="center">
 		<div class="col-lg-6">
 			<div>
 				<h1>회원 정보</h1>

@@ -13,5 +13,5 @@ public interface MemberService {
 	public List<MemberDto> searchAll(Map<String, String> map) ;
 	public void removeMember(String userid);
 	public void updateMember(MemberDto member);
-	public String forgotpwd(Map<String, String> map);
+	public String getPwd(Map<String, String> map);
 }

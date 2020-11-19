@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -32,14 +34,14 @@ public class MemberController{
     }
 
 	@RequestMapping(value = "/listMember", method = RequestMethod.GET)
-	public String searchAll(Map<String, String> map, Model model) {
-	    model.addAttribute("userlist", memberService.searchAll(map));
+	public String searchAll(@RequestParam Map<String, String> map, Model model) {
+		List<MemberDto> userlist = memberService.searchAll(map);
+	    model.addAttribute("userlist", userlist);
 	    return "/listMember";
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String insertMember(MemberDto memberDto) {
-		System.out.println(memberDto.getUserid());
 	    memberService.insertMember(memberDto);
 	    return "index";
 	}
@@ -56,8 +58,9 @@ public class MemberController{
 	}
 	
 	@RequestMapping(value = "/forgotpwd", method = RequestMethod.GET)
-	public String forgotpwd(Map<String, String> map) {
-	    memberService.forgotpwd(map);
+	public String forgotpwd(@RequestParam Map<String, String> map, Model model) {
+		String getpwd = memberService.getPwd(map);
+	    model.addAttribute("getpwd", getpwd);
 	    return "index";
 	}
 	
