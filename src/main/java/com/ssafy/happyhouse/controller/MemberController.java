@@ -57,11 +57,15 @@ public class MemberController{
 	    return "/infoMember";
 	}
 	
-	@RequestMapping(value = "/forgotpwd", method = RequestMethod.GET)
+	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
 	public String forgotpwd(@RequestParam Map<String, String> map, Model model) {
 		String getpwd = memberService.getPwd(map);
-	    model.addAttribute("getpwd", getpwd);
-	    return "index";
+		if(getpwd != null) {
+	    model.addAttribute("msg", "비밀번호는 " + getpwd + " 입니다.");
+		} else {
+		    model.addAttribute("msg", "입력하신 아이디와 이메일 정보가 다릅니다.");
+		}
+	    return "modal/findPassword";
 	}
 	
 	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)

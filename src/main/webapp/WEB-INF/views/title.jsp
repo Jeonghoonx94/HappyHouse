@@ -49,7 +49,7 @@ $(document).ready(function() {
 			alert("이메일 입력!!!");
 			return;
 		} else {
-			$("#forgotform").attr("action", "${root}/forgotpwd?userid=${hintid}&email=${hintemail}").submit();
+			$("#forgotform").attr("action", "${root}/findpwd").submit();
 		}
 	})
 })
@@ -138,7 +138,7 @@ $(document).ready(function() {
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form  method="get" action="" id="forgotform">
+					<form  method="post" action="" id="forgotform">
 						<div class="form-group">
 							<label for="hintid">아이디</label>
 							<input type="text" class="form-control" id="hintid" name="userid">
