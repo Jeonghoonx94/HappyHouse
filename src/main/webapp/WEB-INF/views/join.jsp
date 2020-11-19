@@ -41,11 +41,11 @@
 			<div class="row align-items-stretch mb-5">
 				<div class="col-md-6">
 				    <div class="form-group">
-				        <input class="form-control" id="userId" type="text" name="userId" placeholder="User ID" required="required" />
+				        <input class="form-control" id="userId" type="text" name="userid" placeholder="아이디를 입력하세요" required="required" />
 				    </div>
 				    <div class="form-group">
-				        <input class="form-control" id="userPwd" type="password" name="userPwd"  placeholder="영문 숫자 포함 6자리 이상 " required="required" />
-				        <div id="pwdmessage">
+				        <input class="form-control" id="userPwd" type="password" name="userpwd"  placeholder="영문 숫자 포함 6자리 이상 " required="required" />
+				        <!-- <div id="pwdmessage">
 				            <p id="pwdletter" class="invalid">
 				                A <b>lowercase</b> letter
 				            </p>
@@ -55,19 +55,19 @@
 				            <p id="pwdlength" class="invalid">
 				                Minimum <b>8 characters</b>
 				            </p>
-				        </div>
+				        </div> -->
 				    </div>
 				    <div class="form-group">
-				        <input class="form-control" id="userName" type="text" name="userName" placeholder="User Name" required="required" />
+				        <input class="form-control" id="userName" type="text" name="username" placeholder="이름을 입력하세요" required="required" />
 				    </div>
 				    <div class="form-group">
-				        <input class="form-control" id="userEmail" type="email" name="userEmail" placeholder="email" required="required" />
+				        <input class="form-control" id="userEmail" type="email" name="email" placeholder="xxxx@xxx.xxx" required="required" />
 				    </div>
 				    <div class="form-group">
-				        <input class="form-control" id="userPhone" type="tel" name="userPhone"  placeholder="010-xxxx-xxxx" required="required" />
+				        <input class="form-control" id="userPhone" type="tel" name="phone"  placeholder="010-xxxx-xxxx" required="required" />
 				    </div>
 				    <div class="form-group">
-				        <input class="form-control" id="userAddr" type="text" name="userAddr" placeholder="서울시 종로구" required="required" />
+				        <input class="form-control" id="userAddr" type="text" name="address" placeholder="주소를 입력하세요" required="required" />
 				    </div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary text-uppercase" id="joinbtn">회원가입</button>

@@ -18,7 +18,7 @@
 			<if test="key == 'username'">
 				where username like concat('%', #{word}, '%')
 			</if>
-			<if test="key != 'userid'">
+			<if test="key == 'userid'">
 				where userid like concat('%', #{word}, '%')
 			</if>
 		</if>
@@ -44,7 +44,7 @@
 		</if>
 	</select>
 	
-	<select id="getForgotpwd" parameterType="map" resultType="String">
+	<select id="getPwd" parameterType="map" resultType="String">
 		select userpwd
 		from member
 		where userid = #{userid}

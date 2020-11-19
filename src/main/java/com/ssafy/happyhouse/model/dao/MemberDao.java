@@ -19,5 +19,5 @@ public interface MemberDao {
 	public int totalCount(PageBean bean);
 	public void removeMember(String userid);
 	public void updateMember(MemberDto member);
-	public String getForgotpwd(Map<String, String> map);
+	public String getPwd(Map<String, String> map);
 }

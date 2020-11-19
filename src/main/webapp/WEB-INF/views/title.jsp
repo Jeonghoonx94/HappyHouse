@@ -29,31 +29,30 @@
 <script src="js/scripts.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
-function login() {
-	if(document.getElementById("userid").value == "") {
-		alert("아이디 입력!!!");
-		return;
-	} else if(document.getElementById("userpwd").value == "") {
-		alert("비밀번호 입력!!!");
-		return;
-	} else {
-		document.getElementById("loginform").action = "${root}/login";
-		document.getElementById("loginform").submit();
-	}
-}
-function forgotPwd() {
-	if(document.getElementById("hintid").value == "") {
-		alert("아이디 입력!!!");
-		return;
-	} else if(document.getElementById("hintemail").value == "") {
-		alert("이메일 입력!!!");
-		return;
-	} else {
-		document.getElementById("forgotform").action = "${root}/forgotpwd";
-		document.getElementById("forgotform").submit();
-		alert("$(getpwd)")
-	}
-}
+$(document).ready(function() {
+	$('#loginBtn').click(function () {
+		if($("#userid").value == "") {
+			alert("아이디 입력!!!");
+			return;
+		} else if($("#userpwd").value == "") {
+			alert("비밀번호 입력!!!");
+			return;
+		} else {
+			$("#loginform").attr("action", "${root}/login").submit();
+		}
+	})
+	$('#forgotPwd').click(function () {
+		if($("#hintid").value == "") {
+			alert("아이디 입력!!!");
+			return;
+		} else if($("#hintemail").value == "") {
+			alert("이메일 입력!!!");
+			return;
+		} else {
+			$("#forgotform").attr("action", "${root}/forgotpwd?userid=${hintid}&email=${hintemail}").submit();
+		}
+	})
+})
 </script>
 </head>
 <c:if test="${!empty msg}">
@@ -98,20 +97,19 @@ function forgotPwd() {
 			</div>
 		</div>
 	</nav>
+	
 <!-- The Modal -->
 	<div class="modal" id="loginModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">로그인</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form id="loginform" method="post" action="post">
+					<form id="loginform" method="post" action="">
 						<div class="form-group">
 							<label for="loginid">아이디</label>
 							<input type="text" class="form-control" id="userid" name="userid">
@@ -120,7 +118,7 @@ function forgotPwd() {
 							<label for="loginpwd">비밀번호</label>
 							<input type="password" class="form-control" id="userpwd" name="userpwd">
 						</div>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:login();">로그인</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="loginBtn">로그인</button>
 						<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#forgotModal" data-dismiss="modal">비밀번호 찾기</button>
 					</form>
 				</div>
@@ -129,30 +127,27 @@ function forgotPwd() {
 		</div>
 	</div>
 
-	<!-- The Modal -->
+<!-- The Modal -->
 	<div class="modal" id="forgotModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">비밀번호 찾기</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form  method="post" action="post" id="forgotform">
+					<form  method="get" action="" id="forgotform">
 						<div class="form-group">
 							<label for="hintid">아이디</label>
-							<input type="text" class="form-control" id="hintid" name="hintid">
+							<input type="text" class="form-control" id="hintid" name="userid">
 						</div>
 						<div class="form-group">
 							<label for="hintemail">이메일</label>
-							<input type="email" class="form-control" id="hintemail" name="hintemail">
+							<input type="email" class="form-control" id="hintemail" name="email">
 						</div>
-						<div id="forgotpwd_msg"></div>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:forgotPwd();">비밀번호 찾기</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="forgotPwd">비밀번호 찾기</button>
 					</form>
 				</div>
 
