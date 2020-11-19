@@ -75,6 +75,9 @@ $(document).ready(function() {
 					<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" href='${root}/search.do'>관심지역</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href='${root}/notice'>공지사항</a>
+					</li>
 					<c:choose>
 						<c:when test="${empty userlogin}">
 							<li class="nav-item">

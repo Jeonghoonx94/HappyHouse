@@ -27,6 +27,7 @@
 <script src="js/scripts.js"></script>
 </head>
 <body id="page-top">
+	<!-- Title-->
 	<jsp:include page="title.jsp"/>
 	<!-- Header-->
 	<jsp:include page="header.jsp"/>
@@ -34,8 +35,6 @@
 	<jsp:include page="search.jsp"/>
 	<!-- Close Info-->
 	<jsp:include page="close.jsp"/>
-	<!-- Notice -->
-	<jsp:include page="notice.jsp"/>
 	<!-- Footer-->
 	<jsp:include page="copyright.jsp"/>
 </body>
