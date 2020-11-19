@@ -3,8 +3,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />

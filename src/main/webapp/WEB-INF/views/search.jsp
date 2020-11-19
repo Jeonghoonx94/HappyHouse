@@ -22,7 +22,18 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
-                	
+//                 	마커 찍기 위한 위도, 경도 정보 없음
+//                 	$.ajax({
+//                 	    method: "GET",
+//                 	    url: "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=1KJ59doDivdh8aOsOLOR%2B2cA5p5F3cOv36TYrkFMqJxfdTIEpoUxC9nCKs4PbhaZg0rvGr48KNv3J6roicUJ6g%3D%3D&LAWD_CD=11110&DEAL_YMD=201512",
+//                 	    success: function(data){
+//                 	        console.log(data);
+//                 	        $(data).find("item").each(function (i, v) {
+//                 	            console.log($(v).find('아파트').text(),
+//                 	                $(v).find('거래금액').text());
+//                 	        });
+//                 	    }
+//                 	});
                     $.get("${pageContext.request.contextPath}/map/sido"
                         ,function(data, status){
                             $.each(data, function(index, vo) {
