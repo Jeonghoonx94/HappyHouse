@@ -8,25 +8,40 @@
 		from sidocode
 		order by sidocode
 	</select>
-	
-	<select id="getGugunInSido" parameterType="String" resultType="SidoGugunCodeDto">
+
+	<select id="getGugunInSido" parameterType="String"
+		resultType="SidoGugunCodeDto">
 		SELECT left(gugun_code,5) guguncode, gugun_name gugunname
 		FROM guguncode
 		where left(gugun_code,2) = #{sido}
 		order by guguncode
 	</select>
-	
-	<select id="getDongInGugun" parameterType="String" resultType="HouseInfoDto">
+
+	<select id="getDongInGugun" parameterType="String"
+		resultType="HouseInfoDto">
 		select distinct dong, code
 		from houseinfo
 		where code = #{gugun}
 		order by dong
 	</select>
-	
-	<select id="getAptInDong" parameterType="String" resultType="HouseInfoDto">
-	SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney 
-	FROM houseinfo i right join housedeal d using (aptname) 
-	WHERE d.dong = #{dong} and type = #{type}
+
+	<select id="getAptInDong" parameterType="String"
+		resultType="HouseInfoDto">
+		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
+		FROM houseinfo i right join housedeal d using (aptname)
+		WHERE d.dong = #{dong} and type = #{type}
+		order by d.no
+		limit 100
 	</select>
-	
+
+	<select id="getAptByName" parameterType="String"
+		resultType="HouseInfoDto">
+		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
+		FROM houseinfo i right join housedeal d using (aptname)
+		where d.dong = #{dong} and type = #{type} 
+			and aptname like #{aptName}
+		order by d.no
+		limit 100
+	</select>
+
 </mapper>
