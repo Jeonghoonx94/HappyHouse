@@ -24,32 +24,32 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public void insertMember(MemberDto member){
+	public void insertMember(MemberDto member) throws Exception{
 		sqlSession.getMapper(MemberDao.class).insertMember(member);
 	}
 
 	@Override
-	public List<MemberDto> searchAll(Map<String, String> map) {
+	public List<MemberDto> searchAll(Map<String, String> map) throws Exception {
 		return sqlSession.getMapper(MemberDao.class).searchAll(map);
 	}
 
 	@Override
-	public MemberDto searchMember(String userid){
+	public MemberDto searchMember(String userid) throws Exception{
 		return sqlSession.getMapper(MemberDao.class).getMember(userid);
 	}
 
 	@Override
-	public void removeMember(String userid) {
+	public void removeMember(String userid) throws Exception {
 		sqlSession.getMapper(MemberDao.class).removeMember(userid);
 	}
 
 	@Override
-	public void updateMember(MemberDto member) {
+	public void updateMember(MemberDto member) throws Exception {
 		sqlSession.getMapper(MemberDao.class).updateMember(member);
 	}
 
 	@Override
-	public String getPwd(Map<String, String> map) {
+	public String getPwd(Map<String, String> map) throws Exception {
 		return sqlSession.getMapper(MemberDao.class).getPwd(map);
 	}
 }

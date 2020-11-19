@@ -9,11 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.MemberService;
@@ -25,25 +23,27 @@ public class MemberController{
     @Autowired
     private MemberService memberService;
 
-    @ExceptionHandler
-    public ModelAndView handler(Exception e) {
-        ModelAndView mav = new ModelAndView("error/error");
-        mav.addObject("msg", e.getMessage());
-        e.printStackTrace();
-        return mav;
-    }
-
 	@RequestMapping(value = "/listMember", method = RequestMethod.GET)
 	public String searchAll(@RequestParam Map<String, String> map, Model model) {
-		List<MemberDto> userlist = memberService.searchAll(map);
-	    model.addAttribute("userlist", userlist);
-	    return "/listMember";
+		try {
+			List<MemberDto> userlist = memberService.searchAll(map);
+		    model.addAttribute("userlist", userlist);
+		    return "/listMember";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String insertMember(MemberDto memberDto) {
-	    memberService.insertMember(memberDto);
-	    return "index";
+	    try {
+			memberService.insertMember(memberDto);
+		    return "index";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -53,21 +53,36 @@ public class MemberController{
 	
 	@RequestMapping(value = "/infoMember", method = RequestMethod.GET)
 	public String searchMember(@RequestParam String userid, Model model) {
-	    model.addAttribute("member", memberService.searchMember(userid));
-	    return "/infoMember";
+	    try {
+			model.addAttribute("member", memberService.searchMember(userid));
+		    return "/infoMember";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 	
 	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
 	public String updateMember(MemberDto memberDto, Model model) {
-	    memberService.updateMember(memberDto);
-	    model.addAttribute("member", memberService.searchMember(memberDto.getUserid()));
-	    return "/infoMember";
+	    try {
+		    memberService.updateMember(memberDto);
+			model.addAttribute("member", memberService.searchMember(memberDto.getUserid()));
+		    return "/infoMember";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 	
 	@RequestMapping(value = "/removeMember", method = RequestMethod.GET)
 	public String removeMember(@RequestParam String userid, HttpSession session) {
-	    memberService.removeMember(userid);
-	    session.invalidate();
-	    return "redirect:/";
+	    try {
+			memberService.removeMember(userid);
+		    session.invalidate();
+		    return "redirect:/";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 }

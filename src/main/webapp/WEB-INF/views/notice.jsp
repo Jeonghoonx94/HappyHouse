@@ -36,29 +36,38 @@
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">공지사항</h2>
-				<h3 class="section-subheading text-muted">Happy House 공지사항 관리하는
-					곳입니다.</h3>
+				<h3 class="section-subheading text-muted">Happy House 공지사항</h3>
 			</div>
-			<form id="boardForm" name="boardForm" method="post">
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>날짜</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody id="tBody">
-					</tbody>
-				</table>
-	
-				<div>
-					<button type="button" class="btn btn-success" data-toggle="modal"
-						data-target="#noticemodal">글쓰기</button>
-				</div>
-			</form>
+			<table class="table table-hover">
+		    <thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+		    </thead>
+		    <tbody>
+				<c:choose>
+	    			<c:when test='${empty noticelist}'>
+				    	<div>
+				        	<p>공지사항이 없습니다.</p>
+				        </div>
+	     			</c:when>
+		     		<c:otherwise>
+		     			<c:forEach var='notice' items="${noticelist}">
+		     			<tr>
+		     				<td>${notice.no}</td>
+		     				<td><a href='${root}/detailNotice?no=${notice.no}'>${notice.title}</a></td>
+		     				<td>${notice.writer}</td>
+		     				<td>${notice.regtime}</td>
+		     			</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticemodal">글 작성</button>
 		</div>
 	</section>
 <!-- Footer-->
@@ -76,25 +85,22 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="#">
+					<form action="" method="post" id="noticeForm">
 						<div class="mb-3">
 							<label for="title">제목</label>
 							<input type="text" class="form-control" name="title"
 								id="noticeTitle" placeholder="제목을 입력해 주세요">
 						</div>
-	
 						<div class="mb-3">
 							<label for="reg_id">작성자</label>
-							<input type="text" class="form-control" name="reg_id"
-								id="noticeWriter" placeholder="이름을 입력해 주세요">
+							<input type="text" class="form-control" name="writer"
+								id="noticeWriter" placeholder="작성자를 입력해 주세요">
 						</div>
-	
 						<div class="mb-3">
 							<label for="content">내용</label>
 							<textarea class="form-control" rows="5" name="content"
 								id="noticeContent" placeholder="내용을 입력해 주세요"></textarea>
 						</div>
-	
 						<div class="mb-3">
 							<label for="tag">TAG</label>
 							<input type="text" class="form-control" name="tag" id="noticeTag"
@@ -104,24 +110,17 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="noticeSubmit"
-						data-dismiss="modal">Submit</button>
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="noticeBtn"
+						data-dismiss="modal">등록</button>
 				</div>
 			</div>
 		</div>
 	</div>
 <script>
-	$('#noticeSubmit').on("click", function() {
-		let cnt = 1;
-		$('#tBody > tr').each(function() {
-			cnt += 1;
-		});
-		console.log("클릭했습니다.");
-		let title = $("#noticeTitle").val();
-		let writer = $("#noticeWriter").val();
-		let content = $("#noticeContent").val();
-		let tag = $("#noticeTag").val();
-		$("#tBody").append("<tr>" + "<td>" + cnt + "</td>" + "<td>" + title + "</td>" + "<td>" + writer + "</td>" + "<td>" + "2019/09/21" + "</td>" + "<td>" + "123" + "</td>" + "</tr>");
-	});
+$(document).ready(function() {
+	$('#noticeBtn').click(function () {   
+		$("#noticeForm").attr('action',"${root}/writerNotice").submit;
+	})
+})
 </script>

@@ -41,12 +41,12 @@ public class LoginController {
 				} else {
 					model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 로그인해 주세요.");
 				}
+				return "index";
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
 				return "error/error";
 			}
-			return "index";
 		}
 
 		@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -57,12 +57,17 @@ public class LoginController {
 
 		@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
 		public String forgotpwd(@RequestParam Map<String, String> map, Model model) {
-			String getpwd = memberService.getPwd(map);
-			if(getpwd != null) {
-		    model.addAttribute("msg", "비밀번호는 " + getpwd + " 입니다.");
-			} else {
-			    model.addAttribute("msg", "입력하신 아이디와 이메일 정보가 다릅니다.");
+			try {
+				String getpwd = memberService.getPwd(map);
+				if(getpwd != null) {
+				    model.addAttribute("msg", "비밀번호는 " + getpwd + " 입니다.");
+				} else {
+					model.addAttribute("msg", "입력하신 아이디와 이메일 정보가 다릅니다.");
+				}
+				return "modal/findPassword";
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "error/error";
 			}
-		    return "modal/findPassword";
 		}
 }
