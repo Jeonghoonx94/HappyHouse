@@ -69,27 +69,41 @@ public class PostController {
 	@GetMapping("/view")
 	public String postView(Model model, @RequestParam("postId") int postId, HttpSession session) {
 
-		PostDto post = postService.findByPostId(postId);
-		post.setCount(post.getCount() + 1);
-		postService.updatePost(post);
-		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.searchMember(loginId);
-		model.addAttribute("posts", post);
-		if (post.getUserid() == member.getUserid()
+		try {
+			PostDto post = postService.findByPostId(postId);
+			post.setCount(post.getCount() + 1);
+			postService.updatePost(post);
+			String loginId = (String) session.getAttribute("userId");
+			MemberDto member;
+			member = memberService.searchMember(loginId);
+			model.addAttribute("posts", post);
+			if (post.getUserid() == member.getUserid()
 //				|| member.getUserid() == "admin"	// 관리자인 경우
-				) {
-			return "post/postView";
+			) {
+				return "post/postView";
+			}
+			return "post/postOnlyView";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error/error";
 		}
-		return "post/postOnlyView";
 	}
 
 	@GetMapping("/write")
 	public String postWrite(Model model, HttpSession session) {
-		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.searchMember(loginId);
-		model.addAttribute("member", member);
+		try {
+			String loginId = (String) session.getAttribute("userId");
+			MemberDto member;
+			member = memberService.searchMember(loginId);
+			model.addAttribute("member", member);
 
-		return "post/writePost";
+			return "post/writePost";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 
 	@PostMapping("/write")

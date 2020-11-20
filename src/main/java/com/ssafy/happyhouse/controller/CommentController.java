@@ -30,16 +30,23 @@ public class CommentController {
 	@RequestMapping(value = "/view", method = RequestMethod.POST)
 	public String insertAndAllCommentView(Model model, @RequestParam("postId") int postId,
 			@RequestParam("content") String content, HttpSession session) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.searchMember(loginId);
-		CommentDto comment = new CommentDto(postId, member.getUserid(), content, sdf.format(new Date()),
-				sdf.format(new Date()));
-		commentService.insertComment(comment);
-		List<CommentDto> list = commentService.findAllComment(postId);
-		model.addAttribute("postId", postId);
-		model.addAttribute("list", list);
-		return "comment/commentView";
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String loginId = (String) session.getAttribute("userId");
+			MemberDto member;
+			member = memberService.searchMember(loginId);
+			CommentDto comment = new CommentDto(postId, member.getUserid(), content, sdf.format(new Date()),
+					sdf.format(new Date()));
+			commentService.insertComment(comment);
+			List<CommentDto> list = commentService.findAllComment(postId);
+			model.addAttribute("postId", postId);
+			model.addAttribute("list", list);
+			return "comment/commentView";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error/error";
+		}
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
