@@ -23,7 +23,7 @@
         where p.postNo = ${postNo}
     </select>
 
-    <update id="postUpdate">
+    <update id="updatePost">
         update post
         set title = #{title}, content = #{content}, count = #{count}, createDateTime = #{createDateTime}, updateTime = #{updateTime}
         where postNo = ${postNo}

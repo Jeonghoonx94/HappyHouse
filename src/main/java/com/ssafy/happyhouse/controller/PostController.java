@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ssafy.happyhouse.model.CommentDto;
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.PostDto;
 import com.ssafy.happyhouse.model.service.CommentService;
@@ -21,7 +21,7 @@ import com.ssafy.happyhouse.model.service.MemberService;
 import com.ssafy.happyhouse.model.service.PostService;
 
 @Controller
-@RequestMapping("/post")
+//@RequestMapping("/")
 public class PostController {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class PostController {
 	@Autowired
 	CommentService commentService;
 
-	@GetMapping("/list")
+	@GetMapping("/post/list")
 	public String postMain(Model model, @RequestParam(value = "page", defaultValue = "1") int page, // defaultValue :
 																									// 파라미터 값이 없을 때
 																									// default 값
@@ -50,7 +50,7 @@ public class PostController {
 		return "post/postMain";
 	}
 
-	@PostMapping("/list")
+	@PostMapping("/post/list")
 	public String postMain(Model model, @RequestParam("select") String select, @RequestParam("search") String search) {
 
 		model.addAttribute("select", select);
@@ -66,36 +66,48 @@ public class PostController {
 		return "post/postMainUserName";
 	}
 
-	@GetMapping("/view")
+	@GetMapping("/post/view")
 	public String postView(Model model, @RequestParam("postId") int postId, HttpSession session) {
 
 		try {
 			PostDto post = postService.findByPostId(postId);
+			// 조회수
 			post.setCount(post.getCount() + 1);
 			postService.updatePost(post);
-			String loginId = (String) session.getAttribute("userId");
-			MemberDto member;
-			member = memberService.searchMember(loginId);
+			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
+			if(loginId == null) {
+				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+				return "error/error";
+			}
+			MemberDto member = memberService.searchMember(loginId);
 			model.addAttribute("posts", post);
-			if (post.getUserid() == member.getUserid()
-//				|| member.getUserid() == "admin"	// 관리자인 경우
+			// 댓글
+			List<CommentDto> list = commentService.findAllComment(postId);
+			model.addAttribute("list", list);
+			if (post.getUserid().equals(member.getUserid())
+//				|| "admin".equals(member.getUserid())	// 관리자인 경우
 			) {
 				return "post/postView";
+			} else {
+				return "post/postOnlyView";
 			}
-			return "post/postOnlyView";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
 			return "error/error";
 		}
 	}
 
-	@GetMapping("/write")
+	@GetMapping("/post/write")
 	public String postWrite(Model model, HttpSession session) {
 		try {
-			String loginId = (String) session.getAttribute("userId");
-			MemberDto member;
-			member = memberService.searchMember(loginId);
+			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
+			if(loginId == null) {
+				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+				return "error/error";
+			}
+			MemberDto member = memberService.searchMember(loginId);
 			model.addAttribute("member", member);
 
 			return "post/writePost";
@@ -106,25 +118,25 @@ public class PostController {
 		}
 	}
 
-	@PostMapping("/write")
+	@PostMapping("/post/write")
 	public String postWrite(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("nickname") String nickname, @RequestParam("memberId") String memberId) {
-
+			@RequestParam("nickname") String nickname, HttpSession session) {
+		String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		PostDto post = new PostDto(memberId, title, content, nickname, 1, sdf.format(new Date()),
+		PostDto post = new PostDto(loginId, title, content, nickname, 1, sdf.format(new Date()),
 				sdf.format(new Date()));
 		postService.insertPost(post);
 		return "redirect:/post/list";
 	}
 
-	@GetMapping("/update")
+	@GetMapping("/post/update")
 	public String postUpdateRedirect(Model model, @RequestParam("postId") int postId) {
 		PostDto post = postService.findByPostId(postId);
 		model.addAttribute("posts", post);
 		return "post/postUpdate";
 	}
 
-	@PostMapping("/update")
+	@PostMapping("/post/update")
 	public String postUpdate(@RequestParam("postId") int postId, @RequestParam("title") String title,
 			@RequestParam("content") String content) {
 		PostDto post = postService.findByPostId(postId);
@@ -138,20 +150,20 @@ public class PostController {
 		return "redirect:/post/list";
 	}
 
-	@GetMapping("/delete")
+	@GetMapping("/post/delete")
 	public String postDelete(@RequestParam("postId") int postId) {
 		postService.deletePost(postId);
 		return "redirect:/postComment/deleteAll?postId=" + postId;
 	}
 
-	@GetMapping("postComment/deleteAll")
+	@GetMapping("/postComment/deleteAll")
 	public String postCommentDeleteAll(@RequestParam("postId") int postId) {
 		commentService.postCommentAllDelete(postId);
 		return "redirect:/post/list";
 	}
 
-	@GetMapping("notice")
-	public String notice() {
-		return "notice/notice";
-	}
+//	@GetMapping("notice")
+//	public String notice() {
+//		return "notice/notice";
+//	}
 }
