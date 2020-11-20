@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.CommentDao">
+    <insert id="commentInsert">
+        insert into comment(postId, memberId, content, createDateTime, updateTime)
+        values (#{postId}, #{memberId}, #{content}, #{createDateTime}, #{updateTime})
+    </insert>
+
+    <select id="findAllComment" resultType="Comment">
+        select c.*, m.nickname
+        from comment c join member m
+        on c.memberId = m.userid
+        where postId = #{postId}
+    </select>
+
+    <delete id="postCommentAllDelete">
+        delete from comment
+        where postId = #{postId}
+    </delete>
+
+    <delete id="commentDelete">
+        delete from comment
+        where commentId = #{commentId}
+    </delete>
+
+    <select id="findOneComment" resultType="Comment">
+        select *
+        from comment
+        where commentId = #{commentId};
+    </select>
+
+    <update id="commentUpdate">
+        update comment
+        set content = #{content}, updateTime = #{updateTime}
+        where commentId = #{commentId}
+    </update>
+
+</mapper>
