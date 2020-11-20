@@ -8,7 +8,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>게시판</title>
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${root }/assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"	crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -16,7 +16,7 @@
 <link	href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic"	rel="stylesheet" type="text/css" />
 <link	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+<link href="${root }/css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -25,7 +25,7 @@
 <!-- Contact form JS-->
 <!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="${root }/js/scripts.js"></script>
     <style>
         body { font-family: 굴림체; }
         table.table { width: 500px; }
@@ -36,36 +36,47 @@
         }
     </style>
 </head>
-<body id="page-top">
-<jsp:include page="title.jsp"/>
+<body>
+<jsp:include page="../title.jsp"/>
 
+	<section class="page-section bg-light">
 <div class="container">
 
-    <a href="${root }/comment/list?postId=${postId}"><h1>댓글 목록 </h1></a>
-    <table class="table table-hover table table-striped">
+    <h1><a href="${root }/comment/list?postId=${postId}">댓글 목록 </a></h1>
+    <table class="table table-hover table table-striped w-100">
+		<colgroup>
+			<col width="15%">
+			<col width="35%">
+			<col width="20%">
+			<col width="20%">
+			<col width="10%">
+		</colgroup>
         <tr>
-            <th>댓글번호</th>
             <th>작성자</th>
             <th>내용</th>
             <th>작성시간</th>
             <th>수정시간</th>
-            <th>삭제</th>
+            <th></th>
         </tr>
 
         <c:forEach items="${list}" var="comment">
             <tr>
-                <th>${comment.getCommentId()}</th>
-                <th>${comment.getNickname()}</th>
-                <th><a href="http://localhost:8080/comment/update?commentId=${comment.getCommentId()}">${comment.getContent()}</a></th>
+                <th>${comment.getUsername()}</th>
+                <th>${comment.getContent()}</th>
                 <th>${comment.getCreateDateTime()}</th>
                 <th>${comment.getUpdateTime()}</th>
-                <th><a href="http://localhost:8080/comment/delete?commentId=${comment.getCommentId()}">삭제</a></th>
+                <th>
+                <c:if test="${userlogin.getUserid() == comment.getUserid() }">
+                <a href="${root }/comment/update?commentId=${comment.getCommentNo()}">수정</a> | 
+                <a href="${root }/comment/delete?commentId=${comment.getCommentNo()}">삭제</a>
+                </c:if>
+                </th>
             </tr>
         </c:forEach>
     </table>
-    <a href="http://localhost:8080/post/view?postId=${postId}" class="btn btn-info">게시글로 가기</a>
+    <a href="${root }/post/view?postId=${postId}" class="btn btn-info">게시글로 가기</a>
 </div>
-
-<jsp:include page="copyright.jsp"/>
+</section>
+<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

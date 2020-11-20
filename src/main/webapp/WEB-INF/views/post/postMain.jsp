@@ -10,7 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>게시판</title>
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${root }/assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"	crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -32,13 +32,15 @@
 </head>
 <style>
     #margin{
-        margin-bottom : 20px
+        margin-bottom : 20px;
+        margin-top : 20px;
     }
 </style>
-<body id="page-top">
+<body>
     <!-- 메뉴바 -->
 	<jsp:include page="../title.jsp"/>
     <!-- ./ 메뉴바 -->
+	<section class="page-section bg-light">
 <div class="container">
     <form method="post" class="form-inline">
         <div id="margin" class="form-group">
@@ -75,17 +77,18 @@
         </c:forEach>
     </table>
 
-    <a href="${root }/post/write" class="btn btn-default pull-right">글쓰기</a>
-
+	<div class="text-right">
+    <a href="${root }/post/write" class="btn btn-primary">글쓰기</a>
+	</div>
     <ul class="pagination">
         <c:forEach var="i" begin="1" end="${totalPage}" step="1">
             <li class=<c:if test='${i} == ${page} ? "active" : ""'/>>
-                <a href='/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+                <a href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
             </li>
         </c:forEach>
     </ul>
 </div>
-
+</section>
 	<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

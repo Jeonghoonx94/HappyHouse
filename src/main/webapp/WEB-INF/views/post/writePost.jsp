@@ -9,7 +9,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>게시판</title>
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${root }/assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"	crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -17,7 +17,7 @@
 <link	href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic"	rel="stylesheet" type="text/css" />
 <link	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+<link href="${root }/css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,7 +27,7 @@
 <!-- Contact form JS-->
 <!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="${root }/js/scripts.js"></script>
     <style>
         body { font-family: 굴림체; }
         table.table { width: 500px; }
@@ -40,11 +40,12 @@
 </head>
 <body>
 <jsp:include page="../title.jsp"/>
+	<section class="page-section bg-light">
 <div class="container">
 
     <h1>게시글 등록</h1>
 
-    <form method="post">
+    <form method="post" action="${root }/post/write" >
         <table class="table table-bordered table-condensed">
 
             <tr>
@@ -54,28 +55,15 @@
                 </td>
             </tr>
             <tr>
+                <td>작성자</td>
+                <td>
+                    <input type="text" name="nickname" value="${member.getUsername()}" class="form-control" readonly>
+                </td>
+            </tr>
+            <tr>
                 <td>글 내용</td>
                 <td>
                     <textarea class="form-control" name="content" rows="10"></textarea>
-                </td>
-            </tr>
-
-            <tr>
-                <td>작성자</td>
-                <td>
-                    ${member.getName()}
-                </td>
-            </tr>
-            <tr>
-                <td>닉네임</td>
-                <td>
-                    <input type="text" name="nickname" value="${member.getUserName()}" class="form-control" readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>사용자번호</td>
-                <td>
-                    <input type="text" name="memberId" value="${member.getUserid()}" class="form-control" readonly>
                 </td>
             </tr>
 
@@ -86,6 +74,7 @@
     </form>
 
 </div>
+</section>
 <jsp:include page="../copyright.jsp"/>
 </body>
 </html>

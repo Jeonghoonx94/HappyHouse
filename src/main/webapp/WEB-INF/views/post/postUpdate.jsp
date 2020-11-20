@@ -9,7 +9,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>게시판</title>
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${root }/assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"	crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -17,7 +17,7 @@
 <link	href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic"	rel="stylesheet" type="text/css" />
 <link	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+<link href="${root }/css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -26,7 +26,7 @@
 <!-- Contact form JS-->
 <!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="${root }/js/scripts.js"></script>
     <style>
         body { font-family: 굴림체; }
         table.table { width: 500px; }
@@ -39,15 +39,19 @@
 </head>
 <body>
 
+    <!-- 메뉴바 -->
+	<jsp:include page="../title.jsp"/>
+    <!-- ./ 메뉴바 -->
+	<section class="page-section bg-light" id="team">
 <div class="container">
 
     <h1>게시글 수정</h1>
 
-    <form action="http://localhost:8080/post/update?postId=${posts.getPostId()}" method="POST">
+    <form action="${root }/post/update?postId=${posts.getPostNo()}" method="POST">
         <table class="table table-bordered table-condensed">
             <tr>
                 <td>게시글 번호</td>
-                <td>${posts.getPostId()}</td>
+                <td>${posts.getPostNo()}</td>
             </tr>
             <tr>
                 <td>글 제목</td>
@@ -63,7 +67,7 @@
             </tr>
             <tr>
                 <td>작성자</td>
-                <td>${posts.getName()}</td>
+                <td>${posts.getUsername()}</td>
             </tr>
             <tr>
                 <td>작성시간</td>
@@ -72,11 +76,13 @@
         </table>
 
         <button type="submit" class="btn btn-primary">저장</button>
-        <a href="http://localhost:8080/comment/list?postId=${posts.getPostId()}" class="btn btn-warning">댓글</a>
-        <a href="http://localhost:8080/post/delete?postId=${posts.getPostId()}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
+        <a href="${root }/comment/list?postId=${posts.getPostNo()}" class="btn btn-warning">댓글</a>
+        <a href="${root }/post/delete?postId=${posts.getPostNo()}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
         <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
-        <a href="http://localhost:8080/post/list" class="btn btn-info">처음으로</a>
+        <a href="${root }/post/list" class="btn btn-info">처음으로</a>
     </form>
 </div>
+</section>
+	<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

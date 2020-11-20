@@ -32,7 +32,7 @@ public class CommentController {
 			@RequestParam("content") String content, HttpSession session) {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String loginId = (String) session.getAttribute("userId");
+			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
 			MemberDto member;
 			member = memberService.searchMember(loginId);
 			CommentDto comment = new CommentDto(postId, member.getUserid(), content, sdf.format(new Date()),
@@ -41,7 +41,7 @@ public class CommentController {
 			List<CommentDto> list = commentService.findAllComment(postId);
 			model.addAttribute("postId", postId);
 			model.addAttribute("list", list);
-			return "comment/commentView";
+			return "comment/viewComment";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class CommentController {
 		List<CommentDto> list = commentService.findAllComment(postId);
 		model.addAttribute("postId", postId);
 		model.addAttribute("list", list);
-		return "comment/commentView";
+		return "comment/viewComment";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -68,7 +68,7 @@ public class CommentController {
 	public String commentUpdate(Model model, @RequestParam("commentId") int commentId) {
 		CommentDto comment = commentService.findOneComment(commentId);
 		model.addAttribute("comment", comment);
-		return "comment/commentUpdate";
+		return "comment/updateComment";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -76,6 +76,6 @@ public class CommentController {
 			@RequestParam("commentId") int commentId) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		commentService.updateComment(content, sdf.format(new Date()), commentId);
-		return "redirect:/comment/list?postId=" + postId;
+		return "redirect:comment/list?postId=" + postId;
 	}
 }
