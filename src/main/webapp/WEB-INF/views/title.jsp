@@ -88,7 +88,7 @@ $(document).ready(function() {
 								<a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#loginModal">로그인</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href='${root}/join'>회원가입</a>
+								<a class="nav-link js-scroll-trigger" href='${root}/member/join'>회원가입</a>
 							</li>
 						</c:when>
 						<c:otherwise>
@@ -96,7 +96,7 @@ $(document).ready(function() {
 								<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href="${root}/listMember">회원정보</a>
+								<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원정보</a>
 							</li>
 						</c:otherwise>
 					</c:choose>

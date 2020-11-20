@@ -17,18 +17,18 @@ import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.MemberService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/member")
 public class MemberController{
 
     @Autowired
     private MemberService memberService;
 
-	@RequestMapping(value = "/listMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String searchAll(@RequestParam Map<String, String> map, Model model) {
 		try {
 			List<MemberDto> userlist = memberService.searchAll(map);
 		    model.addAttribute("userlist", userlist);
-		    return "/listMember";
+		    return "member/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
@@ -51,30 +51,30 @@ public class MemberController{
 	    return "/join";
 	}
 	
-	@RequestMapping(value = "/infoMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String searchMember(@RequestParam String userid, Model model) {
 	    try {
 			model.addAttribute("member", memberService.searchMember(userid));
-		    return "/infoMember";
+		    return "member/info";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
 	
-	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String updateMember(MemberDto memberDto, Model model) {
 	    try {
 		    memberService.updateMember(memberDto);
 			model.addAttribute("member", memberService.searchMember(memberDto.getUserid()));
-		    return "/infoMember";
+		    return "member/info";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
 	
-	@RequestMapping(value = "/removeMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public String removeMember(@RequestParam String userid, HttpSession session) {
 	    try {
 			memberService.removeMember(userid);

@@ -51,7 +51,7 @@ $(document).ready(function() {
 	        alert("주소 필수 입력!");
 	        return;
 	    } else {
-	        $("#joinform").attr("action", "${root}/join").submit();
+	        $("#joinform").attr("action", "${root}/member/join").submit();
 	    }
 
 	});
@@ -59,7 +59,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body id="page-top">
-<jsp:include page="title.jsp"/>
+<jsp:include page="../title.jsp"/>
 <div class="container">
 	<section class="page-section" id="contact">
 		<div class="text-center">
@@ -107,6 +107,6 @@ $(document).ready(function() {
 		</form>
 	</section>
 </div>
-<jsp:include page="copyright.jsp"/>
+<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

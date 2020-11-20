@@ -40,13 +40,13 @@ $(document).ready(function() {
 
 	function pagelist(cpage){
 		$("#pageNo").val(cpage);
-		$("#searchform").attr('action',"${root}/listMember?key=${searchKey}&word=${searchWord}").submit;
+		$("#searchform").attr('action',"${root}/member/list?key=${searchKey}&word=${searchWord}").submit;
 	}
 })
 </script>
 </head>
 <body id="page-top">
-<jsp:include page="title.jsp"/>
+<jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light" id="team">
 		<div class="container">
 			<div class="text-center">
@@ -82,7 +82,7 @@ $(document).ready(function() {
 		     		<c:otherwise>
 		     			<c:forEach var='userinfo' items="${userlist}">
 		     			<tr>
-		     				<td><a href='${root}/infoMember?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
+		     				<td><a href='${root}/member/info?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
 		     				<td>${userinfo.username}</td>
 		     				<td>${userinfo.email}</td>
 		     				<td>${userinfo.phone}</td>
@@ -95,6 +95,6 @@ $(document).ready(function() {
 		</table>
 	</div>
 	</section>
-<jsp:include page="copyright.jsp"/>
+<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

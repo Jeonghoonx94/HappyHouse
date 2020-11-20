@@ -35,16 +35,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#updateBtn').click(function () {   
-		$("#updateform").attr("action", "${root}/updateMember").submit();
+		$("#updateform").attr("action", "${root}/member/update").submit();
 	});
 	$('#removeBtn').click(function () {
-		location.href='${root}/removeMember?userid=${member.userid}';
+		location.href='${root}/member/remove?userid=${member.userid}';
 	});
 })
 </script>
 </head>
 <body id="page-top">
-	<jsp:include page="title.jsp"/>
+	<jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light">
 		<div class="container" align="center">
 		<div class="col-lg-6">
@@ -88,6 +88,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 	</section>
-<jsp:include page="copyright.jsp"/>
+<jsp:include page="../copyright.jsp"/>
 </body>
 </html>

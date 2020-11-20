@@ -36,7 +36,7 @@ public class PostController {
 																									// 파라미터 값이 없을 때
 																									// default 값
 			@RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
-
+		pageSize=5;
 		// 페이지네이션 포함
 		int totalPostCount = postService.postAllCount(); // 전체 게시글 수
 		int totalCount = totalPostCount / pageSize + 1; // 총 페이지 수
