@@ -5,71 +5,72 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.service.NoticeService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/notice")
 public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
 
-	@RequestMapping(value = "/notice", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public String noticeList(@RequestParam Map<String, String> map, Model model){
 		try {
 			model.addAttribute("noticelist", noticeService.noticeList(map));
-			return "/notice";
+			return "notice/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
    
-	@RequestMapping(value = "/detailNotice", method = RequestMethod.GET)
-	public String detailBoard(@PathVariable int no) {
+	@GetMapping(value = "/detail")
+	public String detailNotice(@PathVariable int no) {
 		try {
 			noticeService.detailNotice(no);
-			return "";
+			return "notice/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
 
-	@RequestMapping(value = "/writeNotice", method = RequestMethod.POST)
-	public String writeBoard(@RequestBody NoticeDto notice) {
+	@PostMapping(value = "/write")
+	public String writeNotice(NoticeDto notice, Model model) {
 		try {
 			noticeService.writeNotice(notice);
-			return "/notice";
+			model.addAttribute("noticelist", noticeService.noticeList(null));
+			return "notice/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
 
-	@RequestMapping(value = "/updateNotice", method = RequestMethod.GET)
-	public String updateBoard(@RequestBody NoticeDto notice) {
+	@GetMapping(value = "/update")
+	public String updateNotice(NoticeDto notice) {
 		try {
 			noticeService.updateNotice(notice);
-			return "";
+			return "notice/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
 		}
 	}
 
-	@RequestMapping(value = "/deleteNotice", method = RequestMethod.GET)
-	public String deleteBoard(@PathVariable int no) {
+	@GetMapping(value = "/delete")
+	public String deleteNotice(@PathVariable int no) {
 		try {
 			noticeService.deleteNotice(no);
-			return "";
+			return "notice/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";
