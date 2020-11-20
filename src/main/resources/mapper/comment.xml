@@ -8,8 +8,8 @@
         values (#{postId}, #{memberId}, #{content}, #{createDateTime}, #{updateTime})
     </insert>
 
-    <select id="findAllComment" resultType="Comment">
-        select c.*, m.nickname
+    <select id="findAllComment" resultType="CommentDto">
+        select c.*, m.username
         from comment c join member m
         on c.memberId = m.userid
         where postId = #{postId}
@@ -25,7 +25,7 @@
         where commentId = #{commentId}
     </delete>
 
-    <select id="findOneComment" resultType="Comment">
+    <select id="findOneComment" resultType="CommentDto">
         select *
         from comment
         where commentId = #{commentId};

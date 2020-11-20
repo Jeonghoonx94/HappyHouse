@@ -32,7 +32,7 @@ public class CommentController {
 			@RequestParam("content") String content, HttpSession session) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.findMemberByLoginId(loginId);
+		MemberDto member = memberService.searchMember(loginId);
 		CommentDto comment = new CommentDto(postId, member.getUserid(), content, sdf.format(new Date()),
 				sdf.format(new Date()));
 		commentService.insertComment(comment);

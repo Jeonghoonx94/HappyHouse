@@ -6,27 +6,27 @@ public class PostDto {
 	String title;
 	String content;
 	int count;
-	String UpdateTime;
+	String updateTime;
 	String createDateTime;
 	String username;
 
-	public PostDto(String userid, String title, String content, String username, int count, String UpdateTime,
+	public PostDto(String userid, String title, String content, String username, int count, String updateTime,
 			String createDateTime) {
 		this.userid = userid;
 		this.title = title;
 		this.content = content;
 		this.username = username;
 		this.count = count;
-		this.UpdateTime = UpdateTime;
+		this.updateTime = updateTime;
 		this.createDateTime = createDateTime;
 	}
 
 	public String getUpdateTime() {
-		return UpdateTime;
+		return updateTime;
 	}
 
 	public void setUpdateTime(String updateTime) {
-		UpdateTime = updateTime;
+		this.updateTime = updateTime;
 	}
 
 	public String getTitle() {

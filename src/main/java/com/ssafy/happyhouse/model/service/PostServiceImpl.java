@@ -41,8 +41,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto> postFindByNickName(String search, int currentPage, int pageSize) {
-		return sqlSession.getMapper(PostDao.class).postFindByNickName(search, currentPage, pageSize);
+	public List<PostDto> postFindByUserName(String search, int currentPage, int pageSize) {
+		return sqlSession.getMapper(PostDao.class).postFindByUserName(search, currentPage, pageSize);
 	}
 
 	@Override

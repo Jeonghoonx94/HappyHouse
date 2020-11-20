@@ -73,6 +73,9 @@ $(document).ready(function() {
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav text-uppercase ml-auto">
 					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href='${root}/post/list'>게시판</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" href='${root}/search.do'>관심지역</a>
 					</li>
 					<li class="nav-item">
