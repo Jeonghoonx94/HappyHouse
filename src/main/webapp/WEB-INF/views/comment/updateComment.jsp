@@ -23,10 +23,9 @@
 <!-- Third party plugin JS-->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <!-- Contact form JS-->
-<script src="assets/mail/jqBootstrapValidation.js"></script>
+<!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
-<%--     <link href="${root}/res/css/application.css" rel="stylesheet"> --%>
     <style>
         body { font-family: 굴림체; }
         table.table { width: 500px; }

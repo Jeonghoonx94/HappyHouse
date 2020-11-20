@@ -61,9 +61,9 @@ public class PostController {
 			return "post/postMainTitle";
 		}
 
-		List<PostDto> posts = postService.postFindByNickName(search, 0, 7);
+		List<PostDto> posts = postService.postFindByUserName(search, 0, 7);
 		model.addAttribute("posts", posts);
-		return "post/postMainNickName";
+		return "post/postMainUserName";
 	}
 
 	@GetMapping("/view")
@@ -73,7 +73,7 @@ public class PostController {
 		post.setCount(post.getCount() + 1);
 		postService.updatePost(post);
 		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.findMemberByLoginId(loginId);
+		MemberDto member = memberService.searchMember(loginId);
 		model.addAttribute("posts", post);
 		if (post.getUserid() == member.getUserid()
 //				|| member.getUserid() == "admin"	// 관리자인 경우
@@ -86,7 +86,7 @@ public class PostController {
 	@GetMapping("/write")
 	public String postWrite(Model model, HttpSession session) {
 		String loginId = (String) session.getAttribute("userId");
-		MemberDto member = memberService.findMemberByLoginId(loginId);
+		MemberDto member = memberService.searchMember(loginId);
 		model.addAttribute("member", member);
 
 		return "post/writePost";

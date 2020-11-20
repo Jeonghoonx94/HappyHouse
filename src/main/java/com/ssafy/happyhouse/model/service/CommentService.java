@@ -2,11 +2,8 @@ package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.ssafy.happyhouse.model.CommentDto;
 
-@Mapper
 public interface CommentService {
     void insertComment(CommentDto comment);
     List<CommentDto> findAllComment(int postNo);

@@ -4,54 +4,54 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.dao.PostDao">
     <select id="postAllCount" resultType="int">
-        select count(postId)
+        select count(postNo)
         from post;
     </select>
 
     <select id="postFindAll" resultType="PostDto">
         select p.*, m.username
         from post p join member m
-        on p.memberId = m.userid
-        order by p.postId desc
+        on p.userid = m.userid
+        order by p.postNo desc
         limit #{page}, #{pageSize};
     </select>
 
     <select id="findByPostId" resultType="PostDto">
-        select p.*, m.name
+        select p.*, m.username
         from post p join member m
-        on p.memberId = m.userid
-        where p.postId = ${postId}
+        on p.userid = m.userid
+        where p.postNo = ${postNo}
     </select>
 
     <update id="postUpdate">
         update post
         set title = #{title}, content = #{content}, count = #{count}, createDateTime = #{createDateTime}, updateTime = #{updateTime}
-        where postId = ${postId}
+        where postNo = ${postNo}
     </update>
 
     <select id="postFindByTitle" resultType="PostDto">
-        select p.*, m.nickname
+        select p.*, m.username
         from post p join member m
-        on p.memberId = m.userid
+        on p.userid = m.userid
         where title like concat('%', #{search}, '%')
         limit #{currentPage}, #{pageSize}
     </select>
 
-    <select id="postFindByNickName" resultType="PostDto">
-        select p.*, m.nickname
+    <select id="postFindByUserName" resultType="PostDto">
+        select p.*, m.username
         from post p join member m
-        on p.memberId = m.userid
-        where m.nickname like concat('%', #{search}, '%')
+        on p.userid = m.userid
+        where m.username like concat('%', #{search}, '%')
         limit #{currentPage}, #{pageSize}
     </select>
 
     <insert id="insertPost">
-        insert into post(memberId, title, content, count, UpdateTime, createDateTime)
-        values (#{memberId}, #{title}, #{content}, #{count},#{UpdateTime}, #{createDateTime})
+        insert into post(userid, title, content, count, updateTime, createDateTime)
+        values (#{userid}, #{title}, #{content}, #{count},#{updateTime}, #{createDateTime})
     </insert>
 
     <delete id="deletePost">
         delete from post
-        where postId = #{postId}
+        where postNo = #{postNo}
     </delete>
 </mapper>
