@@ -33,9 +33,9 @@ public class NoticeController {
 	}
    
 	@GetMapping(value = "/detail")
-	public String detailNotice(@PathVariable int no) {
+	public String detailNotice(@RequestParam("no") int no, Model model) {
 		try {
-			noticeService.detailNotice(no);
+			model.addAttribute("notice", noticeService.detailNotice(no));
 			return "notice/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,10 +55,12 @@ public class NoticeController {
 		}
 	}
 
-	@GetMapping(value = "/update")
-	public String updateNotice(NoticeDto notice) {
+	@PostMapping(value = "/update")
+	public String updateNotice(NoticeDto notice, Model model) {
+		System.out.println(notice.getNo());
 		try {
 			noticeService.updateNotice(notice);
+			model.addAttribute("notice", noticeService.detailNotice(notice.getNo()));
 			return "notice/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,10 +69,10 @@ public class NoticeController {
 	}
 
 	@GetMapping(value = "/delete")
-	public String deleteNotice(@PathVariable int no) {
+	public String deleteNotice(@RequestParam int no) {
 		try {
 			noticeService.deleteNotice(no);
-			return "notice/list";
+			return "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error/error";

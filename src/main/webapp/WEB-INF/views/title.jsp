@@ -90,14 +90,24 @@ $(document).ready(function() {
 							<li class="nav-item">
 								<a class="nav-link js-scroll-trigger" href='${root}/member/join'>회원가입</a>
 							</li>
+							
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원정보</a>
-							</li>
+							<c:choose>
+								<c:when test="${userlogin.userid eq 'admin'}">
+									<li class="nav-item">
+										<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원정보</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="nav-item">
+										<a class="nav-link js-scroll-trigger" href='${root}/member/info?userid=${userlogin.userid}'>${userlogin.userid }님</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</ul>

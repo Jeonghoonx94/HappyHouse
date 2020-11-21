@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,15 +26,7 @@ public class LoginController {
 		@Autowired
 		private MemberService memberService;
 		
-		@ExceptionHandler
-		public ModelAndView handler(Exception e) {
-			ModelAndView mav = new ModelAndView("error/error");
-			mav.addObject("msg", e.getMessage());
-			e.printStackTrace();
-			return mav;
-		}
-
-		@RequestMapping(value = "/login", method = RequestMethod.POST)
+		@PostMapping(value = "/login")
 		public String login(@RequestParam Map<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
 			try {
 				MemberDto memberDto = memberService.login(map);
@@ -49,13 +43,13 @@ public class LoginController {
 			}
 		}
 
-		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		@GetMapping(value = "/logout")
 		public String logout(HttpSession session) {
 			session.invalidate();
 			return "redirect:/";
 		}
 
-		@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
+		@PostMapping(value = "/findpwd")
 		public String forgotpwd(@RequestParam Map<String, String> map, Model model) {
 			try {
 				String getpwd = memberService.getPwd(map);

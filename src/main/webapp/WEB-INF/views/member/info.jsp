@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,52 +37,52 @@ $(document).ready(function() {
 	$('#removeBtn').click(function () {
 		location.href='${root}/member/remove?userid=${member.userid}';
 	});
+	$('#mvList').click(function () {
+		location.href='${root}/member/list';
+	});
 })
 </script>
 </head>
 <body id="page-top">
 	<jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light">
-		<div class="container" align="center">
-		<div class="col-lg-6">
-			<div>
-				<h1>회원 정보</h1>
-			</div>
-			<form id="updateform" name="updateform" action="" method="post">
-			  	<div class="container" align="center">
-					<div class="col-lg-6" align="center">				
-						<div class="form-group" align="left">
-							<label for="">아이디</label>
-							<input type="text" class="form-control" id="userID" name="userid"  value="${member.userid}">
-						</div>
-						<div class="form-group" align="left">
-							<label for="">비밀번호</label>
-							<input type="text" class="form-control" id="userPWD" name="userpwd"  value="${member.userpwd}">
-						</div>
-						<div class="form-group" align="left">
-							<label for="">이름</label>
-							<input type="text" class="form-control" id="userNAME" name="username"  value="${member.username}">
-						</div>
-						<div class="form-group" align="left">
-							<label for="">이메일</label>
-							<input type="text" class="form-control" id="userEMAIL" name="email"  value="${member.email}">
-						</div>
-						<div class="form-group" align="left">
-							<label for="">연락처</label>
-							<input type="text" class="form-control" id="userPHONE" name="phone"  value="${member.phone}">
-						</div>
-						<div class="form-group" align="left">
-							<label for="">주소</label>
-							<input type="text" class="form-control" id="userADDR" name="address"  value="${member.address}">
-						</div>
-						<div class="form-group" align="left">
-							<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
-							<button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
-						</div>
-					</div>
-				</div>
-			</form>
+	<div class="container col-lg-6" align="center">
+		<div>
+			<h1>회원 정보</h1>
 		</div>
+		<form id="updateform" name="updateform" action="" method="post">
+			<div class="container col-lg-6" align="center">				
+				<div class="form-group" align="left">
+					<label for="">아이디</label>
+					<input type="text" class="form-control" id="userID" name="userid"  value="${member.userid}">
+				</div>
+				<div class="form-group" align="left">
+					<label for="">비밀번호</label>
+					<input type="text" class="form-control" id="userPWD" name="userpwd"  value="${member.userpwd}">
+				</div>
+				<div class="form-group" align="left">
+					<label for="">이름</label>
+					<input type="text" class="form-control" id="userNAME" name="username"  value="${member.username}">
+				</div>
+				<div class="form-group" align="left">
+					<label for="">이메일</label>
+					<input type="text" class="form-control" id="userEMAIL" name="email"  value="${member.email}">
+				</div>
+				<div class="form-group" align="left">
+					<label for="">연락처</label>
+					<input type="text" class="form-control" id="userPHONE" name="phone"  value="${member.phone}">
+				</div>
+				<div class="form-group" align="left">
+					<label for="">주소</label>
+					<input type="text" class="form-control" id="userADDR" name="address"  value="${member.address}">
+				</div>
+				<div class="form-group" align="left">
+					<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
+					<button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
+				</div>
+			<button type="button" class="btn btn-primary" id="mvList">목록</button>
+			</div>
+		</form>
 	</div>
 	</section>
 <jsp:include page="../copyright.jsp"/>

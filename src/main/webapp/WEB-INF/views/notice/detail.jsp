@@ -48,43 +48,37 @@ $(document).ready(function() {
 <jsp:include page="../title.jsp"/>
 <!-- Header-->
 <jsp:include page="../header.jsp"/>
-	<section class="page-section" id="notice">
+	<section class="page-section">
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">공지사항</h2>
 				<h3 class="section-subheading text-muted">Happy House 공지사항</h3>
 			</div>
 			<form action="" method="post" id="detailNotice">
-				<div class="modal-body">
-						<div class="mb-3">
-							<label for="title">제목</label>
-							<input type="text" class="form-control" name="title"
-								placeholder="제목을 입력해 주세요">
-						</div>
-						<div class="mb-3">
-							<label for="reg_id">작성자</label>
-							<input type="text" class="form-control" name="writer"
-								placeholder="작성자를 입력해 주세요">
-						</div>
-						<div class="mb-3">
-							<label for="content">내용</label>
-							<textarea class="form-control" rows="5" name="content"
-								placeholder="내용을 입력해 주세요"></textarea>
-						</div>
-						<div class="mb-3">
-							<label for="tag">TAG</label>
-							<input type="text" class="form-control" name="tag"
-								placeholder="태그를 입력해 주세요">
-						</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="delNotice"
-						data-dismiss="modal">삭제</button>
-					<button type="button" class="btn btn-primary" id="updateNotice"
-						data-dismiss="modal">수정</button>
+				<div class="container col-lg-6" align="center">	
+					<div class="mb-3">
+						<label for="title">제목</label>
+						<input type="text" class="form-control" id="ntitle" name="title" value="${notice.title}">
+					</div>
+					<div class="mb-3">
+						<label for="reg_id">작성자</label>
+						<input type="text" class="form-control" id="nwriter" name="writer" value="${notice.writer}">
+					</div>
+					<div class="mb-3">
+						<label for="content">내용</label>
+						<textarea class="form-control" rows="5" id="ncontent" name="content">${notice.content}</textarea>
+					</div>
+					<div class="mb-3">
+						<label for="tag">TAG</label>
+						<input type="text" class="form-control" id="ntag" name="tag" value="${notice.tag}">
+					</div>
+					<div class="form-group" align="left">
+						<button type="button" class="btn btn-danger" id="delNotice">삭제</button>
+						<button type="button" class="btn btn-primary" id="updateNotice">수정</button>
+					</div>
+				<button type="button" class="btn btn-primary" id="mvNotice">목록</button>
 				</div>
 			</form>
-			<button type="button" class="btn btn-primary" id="moveNotice">목록</button>
 		</div>
 	</section>
 <!-- Footer-->
