@@ -98,14 +98,13 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		try {
 			model.addAttribute("member", member);
 			return "post/writePost";
 		} catch (Exception e) {
 			model.addAttribute("msg", e.getLocalizedMessage());
-			;
 			return "error/error";
 		}
 	}
@@ -116,7 +115,7 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -136,7 +135,7 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		
 		PostDto post = postService.findByPostId(postNo);
@@ -150,7 +149,7 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		PostDto post = postService.findByPostId(postNo);
 		post.setTitle(title);
@@ -172,7 +171,7 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		try {
 			// 게시글 지우기
@@ -191,7 +190,7 @@ public class PostController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		CommentDto comment = commentService.findOneComment(commentNo);
 		try {

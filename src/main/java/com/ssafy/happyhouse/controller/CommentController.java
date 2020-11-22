@@ -36,7 +36,7 @@ public class CommentController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		CommentDto comment = new CommentDto(postNo, member.getUserid(), content, sdf.format(new Date()),
@@ -67,7 +67,7 @@ public class CommentController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		CommentDto comment = commentService.findOneComment(commentNo);
 		try {
@@ -84,7 +84,7 @@ public class CommentController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		CommentDto comment = commentService.findOneComment(commentNo);
 		model.addAttribute("comment", comment);
@@ -97,7 +97,7 @@ public class CommentController {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			return "error/error";
+			return "index";
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {

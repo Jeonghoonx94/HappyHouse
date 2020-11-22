@@ -31,6 +31,11 @@
 <script src="${root }/js/scripts.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	// 로그인서비스가 필요하다면
+	let msg = '<c:if test="${!empty msg}">${msg}</c:if>';
+	if(msg != null && msg != '') {
+		$("#loginModal").modal("show");
+	}
 	$('#loginBtn').click(function () {
 		if($("#userid").value == "") {
 			alert("아이디 입력!!!");
@@ -69,7 +74,7 @@ function logout() {
         type: 'GET',
         url: '${root}/logout',
         success: function () {
-        	alert("Log Out!");
+//         	alert("Log Out!");
 			location.reload(true);
         }
     });
@@ -92,16 +97,15 @@ function logout() {
 			aria-expanded="false" aria-label="Toggle navigation"> Menu <i class="fas fa-bars ml-1"></i>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav text-uppercase ml-auto">
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href='${root}/post/list'>게시판</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href='${root}/search.do'>관심지역</a>
-					</li>
+				<ul class="navbar-nav text-uppercase mr-auto">
 					<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" href='${root}/notice/list'>공지사항</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href='${root}/post/list'>게시판</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav text-uppercase ml-auto">
 					<c:choose>
 						<c:when test="${empty userlogin}">
 							<li class="nav-item">
@@ -112,22 +116,21 @@ function logout() {
 							</li>
 						</c:when>
 						<c:otherwise>
-							<c:choose>
-								<c:when test="${100 eq userlogin.role}">
-									<li class="nav-item">
-										<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원정보</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
-<!-- 									<a class="nav-link js-scroll-trigger" href='javascript:logout()'>로그아웃</a> -->
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="nav-item">
-										<a class="nav-link js-scroll-trigger" href='${root}/member/info?userid=${userlogin.userid}'>${userlogin.userid }님</a>
-									</li>
-								</c:otherwise>
-							</c:choose>
+							<li class="nav-item">
+								<a class="nav-link js-scroll-trigger" href='${root}/search.do'>관심지역</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
+<!-- 							<a class="nav-link js-scroll-trigger" href='javascript:logout()'>로그아웃</a> -->
+							</li>
+							<li class="nav-item">
+								<a class="nav-link js-scroll-trigger" href='${root}/member/info?userid=${userlogin.userid}'>${userlogin.username }님</a>
+							</li>
+							<c:if test="${100 eq userlogin.role}">
+								<li class="nav-item">
+									<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원관리</a>
+								</li>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 				</ul>
