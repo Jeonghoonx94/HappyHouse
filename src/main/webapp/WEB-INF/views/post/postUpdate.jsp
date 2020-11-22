@@ -19,6 +19,7 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${root }/css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
@@ -47,37 +48,33 @@
 
     <h1>게시글 수정</h1>
 
-    <form action="${root }/post/update?postId=${posts.getPostNo()}" method="POST">
+    <form action="${root }/post/update?postNo=${post.postNo}" method="POST">
         <table class="table table-bordered table-condensed">
             <tr>
                 <td>게시글 번호</td>
-                <td>${posts.getPostNo()}</td>
+                <td>${post.postNo}</td>
             </tr>
             <tr>
                 <td>글 제목</td>
                 <td>
-                    <textarea class="form-control" name="title" rows="1">${posts.getTitle()}</textarea>
+                    <textarea class="form-control" name="title" rows="1">${post.title}</textarea>
                 </td>
             </tr>
             <tr>
                 <td>글 내용</td>
                 <td>
-                    <textarea class="form-control" name="content" rows="10">${posts.getContent()}</textarea>
+                    <textarea class="form-control" name="content" rows="10">${post.content}</textarea>
                 </td>
             </tr>
             <tr>
                 <td>작성자</td>
-                <td>${posts.getUsername()}</td>
-            </tr>
-            <tr>
-                <td>작성시간</td>
-                <td>${posts.getCreateDateTime()}</td>
+                <td>${post.username}</td>
             </tr>
         </table>
 
         <button type="submit" class="btn btn-primary">저장</button>
-        <a href="${root }/comment/list?postId=${posts.getPostNo()}" class="btn btn-warning">댓글</a>
-        <a href="${root }/post/delete?postId=${posts.getPostNo()}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
+        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글</a>
+        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
         <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
         <a href="${root }/post/list" class="btn btn-info">처음으로</a>
     </form>

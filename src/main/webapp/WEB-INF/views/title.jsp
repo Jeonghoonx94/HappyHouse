@@ -39,7 +39,17 @@ $(document).ready(function() {
 			alert("비밀번호 입력!!!");
 			return;
 		} else {
-			$("#loginform").attr("action", "${root}/login").submit();
+ 			$("#loginform").attr("action", "${root}/login").submit();
+// 	        $.ajax({
+// 	            type: 'POST',
+// 	            url: '${root}/login',
+// 	            data: {userid:$("#userid").val(),
+// 	            	userpwd:$("#userpwd").val()},
+// 	            success: function () {
+// 	            	console.log("success");
+// 					location.reload(true);
+// 	            }
+// 	        });
 		}
 	})
 	$('#forgotPwd').click(function () {
@@ -54,6 +64,16 @@ $(document).ready(function() {
 		}
 	})
 })
+function logout() {
+    $.ajax({
+        type: 'GET',
+        url: '${root}/logout',
+        success: function () {
+        	alert("Log Out!");
+			location.reload(true);
+        }
+    });
+}
 </script>
 </head>
 <body id="page-top">
@@ -90,16 +110,16 @@ $(document).ready(function() {
 							<li class="nav-item">
 								<a class="nav-link js-scroll-trigger" href='${root}/member/join'>회원가입</a>
 							</li>
-							
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${userlogin.userid eq 'admin'}">
+								<c:when test="${100 eq userlogin.role}">
 									<li class="nav-item">
 										<a class="nav-link js-scroll-trigger" href="${root}/member/list">회원정보</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>
+<!-- 									<a class="nav-link js-scroll-trigger" href='javascript:logout()'>로그아웃</a> -->
 									</li>
 								</c:when>
 								<c:otherwise>

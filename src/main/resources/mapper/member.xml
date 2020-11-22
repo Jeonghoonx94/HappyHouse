@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.happyhouse.model.dao.MemberDao">
 
 	<select id="login" parameterType="map" resultType="MemberDto">
-		select username, userid, email, phone, address 
+		select username, userid, email, phone, address, role
 		from member
 		where userid = #{userid}
 		and userpwd = #{userpwd}

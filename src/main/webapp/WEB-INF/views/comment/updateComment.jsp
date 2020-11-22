@@ -41,14 +41,14 @@
 	<section class="page-section bg-light">
 <div class="container">
     <h1>댓글 수정</h1>
-    <form action="${root }/comment/update?commentId=${comment.getCommentNo()}" method="POST">
+    <form action="${root }/comment/update?commentNo=${comment.commentNo}" method="POST">
         <table class="table table-bordered table-condensed">
             <tr>
                 <td class="mid" width="100">댓글</td>
                 <td>
-                    <textarea class="form-control" name="content" rows="2" >${comment.getContent()}</textarea>
+                    <textarea class="form-control" name="content" rows="2" >${comment.content}</textarea>
                 </td>
-                <td width="100px"><textarea class="form-control" name="postId" rows="2" readonly>${comment.getPostNo()}</textarea></td>
+                <td width="100px"><textarea class="form-control" name="postNo" rows="2" readonly>${comment.postNo}</textarea></td>
             </tr>
         </table>
         <button type="submit" class="btn btn-primary">수정</button>
