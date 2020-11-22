@@ -29,6 +29,11 @@
 <!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
 <script src="${root }/js/scripts.js"></script>
+<script type="text/javascript">
+	function viewPost(postNo) {
+		location.href="${root }/post/view?postNo="+postNo;
+	}
+</script>
 </head>
 <style>
     #margin{
@@ -42,37 +47,50 @@
     <!-- ./ 메뉴바 -->
 	<section class="page-section bg-light">
 <div class="container">
-    <form method="post" class="form-inline">
+    <form method="get" class="form-inline">
         <div id="margin" class="form-group">
             <select name="select" class="form-control">
-                <option value="title">제목</option>
-                <option value="nickname">작성자</option>
+                <option value="title" <c:if test="${select eq 'title'}">selected</c:if>>제목</option>
+                <option value="username" <c:if test="${select eq 'username'}">selected</c:if>>작성자</option>
             </select>
-            <input type="text" size=20 class="form-control" name="search"  placeholder="검색" >
+            <input type="text" size=20 class="form-control" name="search"  placeholder="검색" value="${search}">
             <button type="submit" class="btn btn-primary">조회</button>
         </div>
     </form>
 
     <table class="table table-hover table table-striped">
+    	<colgroup>
+    		<col width="8%">
+    		<col width="12%">
+    		<col width="40%">
+    		<col width="28%">
+    		<col width="12%">
+    	</colgroup>
         <tr>
             <th>번호</th>
             <th>작성자</th>
             <th>제목</th>
+            <th></th>
             <th>조회수</th>
-            <th>수정시간</th>
-            <th>작성시간</th>
         </tr>
 
         <c:forEach items="${posts}" var="post">
-            <tr>
-                <th>${post.getPostNo()}</th>
-                <th>${post.getUsername()}</th>
+            <tr onclick="viewPost(${post.postNo})">
+                <th>${post.postNo}</th>
+                <th>${post.username}</th>
                 <th>
-                    <a href="${root }/post/view?postId=${post.getPostNo()}">${post.getTitle()}</a>
+<%--                     <a href="${root }/post/view?postNo=${post.postNo}"> --%>
+                    ${post.title}
+<!--                     </a> -->
                 </th>
-                <th>${post.getCount()}</th>
-                <th>${post.getUpdateTime()}</th>
-                <th>${post.getCreateDateTime()}</th>
+                <th style="font-size: 0.85em;">
+                작성일: ${post.createDateTime}
+                <c:if test="${post.updateTime ne post.createDateTime }">
+                <br> 
+                수정일: ${post.updateTime}
+                </c:if>
+                </th>
+                <th>${post.count}</th>
             </tr>
         </c:forEach>
     </table>
@@ -80,11 +98,20 @@
 	<div class="text-right">
     <a href="${root }/post/write" class="btn btn-primary">글쓰기</a>
 	</div>
-    <ul class="pagination">
+    <ul class="pagination mx-auto">
         <c:forEach var="i" begin="1" end="${totalPage}" step="1">
-            <li class=<c:if test='${i} == ${page} ? "active" : ""'/>>
-                <a href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
-            </li>
+        	<c:choose>
+        		<c:when test="${i == page}">
+        			<li class="page-item active">
+                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+            		</li>
+        		</c:when>
+        		<c:otherwise>
+        			<li class="page-item">
+                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+            		</li>
+        		</c:otherwise>
+        	</c:choose>
         </c:forEach>
     </ul>
 </div>

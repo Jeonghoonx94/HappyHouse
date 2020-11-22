@@ -5,28 +5,46 @@
 <mapper namespace="com.ssafy.happyhouse.model.dao.PostDao">
     <select id="postAllCount" resultType="int">
         select count(postNo)
-        from post;
+        from post
+		<if test="search != null and search != ''">
+			<if test="select == 'username'">
+				 p join member m
+        		on p.userid = m.userid
+				where username like concat('%', #{search}, '%')
+			</if>
+			<if test="select == 'title'">
+				where title like concat('%', #{search}, '%')
+			</if>
+		</if>
     </select>
 
-    <select id="postFindAll" resultType="PostDto">
+    <select id="postFindAll" parameterType="map" resultType="PostDto">
         select p.*, m.username
         from post p join member m
         on p.userid = m.userid
+		<if test="search != null and search != ''">
+			<if test="select == 'username'">
+				where username like concat('%', #{search}, '%')
+			</if>
+			<if test="select == 'title'">
+				where title like concat('%', #{search}, '%')
+			</if>
+		</if>
         order by p.postNo desc
-        limit #{page}, #{pageSize};
+        limit #{startPostNo}, #{pageSize}
     </select>
 
     <select id="findByPostId" resultType="PostDto">
         select p.*, m.username
         from post p join member m
         on p.userid = m.userid
-        where p.postNo = ${postNo}
+        where p.postNo = #{postNo}
     </select>
 
     <update id="updatePost">
         update post
         set title = #{title}, content = #{content}, count = #{count}, createDateTime = #{createDateTime}, updateTime = #{updateTime}
-        where postNo = ${postNo}
+        where postNo = #{postNo}
     </update>
 
     <select id="postFindByTitle" resultType="PostDto">

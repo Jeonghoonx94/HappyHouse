@@ -57,7 +57,7 @@
             <tr>
                 <td>작성자</td>
                 <td>
-                    <input type="text" name="nickname" value="${member.getUsername()}" class="form-control" readonly>
+                    <input type="text" name="username" value="${member.username}" class="form-control" readonly>
                 </td>
             </tr>
             <tr>

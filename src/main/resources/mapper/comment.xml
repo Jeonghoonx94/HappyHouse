@@ -13,6 +13,7 @@
         from comment c join member m
         on c.userid = m.userid
         where postNo = #{postNo}
+        order by createDateTime
     </select>
 
     <delete id="postCommentAllDelete">

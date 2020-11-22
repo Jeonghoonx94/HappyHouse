@@ -9,39 +9,44 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.happyhouse.model.CommentDto;
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.CommentService;
 import com.ssafy.happyhouse.model.service.MemberService;
+import com.ssafy.happyhouse.model.service.PostService;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
-
+	@Autowired
+	PostService postService;
 	@Autowired
 	CommentService commentService;
 	@Autowired
 	MemberService memberService;
 
-	@RequestMapping(value = "/view", method = RequestMethod.POST)
-	public String insertAndAllCommentView(Model model, @RequestParam("postId") int postId,
-			@RequestParam("content") String content, HttpSession session) {
+	@PostMapping("/write")
+	public String insertComment(Model model, @RequestParam int postNo, @RequestParam String content,
+			HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		CommentDto comment = new CommentDto(postNo, member.getUserid(), content, sdf.format(new Date()),
+				sdf.format(new Date()));
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
-			MemberDto member;
-			member = memberService.searchMember(loginId);
-			CommentDto comment = new CommentDto(postId, member.getUserid(), content, sdf.format(new Date()),
-					sdf.format(new Date()));
 			commentService.insertComment(comment);
-			List<CommentDto> list = commentService.findAllComment(postId);
-			model.addAttribute("postId", postId);
-			model.addAttribute("list", list);
-			return "comment/viewComment";
+			List<CommentDto> comments = commentService.findAllComment(postNo);
+			model.addAttribute("post", postService.findByPostId(postNo));
+			model.addAttribute("comments", comments);
+			return "redirect:/post/view?postNo="+postNo;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,33 +54,58 @@ public class CommentController {
 		}
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String commentAllList(Model model, @RequestParam("postId") int postId) {
-		List<CommentDto> list = commentService.findAllComment(postId);
-		model.addAttribute("postId", postId);
-		model.addAttribute("list", list);
+	@GetMapping("/list")
+	public String commentAllList(Model model, @RequestParam int postNo) {
+		List<CommentDto> comments = commentService.findAllComment(postNo);
+		model.addAttribute("postNo", postNo);
+		model.addAttribute("comments", comments);
 		return "comment/viewComment";
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String commentDelete(@RequestParam("commentId") int commentId) {
-		CommentDto comment = commentService.findOneComment(commentId);
-		commentService.deleteComment(commentId);
-		return "redirect:/comment/list?postId=" + comment.getPostNo();
+	@GetMapping("/delete")
+	public String deleteComment(@RequestParam int commentNo, HttpSession session, Model model) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		CommentDto comment = commentService.findOneComment(commentNo);
+		try {
+			commentService.deleteComment(commentNo);
+			return "redirect:/comment/list?postNo=" + comment.getPostNo();
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String commentUpdate(Model model, @RequestParam("commentId") int commentId) {
-		CommentDto comment = commentService.findOneComment(commentId);
+	@GetMapping("/update")
+	public String updateComment(Model model, @RequestParam int commentNo, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		CommentDto comment = commentService.findOneComment(commentNo);
 		model.addAttribute("comment", comment);
 		return "comment/updateComment";
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String commentUpdate(@RequestParam("content") String content, @RequestParam("postId") int postId,
-			@RequestParam("commentId") int commentId) {
+	@PostMapping("/update")
+	public String updateComment(@RequestParam String content, @RequestParam int postNo, @RequestParam int commentNo,
+			HttpSession session, Model model) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		commentService.updateComment(content, sdf.format(new Date()), commentId);
-		return "redirect:comment/list?postId=" + postId;
+		try {
+			commentService.updateComment(content, sdf.format(new Date()), commentNo);
+			return "redirect:/comment/list?postNo=" + postNo;
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 }

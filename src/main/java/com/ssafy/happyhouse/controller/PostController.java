@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.happyhouse.model.CommentDto;
@@ -21,7 +23,7 @@ import com.ssafy.happyhouse.model.service.MemberService;
 import com.ssafy.happyhouse.model.service.PostService;
 
 @Controller
-//@RequestMapping("/")
+@RequestMapping("/post")
 public class PostController {
 
 	@Autowired
@@ -31,135 +33,174 @@ public class PostController {
 	@Autowired
 	CommentService commentService;
 
-	@GetMapping("/post/list")
-	public String postMain(Model model, @RequestParam(value = "page", defaultValue = "1") int page, // defaultValue :
-																									// 파라미터 값이 없을 때
-																									// default 값
-			@RequestParam(value = "pageSize", defaultValue = "7") int pageSize) {
+	@GetMapping("/list")
+	public String postMain(Model model, @RequestParam Map<String, Object> map) {
 
-		// 페이지네이션 포함
-		int totalPostCount = postService.postAllCount(); // 전체 게시글 수
-		int totalCount = totalPostCount / pageSize + 1; // 총 페이지 수
-		page = (page - 1) * pageSize;
-		List<PostDto> postList = postService.postFindAll(page, pageSize);
+		String pageStr = (String) map.get("page");
+		String pageSizeStr = (String) map.get("pageSize");
+		int page = pageStr == null ? 1 : ("".equals(pageStr) ? 1 : Integer.parseInt(pageStr));
+		int pageSize = pageSizeStr == null ? 7 : ("".equals(pageSizeStr) ? 7 : Integer.parseInt(pageSizeStr));
+
+		// Pagination
+		map.put("page", page); // 현재 페이지
+		map.put("pageSize", pageSize); // 한 페이지에 나타낼 게시글 수
+		int totalPostCount = postService.postAllCount(map); // 전체 게시글 수 : 검색 결과 포함
+		int totalPage = totalPostCount / pageSize; // 총 페이지 수
+		if (totalPostCount % pageSize != 0) {
+			totalPage++;
+		}
+		int startPostNo = (page - 1) * pageSize; // 해당 페이지의 가장 위에 보여줄 게시글 번호
+		map.put("startPostNo", startPostNo);
+
+		List<PostDto> postList = postService.postFindAll(map);
+
+		if (map.get("search") != null) { // 검색했다면
+			model.addAttribute("select", map.get("select"));
+			model.addAttribute("search", map.get("search"));
+		}
 
 		model.addAttribute("posts", postList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("page", page);
-		model.addAttribute("totalPage", totalCount);
+		model.addAttribute("totalPage", totalPage);
 		return "post/postMain";
 	}
 
-	@PostMapping("/post/list")
-	public String postMain(Model model, @RequestParam("select") String select, @RequestParam("search") String search) {
-
-		model.addAttribute("select", select);
-
-		if (select.equals("title")) {
-			List<PostDto> posts = postService.postFindByTitle(search, 0, 7);
-			model.addAttribute("posts", posts);
-			return "post/postMainTitle";
-		}
-
-		List<PostDto> posts = postService.postFindByUserName(search, 0, 7);
-		model.addAttribute("posts", posts);
-		return "post/postMainUserName";
-	}
-
-	@GetMapping("/post/view")
-	public String postView(Model model, @RequestParam("postId") int postId, HttpSession session) {
+	@GetMapping("/view")
+	public String postView(Model model, @RequestParam int postNo, HttpSession session) {
 
 		try {
-			PostDto post = postService.findByPostId(postId);
+			PostDto post = postService.findByPostId(postNo);
 			// 조회수
 			post.setCount(post.getCount() + 1);
-			postService.updatePost(post);
-			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
-			if(loginId == null) {
-				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-				return "error/error";
+			
+			MemberDto member = (MemberDto)session.getAttribute("userlogin");
+			
+			if(member == null || !post.getUserid().equals(member.getUserid())) { 
+				postService.updatePost(post);
 			}
-			MemberDto member = memberService.searchMember(loginId);
-			model.addAttribute("posts", post);
+
+			model.addAttribute("post", post);
+
 			// 댓글
-			List<CommentDto> list = commentService.findAllComment(postId);
-			model.addAttribute("list", list);
-			if (post.getUserid().equals(member.getUserid())
-//				|| "admin".equals(member.getUserid())	// 관리자인 경우
-			) {
-				return "post/postView";
-			} else {
-				return "post/postOnlyView";
-			}
+			List<CommentDto> comments = commentService.findAllComment(postNo);
+			model.addAttribute("comments", comments);
+
+			return "post/postView";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			model.addAttribute("msg", e.getMessage());
+			model.addAttribute("msg", e.getLocalizedMessage());
 			return "error/error";
 		}
 	}
 
-	@GetMapping("/post/write")
+	@GetMapping("/write")
 	public String postWrite(Model model, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
 		try {
-			String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
-			if(loginId == null) {
-				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-				return "error/error";
-			}
-			MemberDto member = memberService.searchMember(loginId);
 			model.addAttribute("member", member);
-
 			return "post/writePost";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("msg", e.getLocalizedMessage());
+			;
 			return "error/error";
 		}
 	}
 
-	@PostMapping("/post/write")
-	public String postWrite(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("nickname") String nickname, HttpSession session) {
-		String loginId = ((MemberDto) session.getAttribute("userlogin")).getUserid();
+	@PostMapping("/write")
+	public String postWrite(@RequestParam String title, @RequestParam String content, @RequestParam String username,
+			HttpSession session, Model model) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		PostDto post = new PostDto(loginId, title, content, nickname, 1, sdf.format(new Date()),
+		PostDto post = new PostDto(member.getUserid(), title, content, username, 1, sdf.format(new Date()),
 				sdf.format(new Date()));
-		postService.insertPost(post);
-		return "redirect:/post/list";
+		try {
+			postService.insertPost(post);
+			return "redirect:/post/list";
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 
-	@GetMapping("/post/update")
-	public String postUpdateRedirect(Model model, @RequestParam("postId") int postId) {
-		PostDto post = postService.findByPostId(postId);
+	@GetMapping("/update")
+	public String postUpdateRedirect(Model model, @RequestParam int postNo, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		
+		PostDto post = postService.findByPostId(postNo);
 		model.addAttribute("posts", post);
 		return "post/postUpdate";
 	}
 
-	@PostMapping("/post/update")
-	public String postUpdate(@RequestParam("postId") int postId, @RequestParam("title") String title,
-			@RequestParam("content") String content) {
-		PostDto post = postService.findByPostId(postId);
+	@PostMapping("/update")
+	public String postUpdate(@RequestParam int postNo, @RequestParam String title, @RequestParam String content,
+			Model model, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		PostDto post = postService.findByPostId(postNo);
 		post.setTitle(title);
 		post.setContent(content);
 		post.setCount(post.getCount());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		post.setUpdateTime(sdf.format(new Date()));
-		postService.updatePost(post);
-
-		return "redirect:/post/list";
+		try {
+			postService.updatePost(post);
+			return "redirect:/post/list";
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 
-	@GetMapping("/post/delete")
-	public String postDelete(@RequestParam("postId") int postId) {
-		postService.deletePost(postId);
-		return "redirect:/postComment/deleteAll?postId=" + postId;
+	@GetMapping("/delete")
+	public String postDelete(@RequestParam int postNo, Model model, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		try {
+			// 게시글 지우기
+			postService.deletePost(postNo);
+			// 게시글에 해당하는 댓글 지우기
+			commentService.postCommentAllDelete(postNo);
+			return "redirect:/post/list";
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 
-	@GetMapping("/postComment/deleteAll")
-	public String postCommentDeleteAll(@RequestParam("postId") int postId) {
-		commentService.postCommentAllDelete(postId);
-		return "redirect:/post/list";
+	@GetMapping("/deleteComment")
+	public String deleteComment(@RequestParam int commentNo, Model model, HttpSession session) {
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		if (member == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			return "error/error";
+		}
+		CommentDto comment = commentService.findOneComment(commentNo);
+		try {
+			commentService.deleteComment(commentNo);
+			return "redirect:/post/view?postNo=" + comment.getPostNo();
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getLocalizedMessage());
+			return "error/error";
+		}
 	}
 
 //	@GetMapping("notice")

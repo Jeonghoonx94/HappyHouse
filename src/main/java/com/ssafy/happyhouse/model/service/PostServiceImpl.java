@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class PostServiceImpl implements PostService {
 	private SqlSession sqlSession;
 
 	@Override
-	public int postAllCount() {
-		return sqlSession.getMapper(PostDao.class).postAllCount();
+	public int postAllCount(Map<String, Object> map) {
+		return sqlSession.getMapper(PostDao.class).postAllCount(map);
 	}
 
 	@Override
-	public List<PostDto> postFindAll(int page, int pageSize) {
-		return sqlSession.getMapper(PostDao.class).postFindAll(page, pageSize);
+	public List<PostDto> postFindAll(Map<String, Object> map) {
+		return sqlSession.getMapper(PostDao.class).postFindAll(map);
 	}
 
 	@Override

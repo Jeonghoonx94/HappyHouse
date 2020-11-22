@@ -42,14 +42,14 @@
 	<section class="page-section bg-light">
 <div class="container">
 
-    <h1><a href="${root }/comment/list?postId=${postId}">댓글 목록 </a></h1>
+    <h1><a href="${root }/comment/list?postNo=${postNo}">댓글 목록 </a></h1>
     <table class="table table-hover table table-striped w-100">
 		<colgroup>
-			<col width="15%">
-			<col width="35%">
-			<col width="20%">
-			<col width="20%">
-			<col width="10%">
+			<col width="100px">
+			<col>
+			<col width="180px">
+			<col width="180px">
+			<col width="100px">
 		</colgroup>
         <tr>
             <th>작성자</th>
@@ -59,22 +59,29 @@
             <th></th>
         </tr>
 
-        <c:forEach items="${list}" var="comment">
+        <c:forEach items="${comments}" var="comment">
             <tr>
-                <th>${comment.getUsername()}</th>
-                <th>${comment.getContent()}</th>
-                <th>${comment.getCreateDateTime()}</th>
-                <th>${comment.getUpdateTime()}</th>
+                <th>${comment.username}</th>
+                <th>${comment.content}</th>
+                <th>${comment.createDateTime}</th>
+                <th>${comment.updateTime}</th>
                 <th>
-                <c:if test="${userlogin.getUserid() == comment.getUserid() }">
-                <a href="${root }/comment/update?commentId=${comment.getCommentNo()}">수정</a> | 
-                <a href="${root }/comment/delete?commentId=${comment.getCommentNo()}">삭제</a>
-                </c:if>
+                <c:choose>
+	                <c:when test="${comment.userid eq userlogin.userid}">
+		                <a href="${root }/comment/update?commentNo=${comment.commentNo}">수정</a> | 
+		                <a href="${root }/comment/delete?commentNo=${comment.commentNo}">삭제</a>
+	                </c:when>
+	                <c:otherwise >
+	                	<c:if test="${100 eq userlogin.role}">
+	                		<a href="${root }/comment/delete?commentNo=${comment.commentNo}">삭제</a>
+	                	</c:if>
+	                </c:otherwise>
+                </c:choose>
                 </th>
             </tr>
         </c:forEach>
     </table>
-    <a href="${root }/post/view?postId=${postId}" class="btn btn-info">게시글로 가기</a>
+    <a href="${root }/post/view?postNo=${postNo}" class="btn btn-info">게시글로 가기</a>
 </div>
 </section>
 <jsp:include page="../copyright.jsp"/>
