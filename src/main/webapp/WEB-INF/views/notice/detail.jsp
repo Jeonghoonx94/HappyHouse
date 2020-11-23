@@ -53,7 +53,8 @@ $(document).ready(function() {
 				<h3 class="section-subheading text-muted">Happy House 공지사항</h3>
 			</div>
 			<form action="" method="post" id="detailNotice">
-				<div class="container col-lg-6" align="center">	
+				<div class="container col-lg-6" align="center">
+					<input type="hidden" name="no" value="${notice.no }">
 					<div class="mb-3">
 						<label for="title">제목</label>
 						<input type="text" class="form-control" id="ntitle" name="title" value="${notice.title}">
