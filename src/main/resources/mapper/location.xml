@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.LocationDao">
+
+	<select id="locationList" resultType="LocationDto">
+		select *
+		from location
+		order by no
+	</select>
+	
+	<select id="totalCount" parameterType="map" resultType="Integer">
+		select count(*) as cnt
+		from location
+		where dong = #{dong}
+		and userid = #{userid}
+	</select>
+	
+	<insert id="addLocation" parameterType="LocationDto">
+		insert into location (userid, dong, gugunName)
+		values (#{userid}, #{dong}, #{gugunName})
+	</insert>
+	
+	<delete id="deleteLocation" parameterType="Integer">
+		delete from location
+		where no = #{no}
+	</delete>
+</mapper>

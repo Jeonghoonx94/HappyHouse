@@ -105,7 +105,7 @@ function logout() {
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item">
-								<a class="nav-link js-scroll-trigger" href='${root}/search.do'>관심지역</a>
+								<a class="nav-link js-scroll-trigger" href='${root}/loc/list'>관심지역</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link js-scroll-trigger" href='${root}/logout'>로그아웃</a>

@@ -25,11 +25,15 @@
 		order by dong
 	</select>
 
-	<select id="getAptInDong" parameterType="String"
-		resultType="HouseInfoDto">
+	<select id="getAptInDong" parameterType="String" resultType="HouseInfoDto">
 		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
 		FROM houseinfo i right join housedeal d using (aptname)
-		WHERE d.dong = #{dong} and type = #{type}
+		<if test="type != null">
+			WHERE d.dong = #{dong} and type = #{type}
+		</if>
+		<if test="type == null">
+			WHERE d.dong = #{dong}
+		</if>
 		order by d.no
 		limit 100
 	</select>

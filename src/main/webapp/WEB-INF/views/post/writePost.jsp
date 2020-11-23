@@ -24,6 +24,8 @@
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
 <script src="${root }/js/scripts.js"></script>
     <style>
@@ -39,39 +41,39 @@
 <body>
 <jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light">
-<div class="container">
-
-    <h1>게시글 등록</h1>
-
-    <form method="post" action="${root }/post/write" >
-        <table class="table table-bordered table-condensed">
-
-            <tr>
-                <td>글 제목</td>
-                <td>
-                    <textarea class="form-control" name="title" rows="1"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>작성자</td>
-                <td>
-                    <input type="text" name="username" value="${member.username}" class="form-control" readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>글 내용</td>
-                <td>
-                    <textarea class="form-control" name="content" rows="10"></textarea>
-                </td>
-            </tr>
-
-        </table>
-
-        <button type="submit" class="btn btn-primary">등록</button>
-        <a href="javascript:window.history.back()" class="btn btn-info">돌아가기</a>
-    </form>
-
-</div>
+	<div class="container">
+	
+	    <h1>게시글 등록</h1>
+	
+	    <form method="post" action="${root }/post/write" >
+	        <table class="table table-bordered table-condensed">
+	
+	            <tr>
+	                <td>글 제목</td>
+	                <td>
+	                    <textarea class="form-control" name="title" rows="1"></textarea>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>작성자</td>
+	                <td>
+	                    <input type="text" name="nickname" value="${member.getUsername()}" class="form-control" readonly>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>글 내용</td>
+	                <td>
+	                    <textarea class="form-control" name="content" rows="10"></textarea>
+	                </td>
+	            </tr>
+	
+	        </table>
+	
+	        <button type="submit" class="btn btn-primary">등록</button>
+	        <a href="javascript:window.history.back()" class="btn btn-info">돌아가기</a>
+	    </form>
+	
+	</div>
 </section>
 <jsp:include page="../copyright.jsp"/>
 </body>
