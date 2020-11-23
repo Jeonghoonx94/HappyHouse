@@ -25,8 +25,6 @@
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-<!-- Contact form JS-->
-<!-- <script src="assets/mail/jqBootstrapValidation.js"></script> -->
 <!-- Core theme JS-->
 <script src="${root }/js/scripts.js"></script>
 <script type="text/javascript">
@@ -45,16 +43,6 @@ $(document).ready(function() {
 			return;
 		} else {
  			$("#loginform").attr("action", "${root}/login").submit();
-// 	        $.ajax({
-// 	            type: 'POST',
-// 	            url: '${root}/login',
-// 	            data: {userid:$("#userid").val(),
-// 	            	userpwd:$("#userpwd").val()},
-// 	            success: function () {
-// 	            	console.log("success");
-// 					location.reload(true);
-// 	            }
-// 	        });
 		}
 	})
 	$('#forgotPwd').click(function () {

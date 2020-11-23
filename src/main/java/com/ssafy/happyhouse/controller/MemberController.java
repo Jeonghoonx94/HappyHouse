@@ -50,7 +50,7 @@ public class MemberController{
 	
 	@GetMapping(value = "/join")
 	public String insertMember() {
-	    return "/join";
+	    return "member/join";
 	}
 	
 	@GetMapping(value = "/info")
