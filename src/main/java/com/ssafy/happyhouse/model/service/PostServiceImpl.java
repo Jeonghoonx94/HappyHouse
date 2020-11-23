@@ -17,33 +17,23 @@ public class PostServiceImpl implements PostService {
 	private SqlSession sqlSession;
 
 	@Override
-	public int postAllCount(Map<String, Object> map) {
-		return sqlSession.getMapper(PostDao.class).postAllCount(map);
+	public int getPostCount(Map<String, Object> map) {
+		return sqlSession.getMapper(PostDao.class).getPostCount(map);
 	}
 
 	@Override
-	public List<PostDto> postFindAll(Map<String, Object> map) {
-		return sqlSession.getMapper(PostDao.class).postFindAll(map);
+	public List<PostDto> findAllPost(Map<String, Object> map) {
+		return sqlSession.getMapper(PostDao.class).findAllPost(map);
 	}
 
 	@Override
-	public PostDto findByPostId(int postNo) {
-		return sqlSession.getMapper(PostDao.class).findByPostId(postNo);
+	public PostDto findByPostNo(int postNo) {
+		return sqlSession.getMapper(PostDao.class).findByPostNo(postNo);
 	}
 
 	@Override
 	public void updatePost(PostDto post) {
 		sqlSession.getMapper(PostDao.class).updatePost(post);
-	}
-
-	@Override
-	public List<PostDto> postFindByTitle(String search, int currentPage, int pageSize) {
-		return sqlSession.getMapper(PostDao.class).postFindByTitle(search, currentPage, pageSize);
-	}
-
-	@Override
-	public List<PostDto> postFindByUserName(String search, int currentPage, int pageSize) {
-		return sqlSession.getMapper(PostDao.class).postFindByUserName(search, currentPage, pageSize);
 	}
 
 	@Override

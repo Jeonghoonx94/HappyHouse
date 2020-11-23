@@ -44,7 +44,7 @@ public class CommentController {
 		try {
 			commentService.insertComment(comment);
 			List<CommentDto> comments = commentService.findAllComment(postNo);
-			model.addAttribute("post", postService.findByPostId(postNo));
+			model.addAttribute("post", postService.findByPostNo(postNo));
 			model.addAttribute("comments", comments);
 			return "redirect:/post/view?postNo="+postNo;
 		} catch (Exception e) {

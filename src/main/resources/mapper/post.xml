@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.model.dao.PostDao">
-    <select id="postAllCount" resultType="int">
+    <select id="getPostCount" resultType="int">
         select count(postNo)
         from post
 		<if test="search != null and search != ''">
@@ -18,7 +18,7 @@
 		</if>
     </select>
 
-    <select id="postFindAll" parameterType="map" resultType="PostDto">
+    <select id="findAllPost" parameterType="map" resultType="PostDto">
         select p.*, m.username
         from post p join member m
         on p.userid = m.userid
@@ -34,7 +34,7 @@
         limit #{startPostNo}, #{pageSize}
     </select>
 
-    <select id="findByPostId" resultType="PostDto">
+    <select id="findByPostNo" resultType="PostDto">
         select p.*, m.username
         from post p join member m
         on p.userid = m.userid
@@ -46,22 +46,6 @@
         set title = #{title}, content = #{content}, count = #{count}, createDateTime = #{createDateTime}, updateTime = #{updateTime}
         where postNo = #{postNo}
     </update>
-
-    <select id="postFindByTitle" resultType="PostDto">
-        select p.*, m.username
-        from post p join member m
-        on p.userid = m.userid
-        where title like concat('%', #{search}, '%')
-        limit #{currentPage}, #{pageSize}
-    </select>
-
-    <select id="postFindByUserName" resultType="PostDto">
-        select p.*, m.username
-        from post p join member m
-        on p.userid = m.userid
-        where m.username like concat('%', #{search}, '%')
-        limit #{currentPage}, #{pageSize}
-    </select>
 
     <insert id="insertPost">
         insert into post(userid, title, content, count, updateTime, createDateTime)

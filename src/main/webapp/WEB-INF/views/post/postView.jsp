@@ -95,8 +95,9 @@
 				</c:if>
 			</c:otherwise>
 		</c:choose>
-        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글 보기</a>
-        <a href="javascript:window.history.back()" class="btn btn-info">목록으로</a>
+        <a href="${root}/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글 보기</a>
+<!--         <a href="javascript:window.history.back()" class="btn btn-info">목록으로</a> -->
+		<a href="${root}/post/list" class="btn btn-info">목록으로</a>
     </form>
 
 	<hr>

@@ -36,18 +36,9 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
-//                 	마커 찍기 위한 위도, 경도 정보 없음
-//                 	$.ajax({
-//                 	    method: "GET",
-//                 	    url: "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=1KJ59doDivdh8aOsOLOR%2B2cA5p5F3cOv36TYrkFMqJxfdTIEpoUxC9nCKs4PbhaZg0rvGr48KNv3J6roicUJ6g%3D%3D&LAWD_CD=11110&DEAL_YMD=201512",
-//                 	    success: function(data){
-//                 	        console.log(data);
-//                 	        $(data).find("item").each(function (i, v) {
-//                 	            console.log($(v).find('아파트').text(),
-//                 	                $(v).find('거래금액').text());
-//                 	        });
-//                 	    }
-//                 	});
+                	var storeMarked = false;
+                	var pollutionMarked = false;
+                	
                     $.get("${pageContext.request.contextPath}/map/sido"
                         ,function(data, status){
                             $.each(data, function(index, vo) {
@@ -86,25 +77,32 @@
                         $.get("${pageContext.request.contextPath}/map/apt"
                                 ,{dong:$("#dong").val(), type:$("#type").val()}
                                 ,function(data, status){
+                                	storeMarked = false;
+                                	pollutionMarked = false;
+                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
                                     $("#searchResult").empty();
+                                    
+                                    let str = "";
                                     $.each(data, function(index, vo) {
                                     	console.log(vo);
                                     	console.log("vo : "+vo);
                                     	console.log("rentMoney" + vo.rentMoney);
+                                    	
                                         //let str = "<tr value='서울특별시+강남구+역삼동+테헤란로+212'>"
-                                        let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+                                        str += "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
                                         +"<th scope='row'>"+vo.no+"</th>"
                                         +"<td>" + vo.aptName + "</td><td>"
                                         +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
                                         +"</td>"
-                                        +"</tr>"
-                                        $("#searchResult").append(str);
+                                        +"</tr>";
                                     });//each
+                                    $("#searchResult").html(str);
                                     //geocode(data);
                                 }//function
                                 , "json"
                         );//get
                     });//change
+                    
                     $("#searchBtn").click(function() {
                     	console.log($("#dong").val(),$("#searchName").val())
                     	if($("#dong").val() !== "0") { // 선택했다면 
@@ -117,19 +115,25 @@
 			            			data: {dong:$("#dong").val(), type:$("#type").val(), aptName:$("#searchName").val()},
 			            			success:function(data) {
 			            				console.log(data);
+			            				
+	                                	storeMarked = false;
+	                                	pollutionMarked = false;
+	                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
 			                            $("#searchResult").empty();
+			                            
+			                            let str = "";
 			                            $.each(data, function(index, vo) {
 			                            	console.log(vo);
 			                            	console.log("vo : "+vo);
 			                            	console.log("rentMoney" + vo.rentMoney);
-			                                let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+			                                str += "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
 			                                +"<th scope='row'>"+vo.no+"</th>"
 			                                +"<td>" + vo.aptName + "</td><td>"
 			                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
 			                                +"</td>"
 			                                +"</tr>"
-			                                $("#searchResult").append(str);
 			                            });//each
+		                                $("#searchResult").html(str);
 			            			},
 			            			error:function(xhr,status,msg){
 			            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
@@ -139,9 +143,35 @@
 //                     			alert('아파트 이름을 입력해 주세요!');
 //                     		}
                     	} else { // 선택하지 않았다면
-                    		alert('읍면동까지 선택해주세요!');
+                    		alert('읍/면/동 을 확인해주세요!');
                     	}
-                    });
+                    }); // searchBtn
+                    
+                    // 업종 정보 버튼 클릭
+                    $("#storeBtn").click(function() {
+                    	if(!storeMarked) {
+                    		console.log("업종 정보 버튼 클릭!");
+                    		if($("#dong").val() !== "0") {
+	                    		storeMarked = true;
+	                    		showStoreMarker($("#dong").val());
+                    		} else {
+                    			alert("읍/면/동 을 확인해주세요!");
+                    		}
+                    	}
+                    }); // end storeBtn
+                    
+					$("#pollutionBtn").click(function() {
+                    	if(!pollutionMarked) {
+                    		console.log("환경 오염 정보 버튼 클릭!");
+                    		if($("#dong").val() !== "0") {
+	                    		pollutionMarked = true;
+	                    		showPollutionMarker($("#dong").val());
+                    		} else {
+                    			alert("읍/면/동 을 확인해주세요!");
+                    		}
+                    	}
+                    }); // end pollutionBtn
+                    
                 });//ready
 
             </script>
@@ -190,36 +220,41 @@
             </div>
         </div>
         <div class="row text-center d-flex justify-content-center">
-            <div class="col-4">
-                <table class="table table-striped" id="table1">
-                	<colgroup>
-                		<col width="20%"/>
-                		<col width="50%"/>
-                		<col width="30%"/>
-                	</colgroup>
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>아파트이름</th>
-                            <th>세부정보</th>
-                        </tr>
-                    </thead>
-                    <tbody id="searchResult">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>멀티캠퍼스</td>
-                            <td>
-                                <button type="button" class="btn btn-secondary btn-sm"
-                                    data-toggle="modal" data-target="#exampleModal">자세히</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <div style="width: 315px">
+				<div class="btn-group btn-group-toggle">
+					<Button class="btn btn-light" type="button" id="storeBtn">동네 업종 정보</Button>
+					<Button class="btn btn-light" type="button" id="pollutionBtn"> 대기오염 정보</Button>
+				</div>
+				<div id="searchTable">
+	                <table class="table table-striped" id="table1">
+	                	<colgroup>
+	                		<col width="20%"/>
+	                		<col width="50%"/>
+	                		<col width="30%"/>
+	                	</colgroup>
+	                    <thead>
+	                        <tr>
+	                            <th>번호</th>
+	                            <th>아파트이름</th>
+	                            <th>세부정보</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="searchResult">
+	                        <tr>
+	                            <th scope="row">1</th>
+	                            <td>멀티캠퍼스</td>
+	                            <td>
+	                                <button type="button" class="btn btn-secondary btn-sm"
+	                                    data-toggle="modal" data-target="#exampleModal">자세히</button>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+				</div>
             </div>
             
             <div class="col-8">
-                <div id="map1" style="width: 100%; height: 300px; margin: auto;"></div>
+                <div id="map1" style="width: 100%; height: 340px; margin: auto;"></div>
 
             </div>
         </div>
@@ -278,7 +313,6 @@
 </body>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw&callback=initMap"></script>
 <script>
-    
 
     var multi = {
         lat : 37.5012743,
@@ -294,10 +328,6 @@
             zoom : 15
         });
 
-        map2 = new google.maps.Map(document.getElementById('map2'), {
-            center : multi,
-            zoom : 15
-        });
         infoWindow = new google.maps.InfoWindow;
 
         const myposition = "${root}/assets/img/my_position.png";
@@ -315,9 +345,9 @@
             iconImage : myposition,
             content : '멀티캠퍼스(역삼)'
         };
+        
         addMarker(multimarker);
-        addMarker2(multimarker2);
-        //var marker2 = new google.maps.Marker({position:{lat: mutlti[0], lng: multi[1]}, map: map2}); 
+        
         infoWindow.setPosition(multi);
         infoWindow.setContent('멀티캠퍼스.');
         infoWindow.open(map);
@@ -327,13 +357,14 @@
         infoWindow.setContent(browserHasGeolocation ? 'Error: Geolocation 서비스 실패.' : 'Error: Geolocation을 지원하지 않는 브라우저.');
         infoWindow.open(map);
     }
+    
     function addMarker2(props) {
         const marker = new google.maps.Marker({
             position : new google.maps.LatLng(parseFloat(props.coords.lat), parseFloat(props.coords.lng)),
-            map : map2
+            map : map,
+            label: props.name,
+            title: props.name
         });
-        map2.setCenter(marker.getPosition());
-        map2.setZoom(15);
 
         if (props.iconImage) {
             marker.setIcon(props.iconImage);
@@ -343,23 +374,26 @@
             infoWindow = new google.maps.InfoWindow({
                 content : props.content
             });
-
         }
 
         marker.addListener('click', function() {
-            map2.setZoom(17);
+//             map2.setZoom(17);
             map2.setCenter(marker.getPosition());
-            bounceMarker(marker);
+//             bounceMarker(marker);
         });
         markers.push(marker);
-        setMapOnAll(map2);
+        setMapOnAll(map);
     }
 
     function addMarker(props) {
         const marker = new google.maps.Marker({
             position : new google.maps.LatLng(parseFloat(props.coords.lat), parseFloat(props.coords.lng)),
-            map : map
+            map : map,
+            label: props.name,
+            title: props.name
+            
         });
+        
         map.setCenter(marker.getPosition());
         map.setZoom(15);
 
@@ -406,8 +440,8 @@
         }
     }
 
-
     $('#table1').on("click", ".clickeTr", function() {
+    	deleteMarkers();
         var area = $(this).attr("value");
         console.log($(this).attr("no"));
         //console.log(area);
@@ -416,20 +450,72 @@
             address : area
         }, function(data, status) {
             console.log(data);
-            deleteMarkers();
+//             deleteMarkers();
             var officemarker = {
                 coords : {
                     lat : data.results[0].geometry.location.lat,
                     lng : data.results[0].geometry.location.lng
                 },
                 iconImage : null,
-                content : area
+                content : area,
+                name : $(this).attr("aptName")
             };
             console.log(officemarker);
             addMarker(officemarker);
+            
         }, "json");//get
+        
+//         let dongVal = $(this).attr("dong");
+//         showStoreMarker(dongVal);
+//         showPollutionMarker(dongVal);
     });
 
+    function showStoreMarker(dongVal) {
+//     	let dongVal = $("#dong").val();
+    	console.log(dongVal);
+        // 상점
+        $.get("${root}/store/list"
+                ,{dong:dongVal}
+                ,function(data, status){
+                    $.each(data, function(index, vo) {
+                    	let marker = {
+                                coords : {
+                                    lat : vo.lat,
+                                    lng : vo.lng
+                                },
+                                iconImage : null,
+                                name : vo.shopName
+                            };
+//                     	console.log(vo);
+                        addMarker2(marker);
+                    });//each
+                }//function
+                , "json"
+        );//get
+    }
+    
+    function showPollutionMarker(dongVal) {
+    	console.log(dongVal);
+        // 환경정보
+        $.get("${root}/pollution/list"
+                ,{dong:dongVal}
+                ,function(data, status){
+                    $.each(data, function(index, vo) {
+                    	let marker = {
+                                coords : {
+                                    lat : vo.lat,
+                                    lng : vo.lng
+                                },
+                                iconImage : null,
+                                name : vo.name
+                            };
+                        addMarker2(marker);
+                    });//each
+                }//function
+                , "json"
+        );//get
+    }
+    
     $('#table1').on("click", ".detail", function() {
         var no = $(this).attr("no");
         $("#detailNum").text(no);

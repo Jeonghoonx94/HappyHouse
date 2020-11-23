@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.dao.StoreDao">
+	<select id="getStoresInDong" parameterType="String"
+		resultType="StoreDto">
+		SELECT no, shopname, codename1, codename2, codename3, codename4, dong, lng, lat
+		FROM store
+		<if test="dong != null and dong != ''">
+			WHERE dong = #{dong}
+		</if>
+		order by no
+	</select>
+</mapper>
