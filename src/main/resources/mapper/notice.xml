@@ -16,6 +16,7 @@
 			</if>
 		</if>
 		order by no
+        limit #{startNo}, #{pageSize}
 	</select>
 	
 	<select id="detailNotice" parameterType="int" resultType="NoticeDto">

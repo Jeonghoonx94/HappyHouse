@@ -12,8 +12,8 @@ public interface NoticeDao {
 	
 	public void writeNotice(NoticeDto notice) throws Exception;
 	public NoticeDto detailNotice(int no) throws Exception;
-	public List<NoticeDto> noticeList(Map<String, String> map) throws Exception;
-	public int totalCount(PageBean bean) throws Exception;
+	public List<NoticeDto> noticeList(Map<String, Object> map) throws Exception;
+	public int totalCount(Map<String, Object> map) throws Exception;
 	public void deleteNotice(int no) throws Exception;
 	public void updateNotice(NoticeDto notice) throws Exception;
 }

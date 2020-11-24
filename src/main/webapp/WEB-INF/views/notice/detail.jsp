@@ -55,19 +55,19 @@ $(document).ready(function() {
 					<input type="hidden" name="no" value="${notice.no }">
 					<div class="mb-3">
 						<label for="title">제목</label>
-						<input type="text" class="form-control admin-input" id="ntitle" name="title" value="${notice.title}">
+						<input type="text" class="form-control admin-input" id="ntitle" name="title" value="${notice.title}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
 					<div class="mb-3">
 						<label for="reg_id">작성자</label>
-						<input type="text" class="form-control admin-input" id="nwriter" name="writer" value="${notice.writer}">
+						<input type="text" class="form-control admin-input" id="nwriter" name="writer" value="${notice.writer}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
 					<div class="mb-3">
 						<label for="content">내용</label>
-						<textarea class="form-control admin-input" rows="5" id="ncontent" name="content">${notice.content}</textarea>
+						<textarea class="form-control admin-input" rows="5" id="ncontent" name="content"<c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>${notice.content}</textarea>
 					</div>
 					<div class="mb-3">
 						<label for="tag">TAG</label>
-						<input type="text" class="form-control admin-input" id="ntag" name="tag" value="${notice.tag}">
+						<input type="text" class="form-control admin-input" id="ntag" name="tag" value="${notice.tag}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
 					<c:if test="${100 eq userlogin.role}">
 						<div class="form-group" align="left">

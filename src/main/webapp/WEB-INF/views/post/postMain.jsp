@@ -100,22 +100,24 @@
 	<div class="text-right">
     <a href="${root }/post/write" class="btn btn-primary">글쓰기</a>
 	</div>
-    <ul class="pagination mx-auto">
-        <c:forEach var="i" begin="1" end="${totalPage}" step="1">
-        	<c:choose>
-        		<c:when test="${i == page}">
-        			<li class="page-item active">
-                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
-            		</li>
-        		</c:when>
-        		<c:otherwise>
-        			<li class="page-item">
-                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
-            		</li>
-        		</c:otherwise>
-        	</c:choose>
-        </c:forEach>
-    </ul>
+	<div>
+	    <ul class="pagination justify-content-center">
+	        <c:forEach var="i" begin="1" end="${totalPage}" step="1">
+	        	<c:choose>
+	        		<c:when test="${i == page}">
+	        			<li class="page-item active">
+	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+	            		</li>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<li class="page-item">
+	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+	            		</li>
+	        		</c:otherwise>
+	        	</c:choose>
+	        </c:forEach>
+	    </ul>
+	</div>
 </div>
 </section>
 	<jsp:include page="../copyright.jsp"/>

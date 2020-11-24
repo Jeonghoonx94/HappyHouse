@@ -10,7 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>공지사항 목록</title>
-<link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="${root}/assets/img/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -45,37 +45,57 @@ $(document).ready(function() {
 				<h3 class="section-subheading text-muted">Happy House 공지사항입니다</h3>
 			</div>
 			<table class="table table-hover">
-		    <thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-		    </thead>
-		    <tbody>
-				<c:choose>
-	    			<c:when test='${empty noticelist}'>
-				    	<div>
-				        	<p>공지사항이 없습니다.</p>
-				        </div>
-	     			</c:when>
-		     		<c:otherwise>
-		     			<c:forEach var='notice' items="${noticelist}">
-		     			<tr>
-		     				<td>${notice.no}</td>
-		     				<td><a href='${root}/notice/detail?no=${notice.no}'>${notice.title}</a></td>
-		     				<td>${notice.writer}</td>
-		     				<td>${notice.regtime}</td>
-		     			</tr>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
-		<c:if test="${100 eq userlogin.role}">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticemodal">글 작성</button>
-		</c:if>
+			    <thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+					</tr>
+			    </thead>
+			    <tbody>
+					<c:choose>
+		    			<c:when test='${empty noticelist}'>
+					    	<div>
+					        	<p>공지사항이 없습니다.</p>
+					        </div>
+		     			</c:when>
+			     		<c:otherwise>
+			     			<c:forEach var='notice' items="${noticelist}">
+			     			<tr>
+			     				<td>${notice.no}</td>
+			     				<td><a href='${root}/notice/detail?no=${notice.no}'>${notice.title}</a></td>
+			     				<td>${notice.writer}</td>
+			     				<td>${notice.regtime}</td>
+			     			</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+			<c:if test="${100 eq userlogin.role}">
+				<div class="text-right">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticemodal">글 작성</button>
+				</div>
+			</c:if>
+			<div>
+			    <ul class="pagination justify-content-center">
+			        <c:forEach var="i" begin="1" end="${totalPage}" step="1">
+			        	<c:choose>
+			        		<c:when test="${i == page}">
+			        			<li class="page-item active">
+			                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+			            		</li>
+			        		</c:when>
+			        		<c:otherwise>
+			        			<li class="page-item">
+			                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+			            		</li>
+			        		</c:otherwise>
+			        	</c:choose>
+			        </c:forEach>
+			    </ul>
+			</div>
 		</div>
 	</section>
 <!-- Footer-->
