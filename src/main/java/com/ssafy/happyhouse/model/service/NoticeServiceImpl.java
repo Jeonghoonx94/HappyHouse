@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.NoticeDto;
 import com.ssafy.happyhouse.model.dao.NoticeDao;
+import com.ssafy.happyhouse.model.dao.PostDao;
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -22,7 +23,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<NoticeDto> noticeList(Map<String, String> map) throws Exception {
+	public List<NoticeDto> noticeList(Map<String, Object> map) throws Exception {
 		return sqlSession.getMapper(NoticeDao.class).noticeList(map);
 	}
 
@@ -39,6 +40,11 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public void updateNotice(NoticeDto notice) throws Exception {
 		sqlSession.getMapper(NoticeDao.class).updateNotice(notice);
+	}
+
+	@Override
+	public int totalCount(Map<String, Object> map) throws Exception {
+		return sqlSession.getMapper(NoticeDao.class).totalCount(map);
 	}
 
 }
