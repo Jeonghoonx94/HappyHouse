@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.LocationDto;
+import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.LocationService;
 
 @RestController
@@ -28,8 +29,9 @@ public class LocationController {
 	private LocationService locationService;
 
 	@PostMapping(value = "/list", headers = { "Content-type=application/json" })
-	public List<LocationDto> locationList() throws Exception{
-		return locationService.locationList();
+	public List<LocationDto> locationList(HttpSession session) throws Exception{
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		return locationService.locationList(member.getUserid());
 	}
    
 	@GetMapping(value = "/add", headers = { "Content-type=application/json" })
@@ -37,16 +39,17 @@ public class LocationController {
 		Map<String, String> map = new HashMap<>();
 		map.put("userid", location.getUserid());
 		map.put("dong", location.getDong());
+		
 		if(locationService.totalCount(map) == 0) {
 			locationService.addLocation(location);
 		}
-		return locationService.locationList();
+		return locationService.locationList(map.get("userid"));
 	}
 
 	@DeleteMapping(value = "/delete/{no}", headers = { "Content-type=application/json" })
-	public List<LocationDto> deleteLocation(@PathVariable int no) throws Exception{
-		System.out.println(no);
+	public List<LocationDto> deleteLocation(@PathVariable int no, HttpSession session) throws Exception{
 		locationService.deleteLocation(no);
-		return locationService.locationList();
+		MemberDto member = (MemberDto) session.getAttribute("userlogin");
+		return locationService.locationList(member.getUserid());
 	}
 }

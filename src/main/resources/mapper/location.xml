@@ -4,11 +4,12 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.dao.LocationDao">
 
-	<select id="locationList" resultType="LocationDto">
+	<select id="locationList" parameterType="String" resultType="LocationDto">
 		select l.*, gugun_name
 		from location l
 		join guguncode
 		on l.gugunName = left(gugun_code,5)
+		where l.userid = #{userid}
 		order by no;
 	</select>
 	

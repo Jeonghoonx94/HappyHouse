@@ -8,7 +8,7 @@ import com.ssafy.happyhouse.model.LocationDto;
 public interface LocationService {
 
 	public void addLocation(LocationDto location) throws Exception;
-	public List<LocationDto> locationList() throws Exception;
+	public List<LocationDto> locationList(String userid) throws Exception;
 	public int totalCount(Map<String, String> map) throws Exception;
 	public void deleteLocation(int no) throws Exception;
 }

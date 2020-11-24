@@ -23,8 +23,8 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	@Override
-	public List<LocationDto> locationList() throws Exception {
-		return sqlSession.getMapper(LocationDao.class).locationList();
+	public List<LocationDto> locationList(String userid) throws Exception {
+		return sqlSession.getMapper(LocationDao.class).locationList(userid);
 	}
 	
 	@Override
