@@ -35,9 +35,9 @@
         <div class="row text-center d-flex justify-content-center font-weight-bold p-3">
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
+               	var storeMarked = false;
+               	var pollutionMarked = false;
                 $(document).ready(function(){
-                	var storeMarked = false;
-                	var pollutionMarked = false;
                 	
                     $.get("${pageContext.request.contextPath}/map/sido"
                         ,function(data, status){
@@ -82,21 +82,20 @@
                                 	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
                                     $("#searchResult").empty();
                                     
-                                    let str = "";
                                     $.each(data, function(index, vo) {
                                     	console.log(vo);
                                     	console.log("vo : "+vo);
                                     	console.log("rentMoney" + vo.rentMoney);
                                     	
                                         //let str = "<tr value='서울특별시+강남구+역삼동+테헤란로+212'>"
-                                        str += "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+                                        let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
                                         +"<th scope='row'>"+vo.no+"</th>"
                                         +"<td>" + vo.aptName + "</td><td>"
-                                        +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
+                                        +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " dealDate='" + vo.dealYear+"년 "+vo.dealMonth + "월 "+vo.dealDay+"일' class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
                                         +"</td>"
                                         +"</tr>";
+	                                    $("#searchResult").append(str);
                                     });//each
-                                    $("#searchResult").html(str);
                                     //geocode(data);
                                 }//function
                                 , "json"
@@ -106,42 +105,37 @@
                     $("#searchBtn").click(function() {
                     	console.log($("#dong").val(),$("#searchName").val())
                     	if($("#dong").val() !== "0") { // 선택했다면 
-//                     		if($("#searchName").val()) {
-			                    $.ajax({
-			            			url:"${pageContext.request.contextPath}/map/search",  
-			            			type:'GET',
-			            			contentType:'application/json;charset=utf-8',
-			            			dataType:'json',
-			            			data: {dong:$("#dong").val(), type:$("#type").val(), aptName:$("#searchName").val()},
-			            			success:function(data) {
-			            				console.log(data);
-			            				
-	                                	storeMarked = false;
-	                                	pollutionMarked = false;
-	                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
-			                            $("#searchResult").empty();
-			                            
-			                            let str = "";
-			                            $.each(data, function(index, vo) {
-			                            	console.log(vo);
-			                            	console.log("vo : "+vo);
-			                            	console.log("rentMoney" + vo.rentMoney);
-			                                str += "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
-			                                +"<th scope='row'>"+vo.no+"</th>"
-			                                +"<td>" + vo.aptName + "</td><td>"
-			                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
-			                                +"</td>"
-			                                +"</tr>"
-			                            });//each
-		                                $("#searchResult").html(str);
-			            			},
-			            			error:function(xhr,status,msg){
-			            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-			            			}
-			            		});
-//                     		} else {
-//                     			alert('아파트 이름을 입력해 주세요!');
-//                     		}
+		                    $.ajax({
+		            			url:"${pageContext.request.contextPath}/map/search",  
+		            			type:'GET',
+		            			contentType:'application/json;charset=utf-8',
+		            			dataType:'json',
+		            			data: {dong:$("#dong").val(), type:$("#type").val(), aptName:$("#searchName").val()},
+		            			success:function(data) {
+		            				console.log(data);
+		            				
+                                	storeMarked = false;
+                                	pollutionMarked = false;
+                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
+		                            $("#searchResult").empty();
+		                            
+		                            $.each(data, function(index, vo) {
+		                            	console.log(vo);
+		                            	console.log("vo : "+vo);
+		                            	console.log("rentMoney" + vo.rentMoney);
+		                                let str = "<tr value="+vo.dong+"+"+vo.aptName+"+"+vo.jibun+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+">"
+		                                +"<th scope='row'>"+vo.no+"</th>"
+		                                +"<td>" + vo.aptName + "</td><td>"
+		                                +"<button type='button'"+" no="+vo.no+" dong="+vo.dong+" aptName="+vo.aptName+" jibun="+vo.jibun+" code="+vo.code+ " rentMoney=" +vo.rentMoney+" dealAmount="+vo.dealAmount+ " dealDate='" + vo.dealYear+"년 "+vo.dealMonth + "월 "+vo.dealDay+"일' class='btn btn-secondary btn-sm detail' data-toggle='modal' data-target='#exampleModal'>자세히</button>"
+		                                +"</td>"
+		                                +"</tr>"
+	                                	$("#searchResult").append(str);
+		                            });//each
+		            			},
+		            			error:function(xhr,status,msg){
+		            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+		            			}
+		            		});
                     	} else { // 선택하지 않았다면
                     		alert('읍/면/동 을 확인해주세요!');
                     	}
@@ -153,6 +147,7 @@
                     		console.log("업종 정보 버튼 클릭!");
                     		if($("#dong").val() !== "0") {
 	                    		storeMarked = true;
+	                    		console.log("업종 정보 표시!");
 	                    		showStoreMarker($("#dong").val());
                     		} else {
                     			alert("읍/면/동 을 확인해주세요!");
@@ -165,6 +160,7 @@
                     		console.log("환경 오염 정보 버튼 클릭!");
                     		if($("#dong").val() !== "0") {
 	                    		pollutionMarked = true;
+	                    		console.log("환경 오염 시설 정보 표시!");
 	                    		showPollutionMarker($("#dong").val());
                     		} else {
                     			alert("읍/면/동 을 확인해주세요!");
@@ -220,7 +216,7 @@
             </div>
         </div>
         <div class="row text-center d-flex justify-content-center">
-            <div style="width: 315px">
+            <div style="width: 320px">
 				<div class="btn-group btn-group-toggle">
 					<Button class="btn btn-light" type="button" id="storeBtn">동네 업종 정보</Button>
 					<Button class="btn btn-light" type="button" id="pollutionBtn"> 대기오염 정보</Button>
@@ -300,6 +296,10 @@
                         	<th scope="col">가격</th>
                         	<td id="detailPrice">500000</td>
                         </tr>
+                        <tr>
+                        	<th scope="col">거래일자</th>
+                        	<td id="detailDate">2020년 7월 7일</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -340,11 +340,6 @@
             iconImage : myposition,
             content : '멀티캠퍼스(역삼)'
         };
-        var multimarker2 = {
-            coords : multi,
-            iconImage : myposition,
-            content : '멀티캠퍼스(역삼)'
-        };
         
         addMarker(multimarker);
         
@@ -362,7 +357,7 @@
         const marker = new google.maps.Marker({
             position : new google.maps.LatLng(parseFloat(props.coords.lat), parseFloat(props.coords.lng)),
             map : map,
-            label: props.name,
+//             label: props.name,
             title: props.name
         });
 
@@ -370,16 +365,18 @@
             marker.setIcon(props.iconImage);
         }
 
-        if (props.content) {
-            infoWindow = new google.maps.InfoWindow({
-                content : props.content
-            });
-        }
+//         if (props.content) {
+//             infoWindow = new google.maps.InfoWindow({
+//                 content : props.content
+//             });
+//         }
 
         marker.addListener('click', function() {
-//             map2.setZoom(17);
-            map2.setCenter(marker.getPosition());
+//             map.setZoom(17);
+            map.setCenter(marker.getPosition());
 //             bounceMarker(marker);
+//             infoWindow.open(map);
+			popInfoWindow(marker.getPosition(), props.content, marker);
         });
         markers.push(marker);
         setMapOnAll(map);
@@ -389,9 +386,7 @@
         const marker = new google.maps.Marker({
             position : new google.maps.LatLng(parseFloat(props.coords.lat), parseFloat(props.coords.lng)),
             map : map,
-            label: props.name,
             title: props.name
-            
         });
         
         map.setCenter(marker.getPosition());
@@ -401,17 +396,18 @@
             marker.setIcon(props.iconImage);
         }
 
-        if (props.content) {
-            infoWindow = new google.maps.InfoWindow({
-                content : props.content
-            });
-
-        }
+//         if (props.content) {
+//             infoWindow = new google.maps.InfoWindow({
+//                 content : props.content
+//             });
+//         }
 
         marker.addListener('click', function() {
-            map.setZoom(17);
+            map.setZoom(16);
             map.setCenter(marker.getPosition());
-            bounceMarker(marker);
+//             bounceMarker(marker);
+//             infoWindow.open(map, marker);
+			popInfoWindow(marker.getPosition(), props.content, marker);
         });
         markers.push(marker);
         setMapOnAll(map);
@@ -440,8 +436,38 @@
         }
     }
 
+    function popInfoWindow(latlng, content, marker){
+    	var geocoder = new google.maps.Geocoder();
+    		map.setCenter(latlng);
+//     		addMarker(latlng);	//마커출력
+    		geocoder.geocode({'latLng': latlng}, function(results, status) {
+    	if (status == google.maps.GeocoderStatus.OK) {
+    		if (results[1]) {
+    			var contentString =
+    				'<div id="content">'+
+    					'<br><div id=="adress">'+
+    					'<b>'+content+'</b>'+
+    					'<br></div>'+
+    					'<p>' +
+           				'<b>주소 :</b> ' +results[1].formatted_address+
+    					'</p>'+
+    				'</div>';
+    			infoWindow.setContent(contentString);
+    			infoWindow.open(map, marker);
+    		} else {
+    			alert("No results found");
+    		}
+    	}else{
+    		alert("Geocoder failed due to: " + status);
+    	}
+    	});
+    }
+
     $('#table1').on("click", ".clickeTr", function() {
     	deleteMarkers();
+		storeMarked = false;
+		pollutionMakred = false;
+		
         var area = $(this).attr("value");
         console.log($(this).attr("no"));
         //console.log(area);
@@ -471,24 +497,28 @@
     });
 
     function showStoreMarker(dongVal) {
-//     	let dongVal = $("#dong").val();
     	console.log(dongVal);
         // 상점
         $.get("${root}/store/list"
                 ,{dong:dongVal}
                 ,function(data, status){
-                    $.each(data, function(index, vo) {
-                    	let marker = {
-                                coords : {
-                                    lat : vo.lat,
-                                    lng : vo.lng
-                                },
-                                iconImage : null,
-                                name : vo.shopName
-                            };
-//                     	console.log(vo);
-                        addMarker2(marker);
-                    });//each
+                	console.log("store!", data.length);
+                	if(data.length >= 1) {
+	                    $.each(data, function(index, vo) {
+	                    	let marker = {
+	                                coords : {
+	                                    lat : vo.lat,
+	                                    lng : vo.lng
+	                                },
+	                                iconImage : "${root}/assets/img/store.png",
+	                                content : vo.shopName,
+	                                name : vo.shopName
+	                            };
+	                        addMarker2(marker);
+	                    });//each
+                	} else {
+                		alert("해당 읍/면/동에 상권 정보가 등록되어 있지 않습니다!");
+                	}
                 }//function
                 , "json"
         );//get
@@ -500,17 +530,23 @@
         $.get("${root}/pollution/list"
                 ,{dong:dongVal}
                 ,function(data, status){
-                    $.each(data, function(index, vo) {
-                    	let marker = {
-                                coords : {
-                                    lat : vo.lat,
-                                    lng : vo.lng
-                                },
-                                iconImage : null,
-                                name : vo.name
-                            };
-                        addMarker2(marker);
-                    });//each
+                	console.log("pollution!", data.length);
+                	if(data.length >= 1) {
+	                    $.each(data, function(index, vo) {
+	                    	let marker = {
+	                                coords : {
+	                                    lat : vo.lat,
+	                                    lng : vo.lng
+	                                },
+	                                iconImage : "${root}/assets/img/pollution_s.png",
+	                                content : vo.name,
+	                                name : vo.name
+	                            };
+	                        addMarker2(marker);
+	                    });//each
+//                 	} else {
+//                 		alert("해당 읍/면/동에 대기오염 시설 정보가 등록되어 있지 않습니다");
+                	}
                 }//function
                 , "json"
         );//get
@@ -538,29 +574,31 @@
         	price = $(this).attr("rentMoney");	
         }
         $("#detailPrice").text(price);
-
+        var dealDate = $(this).attr("dealDate");
+        $("#detailDate").text(dealDate);
+        
     });
 
-    $('#table1 > tbody > tr').on("click", function() {
-        var area = $(this).attr("value");
-        //console.log(area);
-        $.get("https://maps.googleapis.com/maps/api/geocode/json", {
-            key : 'AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw',
-            address : area
-        }, function(data, status) {
-            console.log(data);
-            deleteMarkers();
-            var officemarker = {
-                coords : {
-                    lat : data.results[0].geometry.location.lat,
-                    lng : data.results[0].geometry.location.lng
-                },
-                iconImage : null,
-                content : area
-            };
-            console.log(officemarker);
-            addMarker(officemarker);
-        }, "json");//get
-    });
+//     $('#table1 > tbody > tr').on("click", function() {
+//         var area = $(this).attr("value");
+//         //console.log(area);
+//         $.get("https://maps.googleapis.com/maps/api/geocode/json", {
+//             key : 'AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw',
+//             address : area
+//         }, function(data, status) {
+//             console.log(data);
+//             deleteMarkers();
+//             var officemarker = {
+//                 coords : {
+//                     lat : data.results[0].geometry.location.lat,
+//                     lng : data.results[0].geometry.location.lng
+//                 },
+//                 iconImage : null,
+//                 content : area
+//             };
+//             console.log(officemarker);
+//             addMarker(officemarker);
+//         }, "json");//get
+//     });
 </script>
 
