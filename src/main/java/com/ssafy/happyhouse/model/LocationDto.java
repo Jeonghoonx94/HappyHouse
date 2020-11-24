@@ -5,6 +5,7 @@ public class LocationDto {
 	private String userid;
 	private String dong;
 	private String gugunName;
+	private String gugun_name;
 	
 	public LocationDto(String userid, String dong, String gugunName) {
 		this.userid = userid;
@@ -37,9 +38,18 @@ public class LocationDto {
 		this.gugunName = gugunName;
 	}
 	
+	public String getGugun_name() {
+		return gugun_name;
+	}
+
+	public void setGugun_name(String gugun_name) {
+		this.gugun_name = gugun_name;
+	}
+
 	@Override
 	public String toString() {
-		return "LocationDto [no=" + no + ", userid=" + userid + ", dong=" + dong + ", gugunName=" + gugunName + "]";
+		return "LocationDto [no=" + no + ", userid=" + userid + ", dong=" + dong + ", gugunName=" + gugunName
+				+ ", gugun_name=" + gugun_name + "]";
 	}
-	
+
 }	

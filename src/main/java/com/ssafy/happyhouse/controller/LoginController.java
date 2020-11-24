@@ -61,4 +61,10 @@ public class LoginController {
 				return "error/error";
 			}
 		}
+		
+		@GetMapping(value = "/loc/list", headers = { "Content-type=application/json" })
+		public String location() throws Exception{
+			return "location";
+		}
+		
 }

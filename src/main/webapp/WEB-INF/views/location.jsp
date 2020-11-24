@@ -37,6 +37,21 @@
             <script>
                 let colorArr = ['table-primary','table-success','table-danger'];
                 $(document).ready(function(){
+                	$.post("${pageContext.request.contextPath}/loc/list"
+                        ,function(data, status){
+                       	 $("#locResult").empty();
+                            $.each(data, function(index, vo) {
+                            	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
+			     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
+			     				+ "<td>"
+			     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
+			     				+ "</td>"
+				     			+ "</tr>"
+                            $("#locResult").append(str);
+            				});
+                        }//function
+                        , "json"
+                    );//get
                     $.get("${pageContext.request.contextPath}/map/sido"
                         ,function(data, status){
                             $.each(data, function(index, vo) {
@@ -83,7 +98,16 @@
 			            			dataType:'json',
 			            			data: {  dong:$("#locDong").val(), gugunName:$("#locGugun").val(), userid:"${userlogin.userid}", no:$("#locNo").val() },
 			            			success:function(data) {
-			            				
+	                                    $("#locResult").empty();
+			                            $.each(data, function(index, vo) {
+			                            	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
+						     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
+						     				+ "<td>"
+						     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
+						     				+ "</td>"
+							     			+ "</tr>"
+			                            $("#locResult").append(str);
+			            				});
 			            			},
 			            			error:function(xhr,status,msg){
 			            				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
@@ -138,23 +162,6 @@
                         </tr>
                     </thead>
                     <tbody id="locResult">
-						<c:choose>
-			    			<c:when test='${empty locationlist}'>
-						    	<div>
-						        	<p>조회 할 관심 지역이 없습니다.</p>
-						        </div>
-			     			</c:when>
-				     		<c:otherwise>
-				     			<c:forEach var='location' items="${locationlist}">
-				     			<tr>
-				     				<td>${location.dong} / ${location.gugunName}</td>
-				     				<td>
-				     				<button type='button' class='btn btn-secondary btn-sm delete'>삭제</button>
-				     				</td>
-				     			</tr>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
                     </tbody>
                 </table>
             </div>
@@ -318,16 +325,25 @@
     });
 
     $('#locTable').on("click", ".delete", function() {
+    	console.log($(this).attr("no"));
     	$.ajax({
-			url:"${pageContext.request.contextPath}/loc/delete",  
-			type:'GET',
+			url:"${pageContext.request.contextPath}/loc/delete/" + $(this).attr("no"),  
+			type:'delete',
 			contentType:'application/json;charset=utf-8',
 			dataType:'json',
-			data: { no:"" },
+			/* data: { }, */
 			success:function(data) {
-				console.log(data);
-				
-			},
+			 $("#locResult").empty();
+                $.each(data, function(index, vo) {
+                	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
+     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
+     				+ "<td>"
+     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
+     				+ "</td>"
+	     			+ "</tr>"
+                $("#locResult").append(str);
+				});
+ 			},
 			error:function(xhr,status,msg){
 				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
 			}

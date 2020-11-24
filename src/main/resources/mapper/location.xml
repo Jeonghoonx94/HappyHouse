@@ -5,9 +5,11 @@
 <mapper namespace="com.ssafy.happyhouse.model.dao.LocationDao">
 
 	<select id="locationList" resultType="LocationDto">
-		select *
-		from location
-		order by no
+		select l.*, gugun_name
+		from location l
+		join guguncode
+		on l.gugunName = left(gugun_code,5)
+		order by no;
 	</select>
 	
 	<select id="totalCount" parameterType="map" resultType="Integer">
