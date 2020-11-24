@@ -44,7 +44,7 @@ public class PostController {
 		// Pagination
 		map.put("page", page); // 현재 페이지
 		map.put("pageSize", pageSize); // 한 페이지에 나타낼 게시글 수
-		int totalPostCount = postService.postAllCount(map); // 전체 게시글 수 : 검색 결과 포함
+		int totalPostCount = postService.getPostCount(map); // 전체 게시글 수 : 검색 결과 포함
 		int totalPage = totalPostCount / pageSize; // 총 페이지 수
 		if (totalPostCount % pageSize != 0) {
 			totalPage++;
@@ -52,7 +52,7 @@ public class PostController {
 		int startPostNo = (page - 1) * pageSize; // 해당 페이지의 가장 위에 보여줄 게시글 번호
 		map.put("startPostNo", startPostNo);
 
-		List<PostDto> postList = postService.postFindAll(map);
+		List<PostDto> postList = postService.findAllPost(map);
 
 		if (map.get("search") != null) { // 검색했다면
 			model.addAttribute("select", map.get("select"));
@@ -67,10 +67,10 @@ public class PostController {
 	}
 
 	@GetMapping("/view")
-	public String postView(Model model, @RequestParam int postNo, HttpSession session) {
+	public String viewPost(Model model, @RequestParam int postNo, HttpSession session) {
 
 		try {
-			PostDto post = postService.findByPostId(postNo);
+			PostDto post = postService.findByPostNo(postNo);
 			// 조회수
 			post.setCount(post.getCount() + 1);
 			
@@ -94,7 +94,7 @@ public class PostController {
 	}
 
 	@GetMapping("/write")
-	public String postWrite(Model model, HttpSession session) {
+	public String moveWritePost(Model model, HttpSession session) {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
@@ -110,7 +110,7 @@ public class PostController {
 	}
 
 	@PostMapping("/write")
-	public String postWrite(@RequestParam String title, @RequestParam String content, @RequestParam String username,
+	public String writePost(@RequestParam String title, @RequestParam String content, @RequestParam String username,
 			HttpSession session, Model model) {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
@@ -131,27 +131,27 @@ public class PostController {
 	}
 
 	@GetMapping("/update")
-	public String postUpdateRedirect(Model model, @RequestParam int postNo, HttpSession session) {
+	public String moveUpdatePost(Model model, @RequestParam int postNo, HttpSession session) {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
 			return "index";
 		}
 		
-		PostDto post = postService.findByPostId(postNo);
+		PostDto post = postService.findByPostNo(postNo);
 		model.addAttribute("posts", post);
 		return "post/postUpdate";
 	}
 
 	@PostMapping("/update")
-	public String postUpdate(@RequestParam int postNo, @RequestParam String title, @RequestParam String content,
+	public String updatePost(@RequestParam int postNo, @RequestParam String title, @RequestParam String content,
 			Model model, HttpSession session) {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
 			return "index";
 		}
-		PostDto post = postService.findByPostId(postNo);
+		PostDto post = postService.findByPostNo(postNo);
 		post.setTitle(title);
 		post.setContent(content);
 		post.setCount(post.getCount());
@@ -185,6 +185,7 @@ public class PostController {
 		}
 	}
 
+	// 글 보는 중에 삭제
 	@GetMapping("/deleteComment")
 	public String deleteComment(@RequestParam int commentNo, Model model, HttpSession session) {
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");

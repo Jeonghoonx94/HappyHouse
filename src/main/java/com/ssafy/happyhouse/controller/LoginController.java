@@ -8,13 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.service.MemberService;
@@ -58,7 +55,7 @@ public class LoginController {
 				} else {
 					model.addAttribute("msg", "입력하신 아이디와 이메일 정보가 다릅니다.");
 				}
-				return "modal/findPassword";
+				return "member/findPassword";
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "error/error";
