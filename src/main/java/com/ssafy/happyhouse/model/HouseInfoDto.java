@@ -13,7 +13,9 @@ public class HouseInfoDto {
 	private String img;
 	private String rentMoney;
 	private String dealAmount;
-	
+	private String dealYear;
+	private String dealMonth;
+	private String dealDay;
 
 	public String getRentMoney() {
 		return rentMoney;
@@ -101,6 +103,30 @@ public class HouseInfoDto {
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public String getDealYear() {
+		return dealYear;
+	}
+
+	public void setDealYear(String dealYear) {
+		this.dealYear = dealYear;
+	}
+
+	public String getDealMonth() {
+		return dealMonth;
+	}
+
+	public void setDealMonth(String dealMonth) {
+		this.dealMonth = dealMonth;
+	}
+
+	public String getDealDay() {
+		return dealDay;
+	}
+
+	public void setDealDay(String dealDay) {
+		this.dealDay = dealDay;
 	}
 
 }

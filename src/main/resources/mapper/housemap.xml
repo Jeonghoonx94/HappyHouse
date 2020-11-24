@@ -26,7 +26,7 @@
 	</select>
 
 	<select id="getAptInDong" parameterType="String" resultType="HouseInfoDto">
-		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
+		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney, dealYear, dealMonth, dealDay
 		FROM houseinfo i right join housedeal d using (aptname)
 		<if test="type != null">
 			WHERE d.dong = #{dong} and type = #{type}
@@ -35,17 +35,15 @@
 			WHERE d.dong = #{dong}
 		</if>
 		order by d.no
-		limit 100
 	</select>
 
 	<select id="getAptByName" parameterType="String"
 		resultType="HouseInfoDto">
-		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney
+		SELECT d.no, d.dong , AptName, d.code, d.jibun, dealAmount, rentMoney, dealYear, dealMonth, dealDay
 		FROM houseinfo i right join housedeal d using (aptname)
 		where d.dong = #{dong} and type = #{type} 
 			and aptname like #{aptName}
 		order by d.no
-		limit 100
 	</select>
 
 </mapper>

@@ -39,7 +39,8 @@
                 $(document).ready(function(){
                 	$.post("${pageContext.request.contextPath}/loc/list"
                         ,function(data, status){
-                       	 $("#locResult").empty();
+                       	$("#locTableDiv").css({"overflow-y":"auto", "height":"300px"});
+                    	$("#locResult").empty();
                             $.each(data, function(index, vo) {
                             	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
 			     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
@@ -98,6 +99,7 @@
 			            			dataType:'json',
 			            			data: {  dong:$("#locDong").val(), gugunName:$("#locGugun").val(), userid:"${userlogin.userid}", no:$("#locNo").val() },
 			            			success:function(data) {
+			            				$("#locTableDiv").css({"overflow-y":"auto", "height":"300px"});
 	                                    $("#locResult").empty();
 			                            $.each(data, function(index, vo) {
 			                            	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
@@ -154,7 +156,7 @@
             </div>
         </div>
         <div class="row text-center d-flex justify-content-center">
-            <div class="col-4">
+            <div class="col-4" id="locTableDiv">
                 <table class="table table-striped" id="locTable">
                     <thead>
                         <tr>
