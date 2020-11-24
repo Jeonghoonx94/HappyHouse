@@ -38,8 +38,6 @@ $(document).ready(function() {
 <body>
 <!-- Title-->
 <jsp:include page="../title.jsp"/>
-<!-- Header-->
-<jsp:include page="../header.jsp"/>
 	<section class="page-section" id="notice">
 		<div class="container">
 			<div class="text-center">
