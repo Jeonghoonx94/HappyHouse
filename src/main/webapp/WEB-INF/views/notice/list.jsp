@@ -42,7 +42,7 @@ $(document).ready(function() {
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">공지사항</h2>
-				<h3 class="section-subheading text-muted">Happy House 공지사항</h3>
+				<h3 class="section-subheading text-muted">Happy House 공지사항입니다</h3>
 			</div>
 			<table class="table table-hover">
 		    <thead>
@@ -73,7 +73,9 @@ $(document).ready(function() {
 				</c:choose>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticemodal">글 작성</button>
+		<c:if test="${100 eq userlogin.role}">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticemodal">글 작성</button>
+		</c:if>
 		</div>
 	</section>
 <!-- Footer-->
@@ -100,7 +102,7 @@ $(document).ready(function() {
 							<div class="mb-3">
 								<label for="reg_id">작성자</label>
 								<input type="text" class="form-control" name="writer"
-									id="noticeWriter" placeholder="작성자를 입력해 주세요">
+									id="noticeWriter" value="${userlogin.userid}" readonly>
 							</div>
 							<div class="mb-3">
 								<label for="content">내용</label>

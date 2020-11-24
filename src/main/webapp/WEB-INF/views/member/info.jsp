@@ -45,14 +45,15 @@ $(document).ready(function() {
 	<jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light">
 	<div class="container col-lg-6" align="center">
-		<div>
-			<h1>회원 정보</h1>
+		<div class="text-center">
+			<h2 class="section-heading text-uppercase">회원 정보</h2>
+			<h3 class="section-subheading text-muted">회원 정보를 수정하거나 탈퇴합니다</h3>
 		</div>
 		<form id="updateform" name="updateform" action="" method="post">
 			<div class="container col-lg-6" align="center">				
 				<div class="form-group" align="left">
 					<label for="">아이디</label>
-					<input type="text" class="form-control" id="userID" name="userid"  value="${member.userid}">
+					<input type="text" class="form-control" id="userID" name="userid"  value="${member.userid}" readonly>
 				</div>
 				<div class="form-group" align="left">
 					<label for="">비밀번호</label>
@@ -76,9 +77,11 @@ $(document).ready(function() {
 				</div>
 				<div class="form-group" align="left">
 					<button type="button" class="btn btn-primary" id="updateBtn">수정</button>
-					<button type="button" class="btn btn-danger" id="removeBtn">삭제</button>
+					<button type="button" class="btn btn-danger" id="removeBtn">탈퇴</button>
 				</div>
-			<button type="button" class="btn btn-primary" id="mvList">목록</button>
+			<c:if test="${100 eq userlogin.role}">
+				<button type="button" class="btn btn-primary" id="mvList">목록</button>
+			</c:if>
 			</div>
 		</form>
 	</div>

@@ -35,11 +35,15 @@ $(document).ready(function() {
 	<c:if test='${not empty param.key}'>
  		$('#key').val('${param.key}')
 	</c:if>
-
 	function pagelist(cpage){
 		$("#pageNo").val(cpage);
 		$("#searchform").attr('action',"${root}/member/list?key=${searchKey}&word=${searchWord}").submit;
 	}
+	$('#removeMember').click(function () {   
+		if(alert('정말 삭제하시겠습니까?')){
+			location.href='${root}/member/remove?userid=${userinfo.userid}';
+		}
+	})
 })
 </script>
 </head>
@@ -49,7 +53,7 @@ $(document).ready(function() {
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">회원 정보 목록</h2>
-				<h3 class="section-subheading text-muted">회원 정보 목록입니다.</h3>
+				<h3 class="section-subheading text-muted">가입된 회원 정보 목록입니다</h3>
 			</div>
 		<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
 			<select name='key' id='searchKey'>
@@ -68,6 +72,7 @@ $(document).ready(function() {
 					<th>이메일</th>
 					<th>전화번호</th>
 					<th>주소</th>
+					<th></th>
 				</tr>
 		    </thead>
 		    <tbody>
@@ -80,11 +85,14 @@ $(document).ready(function() {
 		     		<c:otherwise>
 		     			<c:forEach var='userinfo' items="${userlist}">
 		     			<tr>
-		     				<td><a href='${root}/member/info?userid=${userinfo.userid}'>${userinfo.userid}</a></td>
+		     				<td>${userinfo.userid}</td>
 		     				<td>${userinfo.username}</td>
 		     				<td>${userinfo.email}</td>
 		     				<td>${userinfo.phone}</td>
 		     				<td>${userinfo.address}</td>
+		     				<td>
+		     					<button type="button" class="btn btn-danger" id="removeMember">삭제</button>
+		     				</td>
 		     			</tr>
 						</c:forEach>
 					</c:otherwise>

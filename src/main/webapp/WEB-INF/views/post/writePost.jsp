@@ -42,9 +42,10 @@
 <jsp:include page="../title.jsp"/>
 	<section class="page-section bg-light">
 	<div class="container">
-	
-	    <h1>게시글 등록</h1>
-	
+		<div class="text-center">
+			<h2 class="section-heading text-uppercase">게시글 등록</h2>
+			<h3 class="section-subheading text-muted">새로운 게시글을 등록할 수 있습니다</h3>
+		</div>
 	    <form method="post" action="${root }/post/write" >
 	        <table class="table table-bordered table-condensed">
 	

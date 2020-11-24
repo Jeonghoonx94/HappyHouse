@@ -40,11 +40,15 @@
     }
 </style>
 <body>
-    <!-- 메뉴바 -->
-	<jsp:include page="../title.jsp"/>
-    <!-- ./ 메뉴바 -->
-	<section class="page-section bg-light">
+<!-- 메뉴바 -->
+<jsp:include page="../title.jsp"/>
+<!-- ./ 메뉴바 -->
+<section class="page-section bg-light">
 <div class="container">
+	<div class="text-center">
+		<h2 class="section-heading text-uppercase">게시글 목록</h2>
+		<h3 class="section-subheading text-muted">작성된 게시글 목록입니다</h3>
+	</div>
     <form method="get" class="form-inline">
         <div id="margin" class="form-group">
             <select name="select" class="form-control">

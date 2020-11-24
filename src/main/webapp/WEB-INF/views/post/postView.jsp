@@ -37,14 +37,15 @@
     </style>
 </head>
 <body>
-    <!-- 메뉴바 -->
-	<jsp:include page="../title.jsp"/>
-    <!-- ./ 메뉴바 -->
-	<section class="page-section bg-light">
+<!-- 메뉴바 -->
+<jsp:include page="../title.jsp"/>
+<!-- ./ 메뉴바 -->
+<section class="page-section bg-light">
 <div class="container">
-
-    <h1>게시글 보기</h1>
-
+	<div class="text-center">
+		<h2 class="section-heading text-uppercase">게시글 상세 보기</h2>
+		<h3 class="section-subheading text-muted">해당 게시글의 상세 내용입니다</h3>
+	</div>
     <form method="POST">
         <table class="table table-bordered table-condensed w-100">
         	<colgroup>

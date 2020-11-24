@@ -38,14 +38,15 @@
 </head>
 <body>
 
-    <!-- 메뉴바 -->
-	<jsp:include page="../title.jsp"/>
-    <!-- ./ 메뉴바 -->
-	<section class="page-section bg-light" id="team">
+<!-- 메뉴바 -->
+<jsp:include page="../title.jsp"/>
+<!-- ./ 메뉴바 -->
+<section class="page-section bg-light" id="team">
 <div class="container">
-
-    <h1>게시글 수정</h1>
-
+	<div class="text-center">
+		<h2 class="section-heading text-uppercase">게시글 수정</h2>
+		<h3 class="section-subheading text-muted">작성한 게시글을 수정할 수 있습니다</h3>
+	</div>
     <form action="${root }/post/update?postNo=${post.postNo}" method="POST">
         <table class="table table-bordered table-condensed">
             <tr>

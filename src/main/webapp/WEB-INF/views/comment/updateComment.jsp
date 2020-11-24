@@ -24,21 +24,23 @@
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <!-- Core theme JS-->
 <script src="${root }/js/scripts.js"></script>
-    <style>
+<!--     <style>
         body { font-family: 굴림체; }
         table.table { width: 500px; }
         table td:nth-child(1) { background-color: #eee; }
         h1 {
             margin-top: 30px;
         }
-    </style>
+    </style> -->
 </head>
 <body id="page-top">
 <jsp:include page="../title.jsp"/>
-
-	<section class="page-section bg-light">
+<section class="page-section bg-light">
 <div class="container">
-    <h1>댓글 수정</h1>
+    <div class="text-center">
+		<h2 class="section-heading text-uppercase">댓글 수정</h2>
+		<h3 class="section-subheading text-muted">작성한 댓글을 수정할 수 있습니다</h3>
+	</div>
     <form action="${root }/comment/update?commentNo=${comment.commentNo}" method="POST">
         <table class="table table-bordered table-condensed">
             <tr>

@@ -53,16 +53,17 @@ $(document).ready(function() {
 	    }
 
 	});
-}
+})
 </script>
 </head>
 <body id="page-top">
 <jsp:include page="../title.jsp"/>
 <div class="container">
 	<section class="page-section" id="contact">
+	<div class="container">
 		<div class="text-center">
-			<h2 class="section-heading text-uppercase">회원가입</h2>
-			<h3 class="section-subheading text-muted">다음 항목을 입력해주세요.</h3>
+			<h2 class="section-heading text-uppercase">회원 가입</h2>
+			<h3 class="section-subheading text-muted">회원 가입을 위해 다음 항목을 입력해주세요.</h3>
 		</div>
 		<form id="joinform" name="joinform" method="post" action="" novalidate="novalidate">
 			<div class="row align-items-stretch mb-5">
@@ -103,6 +104,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</form>
+		</div>
 	</section>
 </div>
 <jsp:include page="../copyright.jsp"/>
