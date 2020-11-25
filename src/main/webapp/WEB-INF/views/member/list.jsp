@@ -91,7 +91,7 @@ $(document).ready(function() {
 			     				<td>${userinfo.phone}</td>
 			     				<td>${userinfo.address}</td>
 			     				<td>
-			     					<button type="button" class="btn btn-danger btn-sm" id="removeMember">삭제</button>
+			     					<a class="btn btn-danger btn-sm" href="${root }/member/list/remove?userid=${userinfo.userid}"  onclick="confirm('정말 삭제하시겠습니까?')">삭제</a>
 			     				</td>
 			     			</tr>
 							</c:forEach>
