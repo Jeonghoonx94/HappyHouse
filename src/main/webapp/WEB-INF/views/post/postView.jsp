@@ -116,8 +116,8 @@
         <c:forEach items="${comments}" var="comment">
             <tr>
                 <th>${comment.username}</th>
-                <th>${comment.content}</th>
-                <th style="font-size: 0.76em">작성: ${comment.createDateTime}<hr>수정: ${comment.updateTime}</th>
+                <td>${comment.content}</td>
+                <td style="font-size: 0.76em">작성: ${comment.createDateTime}<hr>수정: ${comment.updateTime}</td>
                 <th>
 <!--                 userlogin : 로그인정보, 댓글 작성자와 로그인 아이디가 같다면 수정, 삭제 가능 -->
                 <c:choose>

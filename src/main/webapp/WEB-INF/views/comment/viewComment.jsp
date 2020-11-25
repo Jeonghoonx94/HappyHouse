@@ -43,7 +43,7 @@
 			<h3 class="section-subheading text-muted">해당 게시글의 댓글 목록입니다</h3>
 		</div>
 	    <%-- <a href="${root }/comment/list?postNo=${postNo}">댓글 목록 </a> --%>
-	    <table class="table table-hover table table-striped w-100">
+	    <table class="table table-hover table-striped w-100">
 			<colgroup>
 				<col width="100px">
 				<col>
@@ -61,11 +61,11 @@
 	
 	        <c:forEach items="${comments}" var="comment">
 	            <tr>
-	                <th>${comment.username}</th>
-	                <th>${comment.content}</th>
-	                <th>${comment.createDateTime}</th>
-	                <th>${comment.updateTime}</th>
-	                <th>
+	                <td>${comment.username}</td>
+	                <td>${comment.content}</td>
+	                <td>${comment.createDateTime}</td>
+	                <td>${comment.updateTime}</td>
+	                <td>
 	                <c:choose>
 		                <c:when test="${comment.userid eq userlogin.userid}">
 			                <a href="${root }/comment/update?commentNo=${comment.commentNo}">수정</a> | 
@@ -77,11 +77,13 @@
 		                	</c:if>
 		                </c:otherwise>
 	                </c:choose>
-	                </th>
+	                </td>
 	            </tr>
 	        </c:forEach>
 	    </table>
-	    <a href="${root }/post/view?postNo=${postNo}" class="btn btn-info">게시글로 가기</a>
+		<div class="form-group" align="right">
+	    	<a href="${root }/post/view?postNo=${postNo}" class="btn btn-secondary">게시글 가기</a>
+	    </div>
 	</div>
 </section>
 <jsp:include page="../copyright.jsp"/>

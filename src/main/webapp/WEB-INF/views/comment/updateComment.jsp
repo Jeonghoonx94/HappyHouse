@@ -51,8 +51,10 @@
                 <td width="100px"><textarea class="form-control" name="postNo" rows="2" readonly>${comment.postNo}</textarea></td>
             </tr>
         </table>
-        <button type="submit" class="btn btn-primary">수정</button>
-        <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
+        <div class="form-group" align="right">
+	        <button type="submit" class="btn btn-primary">수정</button>
+	        <a href="javascript:window.history.back()" class="btn btn-secondary">뒤로가기</a>
+        </div>
     </form>
 
 </div>

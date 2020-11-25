@@ -49,8 +49,8 @@ $(document).ready(function() {
 	<section class="page-section bg-light" id="team">
 		<div class="container">
 			<div class="text-center">
-				<h2 class="section-heading text-uppercase">회원 정보 목록</h2>
-				<h3 class="section-subheading text-muted">가입된 회원 정보 목록입니다</h3>
+				<h2 class="section-heading text-uppercase">회원 목록</h2>
+				<h3 class="section-subheading text-muted">가입된 회원 목록입니다</h3>
 			</div>
 			
 			<form id="searchform" action="" method="get" class="form-inline" style="margin: auto; max-width: 50%">

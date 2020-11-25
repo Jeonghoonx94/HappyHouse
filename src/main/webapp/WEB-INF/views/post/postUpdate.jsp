@@ -48,35 +48,39 @@
 		<h3 class="section-subheading text-muted">작성한 게시글을 수정할 수 있습니다</h3>
 	</div>
     <form action="${root }/post/update?postNo=${post.postNo}" method="POST">
-        <table class="table table-bordered table-condensed">
-            <tr>
-                <td>게시글 번호</td>
-                <td>${post.postNo}</td>
-            </tr>
-            <tr>
-                <td>글 제목</td>
-                <td>
-                    <textarea class="form-control" name="title" rows="1">${post.title}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>글 내용</td>
-                <td>
-                    <textarea class="form-control" name="content" rows="10">${post.content}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>작성자</td>
-                <td>${post.username}</td>
-            </tr>
-        </table>
-		<div class="form-group" align="center">
-	        <button type="submit" class="btn btn-primary">저장</button>
-	        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글</a>
-	        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
-	        <br>
-	        <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
-	        <a href="${root }/post/list" class="btn btn-info">처음으로</a>
+	    <div class="container col-lg form-group" align="center">	
+	        <table class="table table-bordered table-condensed">
+	            <tr>
+	                <td>게시글 번호</td>
+	                <td>${post.postNo}</td>
+	            </tr>
+	            <tr>
+	                <td>글 제목</td>
+	                <td>
+	                    <textarea class="form-control" name="title" rows="1">${post.title}</textarea>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>글 내용</td>
+	                <td>
+	                    <textarea class="form-control" name="content" rows="10">${post.content}</textarea>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>작성자</td>
+	                <td>${post.username}</td>
+	            </tr>
+	        </table>
+			<div class="form-group" align="center">
+		        <button type="submit" class="btn btn-primary btn-sm">수정</button>
+		        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-danger btn-sm" onclick="confirm('정말 삭제하시겠습니까?')">삭제</a>
+		        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-primary btn-sm">댓글보기</a>
+		        <br>
+				<div class="form-group" align="right">
+			        <a href="javascript:window.history.back()" class="btn btn-secondary btn-sm">뒤로가기</a>
+			        <a href="${root }/post/list" class="btn btn-secondary btn-sm">게시글 목록</a>
+		        </div>
+		    </div>
 	    </div>
     </form>
 </div>
