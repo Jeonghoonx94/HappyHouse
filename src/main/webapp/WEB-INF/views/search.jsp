@@ -40,6 +40,7 @@
                	var cctvMarked = false;
                	
                 $(document).ready(function(){
+//                 	showCctvAll();
                 	
                     $.get("${pageContext.request.contextPath}/map/sido"
                         ,function(data, status){
@@ -180,7 +181,8 @@
                     		if($("#dong").val() !== "0") {
 	                    		cctvMarked = true;
 	                    		console.log("cctv 표시!");
-	                    		showCctv($("#dong").val());
+// 	                    		showCctv($("#dong").val());
+								showCctvAll();
                     		} else {
                     			alert("읍/면/동 을 확인해주세요!");
                     		}
@@ -547,7 +549,7 @@
     
     function showCctv(dongVal) {
     	console.log(dongVal);
-        // 환경정보
+        // cctv
         $.get("${root}/cctv/search"
 			,{dong:dongVal}
             ,function(data, status){
@@ -556,13 +558,13 @@
 					console.log(cctv);
 					var circle = new google.maps.Circle({
 					    center : new google.maps.LatLng(cctv.lat, cctv.lon),  // 원의 중심좌표 
-					    radius: 30, // 미터 단위, 원의 반지름
+					    radius: 40, // 미터 단위, 원의 반지름
 					    strokeWeight: 3, // 선 두께
 					    strokeColor: '#FDBACB', // 선 색깔
 					    strokeOpacity: 0.7, // 선의 불투명도. 1에서 0 사이의 값으로 0에 가까울수록 투명
 					    strokeStyle: 'none', // 선 스타일
 					    fillColor: '#FDBACB', // 채우기 색깔
-					    fillOpacity: 0.4  // 채우기 불투명도
+					    fillOpacity: 0.45  // 채우기 불투명도
 					}); 
 					markers.push(circle);
 					circle.setMap(map);
@@ -571,6 +573,31 @@
              , "json"
         );//get
     }
+    
+    function showCctvAll() {
+        $.get("${root}/cctv/list"
+            ,function(data, status){
+             	console.log("cctv!", data.length);
+				$.each(data, function(index, cctv) {
+					console.log(cctv);
+					var circle = new google.maps.Circle({
+					    center : new google.maps.LatLng(cctv.lat, cctv.lon),  // 원의 중심좌표 
+					    radius: 40, // 미터 단위, 원의 반지름
+					    strokeWeight: 3, // 선 두께
+					    strokeColor: '#FDBACB', // 선 색깔
+					    strokeOpacity: 0.7, // 선의 불투명도. 1에서 0 사이의 값으로 0에 가까울수록 투명
+					    strokeStyle: 'none', // 선 스타일
+					    fillColor: '#FDBACB', // 채우기 색깔
+					    fillOpacity: 0.45  // 채우기 불투명도
+					}); 
+					markers.push(circle);
+					circle.setMap(map);
+				}); // each
+             }//function
+             , "json"
+        );//get
+    }
+    
     
     $('#table1').on("click", ".detail", function() {
         var no = $(this).attr("no");
