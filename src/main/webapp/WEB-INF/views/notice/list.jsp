@@ -63,8 +63,8 @@ $(document).ready(function() {
 			     		<c:otherwise>
 			     			<c:forEach var='notice' items="${noticelist}">
 			     			<tr>
-			     				<td>${notice.no}</td>
-			     				<td><a href='${root}/notice/detail?no=${notice.no}'>${notice.title}</a></td>
+			     				<td><a href='${root}/notice/detail?no=${notice.no}'>${notice.no}</a></td>
+			     				<td>${notice.title}</td>
 			     				<td>${notice.writer}</td>
 			     				<td>${notice.regtime}</td>
 			     			</tr>

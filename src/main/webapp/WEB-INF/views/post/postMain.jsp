@@ -60,7 +60,7 @@
             </div>
 	    </form>
 	
-	    <table class="table table-hover table-striped">
+	    <table class="table table-hover">
 	    	<colgroup>
 	    		<col width="10%">
 	    		<col width="10%">
@@ -68,33 +68,36 @@
 	    		<col width="30%">
 	    		<col width="10%">
 	    	</colgroup>
-	        <tr>
-	            <th>번호</th>
-	            <th>작성자</th>
-	            <th>제목</th>
-	            <th>작성일/수정일</th>
-	            <th>조회수</th>
-	        </tr>
-	
+	    	<thead>
+		        <tr>
+		            <th>번호</th>
+		            <th>작성자</th>
+		            <th>제목</th>
+		            <th>작성일/수정일</th>
+		            <th>조회수</th>
+		        </tr>
+	        </thead>
+			<tbody>
 	        <c:forEach items="${posts}" var="post">
 	            <tr onclick="viewPost(${post.postNo})">
-	                <th>${post.postNo}</th>
-	                <th>${post.username}</th>
-	                <th>
+	                <td>${post.postNo}</td>
+	                <td>${post.username}</td>
+	                <td>
 	<%--                     <a href="${root }/post/view?postNo=${post.postNo}"> --%>
 	                    ${post.title}
 	<!--                     </a> -->
-	                </th>
-	                <th style="font-size: 0.85em;">
+	                </td>
+	                <td style="font-size: 0.85em;">
 	                	작성일: ${post.createDateTime}
 	                <c:if test="${post.updateTime ne post.createDateTime }">
 	                <br> 
 	                	수정일: ${post.updateTime}
 	                </c:if>
-	                </th>
-	                <th>${post.count}</th>
+	                </td>
+	                <td>${post.count}</td>
 	            </tr>
 	        </c:forEach>
+	        </tbody>
 	    </table>
 	
 		<div class="text-right">
