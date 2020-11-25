@@ -113,4 +113,15 @@ public class MemberController{
 			return "error/error";
 		}
 	}
+
+	@GetMapping(value = "/list/remove")
+	public String removeMemberInList(@RequestParam String userid) {
+	    try {
+			memberService.removeMember(userid);
+		    return "redirect:/member/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/error";
+		}
+	}
 }
