@@ -33,7 +33,7 @@ $(document).ready(function() {
 		$("#updateform").attr("action", "${root}/member/update").submit();
 	});
 	$('#removeBtn').click(function () {
-		if(alert('정말 탈퇴하시겠습니까?')){
+		if(confirm('정말 탈퇴하시겠습니까?')){
 			location.href='${root}/member/remove?userid=${member.userid}';
 		}
 	});

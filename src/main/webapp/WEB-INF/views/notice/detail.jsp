@@ -30,7 +30,7 @@
 <script>
 $(document).ready(function() {
 	$('#delNotice').click(function () {
-		if(alert("정말 삭제하시겠습니까?")){
+		if(confirm("정말 삭제하시겠습니까?")){
 			location.href='${root}/notice/delete?no=${notice.no}';
 		}
 	});

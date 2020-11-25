@@ -327,31 +327,31 @@
     });
 
     $('#locTable').on("click", ".delete", function() {
-    	console.log($(this).attr("no"));
-    	$.ajax({
-			url:"${pageContext.request.contextPath}/loc/delete/" + $(this).attr("no"),  
-			type:'delete',
-			contentType:'application/json;charset=utf-8',
-			dataType:'json',
-			/* data: { }, */
-			success:function(data) {
-			if(alert("정말 삭제하시겠습니까?")){
-				$("#locResult").empty();
-	              $.each(data, function(index, vo) {
-	              	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
-	   				+ "<td>" + vo.gugun_name + "/" + vo.dong + "</td>"
-	   				+ "<td>"
-	   				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
-	   				+ "</td>"
-	    			+ "</tr>"
-	              $("#locResult").append(str);
-				});
-			}
- 			},
-			error:function(xhr,status,msg){
-				console.log("상태값 : " + status + " Http에러메시지 : "+msg);
-			}
-		});
+
+		if(confirm("정말 삭제하시겠습니까?")){
+	    	$.ajax({
+				url:"${pageContext.request.contextPath}/loc/delete/" + $(this).attr("no"),  
+				type:'delete',
+				contentType:'application/json;charset=utf-8',
+				dataType:'json',
+				/* data: { }, */
+				success:function(data) {
+					$("#locResult").empty();
+		              $.each(data, function(index, vo) {
+		              	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
+		   				+ "<td>" + vo.gugun_name + "/" + vo.dong + "</td>"
+		   				+ "<td>"
+		   				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
+		   				+ "</td>"
+		    			+ "</tr>"
+		              $("#locResult").append(str);
+					});
+	 			},
+				error:function(xhr,status,msg){
+					console.log("상태값 : " + status + " Http에러메시지 : "+msg);
+				}
+			});
+		}
     });
     
     $('#locTable > tbody > tr').on("click", function() {
