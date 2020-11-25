@@ -30,11 +30,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#searchbtn').click(function () {   
-		pagelist(1);
+// 		pagelist(1);
 	})
-	<c:if test='${not empty param.key}'>
- 		$('#key').val('${param.key}')
-	</c:if>
 	function pagelist(cpage){
 		$("#pageNo").val(cpage);
 		$("#searchform").attr('action',"${root}/member/list?key=${searchKey}&word=${searchWord}").submit;
@@ -55,51 +52,67 @@ $(document).ready(function() {
 				<h2 class="section-heading text-uppercase">회원 정보 목록</h2>
 				<h3 class="section-subheading text-muted">가입된 회원 정보 목록입니다</h3>
 			</div>
-		<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
-			<select name='key' id='searchKey'>
-			  	<option value='all'>--선택하세요--</option>
-			  	<option value='userid'>아이디</option>
-			  	<option value='username'>이름</option>
-		 	</select>
-		 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="searchWord"  name='word' value='${bean.word}'>
-		  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
-		</form>
-		<table class="table table-hover">
-		    <thead>
-				<tr>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>전화번호</th>
-					<th>주소</th>
-					<th></th>
-				</tr>
-		    </thead>
-		    <tbody>
-				<c:choose>
-	    			<c:when test='${empty userlist}'>
-				    	<div>
-				        	<p>조회 할 회원이 없습니다.</p>
-				        </div>
-	     			</c:when>
-		     		<c:otherwise>
-		     			<c:forEach var='userinfo' items="${userlist}">
-		     			<tr>
-		     				<td>${userinfo.userid}</td>
-		     				<td>${userinfo.username}</td>
-		     				<td>${userinfo.email}</td>
-		     				<td>${userinfo.phone}</td>
-		     				<td>${userinfo.address}</td>
-		     				<td>
-		     					<button type="button" class="btn btn-danger" id="removeMember">삭제</button>
-		     				</td>
-		     			</tr>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
-	</div>
+			<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
+				<select name='key' id='searchKey'>
+				  	<option value='all' <c:if test="${empty key}">selected</c:if>>--선택하세요--</option>
+				  	<option value='userid' <c:if test="${key eq 'userid'}">selected</c:if>>아이디</option>
+				  	<option value='username' <c:if test="${key eq 'username'}">selected</c:if>>이름</option>
+			 	</select>
+			 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="searchWord"  name='word' value='${word}'>
+			  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
+			</form>
+			<table class="table table-hover">
+			    <thead>
+					<tr>
+						<th>아이디</th>
+						<th>이름</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>주소</th>
+						<th></th>
+					</tr>
+			    </thead>
+			    <tbody>
+					<c:choose>
+		    			<c:when test='${empty userlist}'>
+					    	<div>
+					        	<p>조회 할 회원이 없습니다.</p>
+					        </div>
+		     			</c:when>
+			     		<c:otherwise>
+			     			<c:forEach var='userinfo' items="${userlist}">
+			     			<tr>
+			     				<td>${userinfo.userid}</td>
+			     				<td>${userinfo.username}</td>
+			     				<td>${userinfo.email}</td>
+			     				<td>${userinfo.phone}</td>
+			     				<td>${userinfo.address}</td>
+			     				<td>
+			     					<button type="button" class="btn btn-danger" id="removeMember">삭제</button>
+			     				</td>
+			     			</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		    <ul class="pagination justify-content-center">
+		        <c:forEach var="i" begin="1" end="${totalPage}" step="1">
+		        	<c:choose>
+		        		<c:when test="${i == page}">
+		        			<li class="page-item active">
+		                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+		            		</li>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<li class="page-item">
+		                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+		            		</li>
+		        		</c:otherwise>
+		        	</c:choose>
+		        </c:forEach>
+		    </ul>
+		</div>
 	</section>
 <jsp:include page="../copyright.jsp"/>
 </body>

@@ -365,17 +365,8 @@
             marker.setIcon(props.iconImage);
         }
 
-//         if (props.content) {
-//             infoWindow = new google.maps.InfoWindow({
-//                 content : props.content
-//             });
-//         }
-
         marker.addListener('click', function() {
-//             map.setZoom(17);
             map.setCenter(marker.getPosition());
-//             bounceMarker(marker);
-//             infoWindow.open(map);
 			popInfoWindow(marker.getPosition(), props.content, marker);
         });
         markers.push(marker);
@@ -396,17 +387,9 @@
             marker.setIcon(props.iconImage);
         }
 
-//         if (props.content) {
-//             infoWindow = new google.maps.InfoWindow({
-//                 content : props.content
-//             });
-//         }
-
         marker.addListener('click', function() {
             map.setZoom(16);
             map.setCenter(marker.getPosition());
-//             bounceMarker(marker);
-//             infoWindow.open(map, marker);
 			popInfoWindow(marker.getPosition(), props.content, marker);
         });
         markers.push(marker);
@@ -438,35 +421,35 @@
 
     function popInfoWindow(latlng, content, marker){
     	var geocoder = new google.maps.Geocoder();
-    		map.setCenter(latlng);
+   		map.setCenter(latlng);
 //     		addMarker(latlng);	//마커출력
-    		geocoder.geocode({'latLng': latlng}, function(results, status) {
-    	if (status == google.maps.GeocoderStatus.OK) {
-    		if (results[1]) {
-    			var contentString =
-    				'<div id="content">'+
-    					'<br><div id=="adress">'+
-    					'<b>'+content+'</b>'+
-    					'<br></div>'+
-    					'<p>' +
-           				'<b>주소 :</b> ' +results[1].formatted_address+
-    					'</p>'+
-    				'</div>';
-    			infoWindow.setContent(contentString);
-    			infoWindow.open(map, marker);
-    		} else {
-    			alert("No results found");
+   		geocoder.geocode({'latLng': latlng}, function(results, status) {
+	    	if (status == google.maps.GeocoderStatus.OK) {
+	    		if (results[1]) {
+	    			var contentString =
+	    				'<div id="content">'+
+	    					'<br><div id=="adress">'+
+	    					'<b>'+content+'</b>'+
+	    					'<br></div>'+
+	    					'<p>' +
+	           				'<b>주소 :</b> ' +results[1].formatted_address+
+	    					'</p>'+
+	    				'</div>';
+	    			infoWindow.setContent(contentString);
+	    			infoWindow.open(map, marker);
+	    		} else {
+	    			alert("No results found");
+	    		}
+	    	}else{
+    			alert("Geocoder failed due to: " + status);
     		}
-    	}else{
-    		alert("Geocoder failed due to: " + status);
-    	}
     	});
     }
 
     $('#table1').on("click", ".clickeTr", function() {
     	deleteMarkers();
 		storeMarked = false;
-		pollutionMakred = false;
+		pollutionMarked = false;
 		
         var area = $(this).attr("value");
         console.log($(this).attr("no"));
@@ -474,22 +457,21 @@
         $.get("https://maps.googleapis.com/maps/api/geocode/json", {
             key : 'AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw',
             address : area
-        }, function(data, status) {
-            console.log(data);
-//             deleteMarkers();
-            var officemarker = {
-                coords : {
-                    lat : data.results[0].geometry.location.lat,
-                    lng : data.results[0].geometry.location.lng
-                },
-                iconImage : null,
-                content : area,
-                name : $(this).attr("aptName")
-            };
-            console.log(officemarker);
-            addMarker(officemarker);
-            
-        }, "json");//get
+        	}, function(data, status) {
+            	console.log(data);
+//             	deleteMarkers();
+            	var officemarker = {
+                	coords : {
+                	    lat : data.results[0].geometry.location.lat,
+                	    lng : data.results[0].geometry.location.lng
+                	},
+                	iconImage : null,
+                	content : area,
+                	name : $(this).attr("aptName")
+            	};
+            	console.log(officemarker);
+            	addMarker(officemarker);
+			}, "json");//get
         
 //         let dongVal = $(this).attr("dong");
 //         showStoreMarker(dongVal);
@@ -500,55 +482,47 @@
     	console.log(dongVal);
         // 상점
         $.get("${root}/store/list"
-                ,{dong:dongVal}
-                ,function(data, status){
-                	console.log("store!", data.length);
-                	if(data.length >= 1) {
-	                    $.each(data, function(index, vo) {
-	                    	let marker = {
-	                                coords : {
-	                                    lat : vo.lat,
-	                                    lng : vo.lng
-	                                },
-	                                iconImage : "${root}/assets/img/store.png",
-	                                content : vo.shopName,
-	                                name : vo.shopName
-	                            };
-	                        addMarker2(marker);
-	                    });//each
-                	} else {
-                		alert("해당 읍/면/동에 상권 정보가 등록되어 있지 않습니다!");
-                	}
-                }//function
-                , "json"
-        );//get
+			,{dong:dongVal}
+			,function(data, status){
+				console.log("store!", data.length);
+				$.each(data, function(index, vo) {
+					let marker = {
+						coords : {
+							lat : vo.lat,
+							lng : vo.lng
+						},
+						iconImage : "${root}/assets/img/store.png",
+						content : vo.shopName,
+						name : vo.shopName
+					};
+					addMarker2(marker);
+				});//each
+			}//function
+			, "json"
+		);//get
     }
     
     function showPollutionMarker(dongVal) {
     	console.log(dongVal);
         // 환경정보
         $.get("${root}/pollution/list"
-                ,{dong:dongVal}
-                ,function(data, status){
-                	console.log("pollution!", data.length);
-                	if(data.length >= 1) {
-	                    $.each(data, function(index, vo) {
-	                    	let marker = {
-	                                coords : {
-	                                    lat : vo.lat,
-	                                    lng : vo.lng
-	                                },
-	                                iconImage : "${root}/assets/img/pollution_s.png",
-	                                content : vo.name,
-	                                name : vo.name
-	                            };
-	                        addMarker2(marker);
-	                    });//each
-//                 	} else {
-//                 		alert("해당 읍/면/동에 대기오염 시설 정보가 등록되어 있지 않습니다");
-                	}
-                }//function
-                , "json"
+			,{dong:dongVal}
+            ,function(data, status){
+             	console.log("pollution!", data.length);
+                $.each(data, function(index, vo) {
+                	let marker = {
+                        coords : {
+                        	lat : vo.lat,
+                            lng : vo.lng
+                        },
+						iconImage : "${root}/assets/img/pollution_s.png",
+                        content : vo.name,
+                        name : vo.name
+                    };
+                	addMarker2(marker);
+				});//each
+             }//function
+             , "json"
         );//get
     }
     
@@ -578,27 +552,5 @@
         $("#detailDate").text(dealDate);
         
     });
-
-//     $('#table1 > tbody > tr').on("click", function() {
-//         var area = $(this).attr("value");
-//         //console.log(area);
-//         $.get("https://maps.googleapis.com/maps/api/geocode/json", {
-//             key : 'AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw',
-//             address : area
-//         }, function(data, status) {
-//             console.log(data);
-//             deleteMarkers();
-//             var officemarker = {
-//                 coords : {
-//                     lat : data.results[0].geometry.location.lat,
-//                     lng : data.results[0].geometry.location.lng
-//                 },
-//                 iconImage : null,
-//                 content : area
-//             };
-//             console.log(officemarker);
-//             addMarker(officemarker);
-//         }, "json");//get
-//     });
 </script>
 

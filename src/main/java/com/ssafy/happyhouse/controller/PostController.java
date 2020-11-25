@@ -110,8 +110,8 @@ public class PostController {
 	}
 
 	@PostMapping("/write")
-	public String writePost(@RequestParam String title, @RequestParam String content, @RequestParam String username,
-			HttpSession session, Model model) {
+	public String writePost(@RequestParam String title, @RequestParam String content, HttpSession session, Model model) {
+		System.out.println();
 		MemberDto member = (MemberDto) session.getAttribute("userlogin");
 		if (member == null) {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
@@ -119,7 +119,7 @@ public class PostController {
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		PostDto post = new PostDto(member.getUserid(), title, content, username, 1, sdf.format(new Date()),
+		PostDto post = new PostDto(member.getUserid(), title, content, member.getUsername(), 1, sdf.format(new Date()),
 				sdf.format(new Date()));
 		try {
 			postService.insertPost(post);
@@ -139,7 +139,7 @@ public class PostController {
 		}
 		
 		PostDto post = postService.findByPostNo(postNo);
-		model.addAttribute("posts", post);
+		model.addAttribute("post", post);
 		return "post/postUpdate";
 	}
 

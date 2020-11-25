@@ -1,7 +1,5 @@
 package com.ssafy.happyhouse.model.service;
 
-import com.ssafy.happyhouse.model.dao.MemberDao;
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.MemberDto;
+import com.ssafy.happyhouse.model.dao.MemberDao;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -29,8 +28,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberDto> searchAll(Map<String, String> map) throws Exception {
+	public List<MemberDto> searchAll(Map<String, Object> map) throws Exception {
 		return sqlSession.getMapper(MemberDao.class).searchAll(map);
+	}
+	
+	@Override
+	public int totalCount(Map<String, Object> map) throws Exception {
+		return sqlSession.getMapper(MemberDao.class).totalCount(map);
 	}
 
 	@Override

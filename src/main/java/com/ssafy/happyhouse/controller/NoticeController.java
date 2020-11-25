@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.happyhouse.model.NoticeDto;
-import com.ssafy.happyhouse.model.PostDto;
 import com.ssafy.happyhouse.model.service.NoticeService;
 
 @Controller

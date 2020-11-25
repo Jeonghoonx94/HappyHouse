@@ -35,8 +35,6 @@
 	<jsp:include page="header.jsp"/>
 	<!-- Search-->
 	<jsp:include page="search.jsp"/>
-	<!-- Close Info-->
-<%-- 	<jsp:include page="close.jsp"/> --%>
 	<!-- Footer-->
 	<jsp:include page="copyright.jsp"/>
 </body>
