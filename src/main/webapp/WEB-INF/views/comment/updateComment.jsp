@@ -48,7 +48,7 @@
                 <td>
                     <textarea class="form-control" name="content" rows="2" >${comment.content}</textarea>
                 </td>
-                <td width="100px"><textarea class="form-control" name="postNo" rows="2" readonly>${comment.postNo}</textarea></td>
+                <td width="100px"><input type="text" class="form-control" name="postNo" rows="2" readonly value="${comment.postNo}"></td>
             </tr>
         </table>
         <div class="form-group" align="right">
