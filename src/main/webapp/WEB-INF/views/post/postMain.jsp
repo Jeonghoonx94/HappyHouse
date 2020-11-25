@@ -106,12 +106,12 @@
 	        	<c:choose>
 	        		<c:when test="${i == page}">
 	        			<li class="page-item active">
-	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}&select=${select}&search=${search}'>${i}</a>
 	            		</li>
 	        		</c:when>
 	        		<c:otherwise>
 	        			<li class="page-item">
-	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+	                		<a class="page-link" href='${root }/post/list?page=${i}&pageSize=${pageSize}&select=${select}&search=${search}'>${i}</a>
 	            		</li>
 	        		</c:otherwise>
 	        	</c:choose>

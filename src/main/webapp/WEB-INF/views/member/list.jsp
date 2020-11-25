@@ -52,14 +52,16 @@ $(document).ready(function() {
 				<h2 class="section-heading text-uppercase">회원 정보 목록</h2>
 				<h3 class="section-subheading text-muted">가입된 회원 정보 목록입니다</h3>
 			</div>
-			<form id="searchform" action="" method="get" class="searchUser" style="margin: auto; max-width: 50%">
-				<select name='key' id='searchKey'>
-				  	<option value='all' <c:if test="${empty key}">selected</c:if>>--선택하세요--</option>
-				  	<option value='userid' <c:if test="${key eq 'userid'}">selected</c:if>>아이디</option>
-				  	<option value='username' <c:if test="${key eq 'username'}">selected</c:if>>이름</option>
-			 	</select>
-			 	<input type="text"  class="form-control" placeholder="회원 정보 검색" id="searchWord"  name='word' value='${word}'>
-			  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
+			<form id="searchform" action="" method="get" class="form-inline mx-auto mb-2" style="max-width: 50%">
+	        	<div id="margin" class="form-group">
+					<select name='key' id='searchKey' class="form-control">
+	<%-- 				  	<option value='all' <c:if test="${key eq 'all'}">selected</c:if>>--선택하세요--</option> --%>
+					  	<option value='userid' <c:if test="${key eq 'userid'}">selected</c:if>>아이디</option>
+					  	<option value='username' <c:if test="${key eq 'username'}">selected</c:if>>이름</option>
+				 	</select>
+				 	<input type="text"  class="bg-gray form-control" placeholder="회원 정보 검색" id="searchWord"  name='word' value='${word}'>
+				  	<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
+			  	</div>
 			</form>
 			<table class="table table-hover">
 			    <thead>
@@ -100,13 +102,14 @@ $(document).ready(function() {
 		        <c:forEach var="i" begin="1" end="${totalPage}" step="1">
 		        	<c:choose>
 		        		<c:when test="${i == page}">
+		        			
 		        			<li class="page-item active">
-		                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+		                		<a class="page-link" href='${root }/member/list?page=${i}&pageSize=${pageSize}&key=${key}&word=${word}'>${i}</a>
 		            		</li>
 		        		</c:when>
 		        		<c:otherwise>
 		        			<li class="page-item">
-		                		<a class="page-link" href='${root }/notice/list?page=${i}&pageSize=${pageSize}'>${i}</a>
+		                		<a class="page-link" href='${root }/member/list?page=${i}&pageSize=${pageSize}&key=${key}&word=${word}'>${i}</a>
 		            		</li>
 		        		</c:otherwise>
 		        	</c:choose>

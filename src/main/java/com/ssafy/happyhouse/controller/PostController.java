@@ -54,7 +54,8 @@ public class PostController {
 
 		List<PostDto> postList = postService.findAllPost(map);
 
-		if (map.get("search") != null) { // 검색했다면
+		String search = (String) map.get("search");
+		if (search != null && !"".equals(search)) { // 검색했다면
 			model.addAttribute("select", map.get("select"));
 			model.addAttribute("search", map.get("search"));
 		}
