@@ -48,7 +48,7 @@
 		<h3 class="section-subheading text-muted">작성한 게시글을 수정할 수 있습니다</h3>
 	</div>
     <form action="${root }/post/update?postNo=${post.postNo}" method="POST">
-	    <div class="container col-lg form-group" align="center">	
+	    <div class="container col-lg" align="center">	
 	        <table class="table table-bordered table-condensed">
 	            <tr>
 	                <td>게시글 번호</td>
@@ -62,7 +62,7 @@
 	            <tr>
 	                <td>글 제목</td>
 	                <td>
-	                    <textarea class="form-control" name="title" rows="1">${post.title}</textarea>
+	                    <input type="text" class="form-control" name="title" value="${post.title}">
 	                </td>
 	            </tr>
 	            <tr>
