@@ -29,7 +29,7 @@ public class MemberController{
 			String pageStr = (String) map.get("page");
 			String pageSizeStr = (String) map.get("pageSize");
 			int page = pageStr == null ? 1 : ("".equals(pageStr) ? 1 : Integer.parseInt(pageStr));
-			int pageSize = pageSizeStr == null ? 1 : ("".equals(pageSizeStr) ? 7 : Integer.parseInt(pageSizeStr));
+			int pageSize = pageSizeStr == null ? 10 : ("".equals(pageSizeStr) ? 10 : Integer.parseInt(pageSizeStr));
 
 			// Pagination
 			map.put("page", page); // 현재 페이지
@@ -42,18 +42,19 @@ public class MemberController{
 			int startNo = (page - 1) * pageSize; // 해당 페이지의 가장 위에 보여줄 게시글 번호
 			map.put("startNo", startNo);
 
-			if (map.get("word") != null) { // 검색했다면
+			String word = (String) map.get("word");
+			if (word != null && !"".equals(word)) { // 검색했다면
 				model.addAttribute("key", map.get("key"));
 				model.addAttribute("word", map.get("word"));
 			}
 
-			model.addAttribute("pageSize", pageSize);
-			model.addAttribute("page", page);
-			model.addAttribute("totalPage", totalPage);
 			
 			List<MemberDto> userlist = memberService.searchAll(map);
 			
-		    model.addAttribute("userlist", userlist);
+			model.addAttribute("userlist", userlist);
+			model.addAttribute("pageSize", pageSize);
+			model.addAttribute("page", page);
+			model.addAttribute("totalPage", totalPage);
 		    
 		    return "member/list";
 		} catch (Exception e) {
