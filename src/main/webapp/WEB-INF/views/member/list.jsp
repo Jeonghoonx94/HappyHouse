@@ -56,7 +56,7 @@ $(document).ready(function() {
 			<form id="searchform" action="" method="get" class="form-inline" style="margin: auto; max-width: 50%">
 				<div class="form-group">
 					<select name='key' id='searchKey' class="form-control">
-					  	<%-- <option value='all' <c:if test="${empty key}">selected</c:if>>선택하세요</option> --%>
+					  	<option value='all' <c:if test="${empty key or 'all' eq key}">selected</c:if>>선택하세요</option>
 					  	<option value='userid' <c:if test="${key eq 'userid'}">selected</c:if>>아이디</option>
 					  	<option value='username' <c:if test="${key eq 'username'}">selected</c:if>>이름</option>
 				 	</select>

@@ -218,8 +218,8 @@
         <div class="row text-center d-flex justify-content-center">
             <div style="width: 320px">
 				<div class="btn-group btn-group-toggle">
-					<Button class="btn btn-light" type="button" id="storeBtn">동네 업종 정보</Button>
-					<Button class="btn btn-light" type="button" id="pollutionBtn"> 대기오염 정보</Button>
+					<Button class="btn btn-light" type="button" id="storeBtn">주변 상가</Button>
+					<Button class="btn btn-light" type="button" id="pollutionBtn"> 주변 대기오염 시설</Button>
 				</div>
 				<div id="searchTable">
 	                <table class="table table-striped" id="table1">
