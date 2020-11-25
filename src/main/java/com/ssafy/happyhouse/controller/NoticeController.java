@@ -27,7 +27,7 @@ public class NoticeController {
 			String pageStr = (String) map.get("page");
 			String pageSizeStr = (String) map.get("pageSize");
 			int page = pageStr == null ? 1 : ("".equals(pageStr) ? 1 : Integer.parseInt(pageStr));
-			int pageSize = pageSizeStr == null ? 7 : ("".equals(pageSizeStr) ? 7 : Integer.parseInt(pageSizeStr));
+			int pageSize = pageSizeStr == null ? 5 : ("".equals(pageSizeStr) ? 5 : Integer.parseInt(pageSizeStr));
 
 			// Pagination
 			map.put("page", page); // 현재 페이지

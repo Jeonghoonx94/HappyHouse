@@ -342,10 +342,6 @@
         };
         
         addMarker(multimarker);
-        
-        infoWindow.setPosition(multi);
-        infoWindow.setContent('멀티캠퍼스.');
-        infoWindow.open(map);
     }
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
