@@ -427,6 +427,9 @@
     }
 
     function deleteMarkers() {
+		storeMarked = false;
+		pollutionMarked = false;
+		cctvMarked = false;
         clearMarkers();
         markers = [];
     }
