@@ -56,6 +56,15 @@
                 <td>게시글 번호</td>
                 <td>${post.postNo}</td>
             </tr>
+            
+            <tr>
+                <td>작성자</td>
+                <td>${post.username}</td>
+            </tr>
+            <tr>
+                <td>작성시간</td>
+                <td>${post.createDateTime}</td>
+            </tr>
             <tr>
                 <td>글 제목</td>
                 <td>
@@ -69,14 +78,6 @@
                 </td>
             </tr>
 
-            <tr>
-                <td>작성자</td>
-                <td>${post.username}</td>
-            </tr>
-            <tr>
-                <td>작성시간</td>
-                <td>${post.createDateTime}</td>
-            </tr>
             <c:if test="${post.createDateTime ne post.updateTime }">
 	            <tr>
 	                <td>수정시간</td>
@@ -128,7 +129,7 @@
 	                <c:otherwise>
 <!-- 	                관리자일 경우 삭제만 가능 -->
 	                	<c:if test="${100 eq userlogin.role}">
-	                		<a href="${root }/post/deleteComment?commentNo=${comment.commentNo}">삭제</a>
+	                		<a href="${root }/post/deleteComment?commentNo=${comment.commentNo}" onclick="confirm('정말 삭제하시겠습니까?')">삭제</a>
 	                	</c:if>
 	                </c:otherwise>
                 </c:choose>

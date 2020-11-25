@@ -54,6 +54,11 @@
 	                <td>게시글 번호</td>
 	                <td>${post.postNo}</td>
 	            </tr>
+	            
+	            <tr>
+	                <td>작성자</td>
+	                <td>${post.username}</td>
+	            </tr>
 	            <tr>
 	                <td>글 제목</td>
 	                <td>
@@ -66,20 +71,15 @@
 	                    <textarea class="form-control" name="content" rows="10">${post.content}</textarea>
 	                </td>
 	            </tr>
-	            <tr>
-	                <td>작성자</td>
-	                <td>${post.username}</td>
-	            </tr>
 	        </table>
 			<div class="form-group" align="center">
 		        <button type="submit" class="btn btn-primary btn-sm">수정</button>
-		        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-danger btn-sm" onclick="confirm('정말 삭제하시겠습니까?')">삭제</a>
-		        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-primary btn-sm">댓글보기</a>
+		        <a href="javascript:window.history.back()" class="btn btn-danger btn-sm">취소</a>
 		        <br>
 				<div class="form-group" align="right">
-			        <a href="javascript:window.history.back()" class="btn btn-secondary btn-sm">뒤로가기</a>
+		        	<a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-info btn-sm">댓글보기</a>
 			        <a href="${root }/post/list" class="btn btn-secondary btn-sm">게시글 목록</a>
-		        </div>
+			    </div>
 		    </div>
 	    </div>
     </form>
