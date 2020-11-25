@@ -564,7 +564,7 @@
 					    fillColor: '#FDBACB', // 채우기 색깔
 					    fillOpacity: 0.4  // 채우기 불투명도
 					}); 
-					
+					markers.push(circle);
 					circle.setMap(map);
 				}); // each
              }//function
