@@ -66,8 +66,8 @@ $(document).ready(function() {
 			<h3 class="section-subheading text-muted">회원 가입을 위해 다음 항목을 입력해주세요.</h3>
 		</div>
 		<form id="joinform" name="joinform" method="post" action="" novalidate="novalidate">
-			<div class="row align-items-stretch mb-5">
-				<div class="col-md-6">
+			<div class="container col-lg-10" align="center">
+				<div class="col-md-8">
 				    <div class="form-group">
 				        <input class="form-control" id="userId" type="text" name="userid" placeholder="아이디를 입력하세요" required="required" />
 				    </div>
@@ -98,8 +98,8 @@ $(document).ready(function() {
 				        <input class="form-control" id="userAddr" type="text" name="address" placeholder="주소를 입력하세요" required="required" />
 				    </div>
 					<div class="text-center">
-						<button type="submit" class="btn btn-primary text-uppercase" id="joinbtn">회원가입</button>
-						<button type="reset" class="btn btn-warning">초기화</button>
+						<button type="submit" class="btn btn-primary" id="joinbtn">회원가입</button>
+						<button type="reset" class="btn btn-danger">초기화</button>
 					</div>
 				</div>
 			</div>

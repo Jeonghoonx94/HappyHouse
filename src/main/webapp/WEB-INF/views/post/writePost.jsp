@@ -47,31 +47,32 @@
 			<h3 class="section-subheading text-muted">새로운 게시글을 등록할 수 있습니다</h3>
 		</div>
 	    <form method="post" action="${root }/post/write" >
-	        <table class="table table-bordered table-condensed">
-	
-	            <tr>
-	                <td>글 제목</td>
-	                <td>
-	                    <textarea class="form-control" name="title" rows="1"></textarea>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>작성자</td>
-	                <td>
-	                    <input type="text" name="nickname" value="${member.getUsername()}" class="form-control" readonly>
-	                </td>
-	            </tr>
-	            <tr>
-	                <td>글 내용</td>
-	                <td>
-	                    <textarea class="form-control" name="content" rows="10"></textarea>
-	                </td>
-	            </tr>
-	
-	        </table>
-	
-	        <button type="submit" class="btn btn-primary">등록</button>
-	        <a href="javascript:window.history.back()" class="btn btn-info">돌아가기</a>
+			<div class="container col-lg" align="center">
+					<div class="col-md">
+	        			<table class="table table-bordered table-condensed">
+				            <tr>
+				                <td>글 제목</td>
+				                <td>
+				                    <textarea class="form-control" name="title" rows="1"></textarea>
+				                </td>
+				            </tr>
+				            <tr>
+				                <td>작성자</td>
+				                <td>
+				                    <input type="text" name="nickname" value="${member.getUsername()}" class="form-control" readonly>
+				                </td>
+				            </tr>
+				            <tr>
+				                <td>글 내용</td>
+				                <td>
+				                    <textarea class="form-control" name="content" rows="10"></textarea>
+				                </td>
+				            </tr>
+	        			</table>
+			        <button type="submit" class="btn btn-primary">등록</button>
+			       	<a href="javascript:window.history.back()" class="btn btn-secondary">목록</a>
+		        </div>
+	        </div>
 	    </form>
 	
 	</div>

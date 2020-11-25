@@ -70,12 +70,14 @@
                 <td>${post.username}</td>
             </tr>
         </table>
-
-        <button type="submit" class="btn btn-primary">저장</button>
-        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글</a>
-        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
-        <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
-        <a href="${root }/post/list" class="btn btn-info">처음으로</a>
+		<div class="form-group" align="center">
+	        <button type="submit" class="btn btn-primary">저장</button>
+	        <a href="${root }/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글</a>
+	        <a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning" onclick="confirm('삭제하시겠습니까?')">삭제</a>
+	        <br>
+	        <a href="javascript:window.history.back()" class="btn btn-info">뒤로가기</a>
+	        <a href="${root }/post/list" class="btn btn-info">처음으로</a>
+	    </div>
     </form>
 </div>
 </section>

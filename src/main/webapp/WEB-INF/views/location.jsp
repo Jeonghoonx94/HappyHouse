@@ -27,7 +27,7 @@
 <script src="${root }/js/scripts.js"></script>
 <body>
 <jsp:include page="title.jsp"/>
-<section class="page-section" id="locServices">
+<section class="page-section bg-light" id="services">
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">관심 지역 목록</h2>
@@ -43,7 +43,7 @@
                     	$("#locResult").empty();
                             $.each(data, function(index, vo) {
                             	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
-			     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
+			     				+ "<td>" + vo.gugun_name + "/" + vo.dong + "</td>"
 			     				+ "<td>"
 			     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
 			     				+ "</td>"
@@ -103,7 +103,7 @@
 	                                    $("#locResult").empty();
 			                            $.each(data, function(index, vo) {
 			                            	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
-						     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
+						     				+ "<td>" + vo.gugun_name + "/" + vo.dong + "</td>"
 						     				+ "<td>"
 						     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
 						     				+ "</td>"
@@ -335,16 +335,18 @@
 			dataType:'json',
 			/* data: { }, */
 			success:function(data) {
-			 $("#locResult").empty();
-                $.each(data, function(index, vo) {
-                	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
-     				+ "<td>" + vo.dong + "/" + vo.gugun_name + "</td>"
-     				+ "<td>"
-     				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
-     				+ "</td>"
-	     			+ "</tr>"
-                $("#locResult").append(str);
+			if(alert("정말 삭제하시겠습니까?")){
+				$("#locResult").empty();
+	              $.each(data, function(index, vo) {
+	              	let str = "<tr value="+vo.dong+"+"+" class='clickeTr'"+" no="+vo.no+" dong="+vo.dong+">"
+	   				+ "<td>" + vo.gugun_name + "/" + vo.dong + "</td>"
+	   				+ "<td>"
+	   				+ "<button type='button' no='" + vo.no + "' class='btn btn-secondary btn-sm delete'>삭제</button>"
+	   				+ "</td>"
+	    			+ "</tr>"
+	              $("#locResult").append(str);
 				});
+			}
  			},
 			error:function(xhr,status,msg){
 				console.log("상태값 : " + status + " Http에러메시지 : "+msg);

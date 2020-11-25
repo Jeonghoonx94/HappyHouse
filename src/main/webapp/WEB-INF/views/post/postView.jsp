@@ -85,24 +85,28 @@
             </c:if>
         </table>
 <!--         관리자 계정 삭제 가능 -->
-		<c:choose>
-			<c:when test="${post.userid eq userlogin.userid }">
-		    	<a class="btn btn-primary" href="${root }/post/update?postNo=${post.postNo}&userid=${post.userid}">수정</a>
-				<a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning">삭제</a>
-			</c:when>
-			<c:otherwise>
-				<c:if test="${100 eq userlogin.role }">
-					<a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-warning">삭제</a>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-        <a href="${root}/comment/list?postNo=${post.postNo}" class="btn btn-warning">댓글 보기</a>
-<!--         <a href="javascript:window.history.back()" class="btn btn-info">목록으로</a> -->
-		<a href="${root}/post/list" class="btn btn-info">목록으로</a>
+		<div class="form-group" align="center">
+			<c:choose>
+				<c:when test="${post.userid eq userlogin.userid }">
+			    	<a class="btn btn-primary btn-sm" href="${root }/post/update?postNo=${post.postNo}&userid=${post.userid}">수정</a>
+					<a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-danger btn-sm">삭제</a>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${100 eq userlogin.role }">
+						<a href="${root }/post/delete?postNo=${post.postNo}" class="btn btn-danger btn-sm">삭제</a>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+			</div>
+			<div class="form-group" align="right">
+	        <a href="${root}/comment/list?postNo=${post.postNo}" class="btn btn-info btn-sm">전체 댓글</a>
+	<!--         <a href="javascript:window.history.back()" class="btn btn-info">목록으로</a> -->
+			<a href="${root}/post/list" class="btn btn-secondary btn-sm">목록</a>
+		</div>
     </form>
 
 	<hr>
-	<table class="table table-hover table table-striped w-100">
+	<table class="table table-hover table-striped w-100">
 		<colgroup>
 			<col width="100px">
 			<col>

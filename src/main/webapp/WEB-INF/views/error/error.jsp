@@ -34,7 +34,7 @@
     <h1>처리중 에러가 발생했습니다.</h1>      
     <p><%= request.getAttribute("msg") %></p>
   </div>  
-  <p><a href="${root}">메인으로 가기</a></p>
+  <p><a href="${root}">메인으로</a></p>
 </div>
 </body>
 </html>

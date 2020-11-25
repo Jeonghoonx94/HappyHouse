@@ -38,7 +38,7 @@ $(document).ready(function() {
 <body>
 <!-- Title-->
 <jsp:include page="../title.jsp"/>
-	<section class="page-section" id="notice">
+	<section class="page-section bg-light" id="notice">
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">공지사항</h2>
@@ -122,7 +122,7 @@ $(document).ready(function() {
 							<div class="mb-3">
 								<label for="reg_id">작성자</label>
 								<input type="text" class="form-control" name="writer"
-									id="noticeWriter" value="${userlogin.userid}" readonly>
+									id="noticeWriter" value="${userlogin.username}" readonly>
 							</div>
 							<div class="mb-3">
 								<label for="content">내용</label>
@@ -136,10 +136,10 @@ $(document).ready(function() {
 							</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
 						<button type="button" class="btn btn-primary" id="noticeBtn"
 							data-dismiss="modal">등록</button>
+						<button type="reset" class="btn btn-danger"
+							data-dismiss="modal">취소</button>
 					</div>
 				</form>
 			</div>

@@ -30,7 +30,9 @@
 <script>
 $(document).ready(function() {
 	$('#delNotice').click(function () {
-		location.href='${root}/notice/delete?no=${notice.no}';
+		if(alert("정말 삭제하시겠습니까?")){
+			location.href='${root}/notice/delete?no=${notice.no}';
+		}
 	});
 	$('#updateNotice').click(function () {
 		$("#detailNotice").attr("action","${root}/notice/update").submit();
@@ -44,38 +46,41 @@ $(document).ready(function() {
 <body>
 <!-- Title-->
 <jsp:include page="../title.jsp"/>
-	<section class="page-section">
+	<section class="page-section bg-light">
 		<div class="container">
 			<div class="text-center">
 				<h2 class="section-heading text-uppercase">공지사항</h2>
 				<h3 class="section-subheading text-muted">공지사항을 확인해주세요</h3>
 			</div>
 			<form action="" method="post" id="detailNotice">
-				<div class="container col-lg-6" align="center">
+				<div class="container col-lg" align="center">
 					<input type="hidden" name="no" value="${notice.no }">
-					<div class="mb-3">
+					<div class="form-group" align="left">
 						<label for="title">제목</label>
 						<input type="text" class="form-control admin-input" id="ntitle" name="title" value="${notice.title}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
-					<div class="mb-3">
+					<div class="form-group" align="left">
 						<label for="reg_id">작성자</label>
 						<input type="text" class="form-control admin-input" id="nwriter" name="writer" value="${notice.writer}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
-					<div class="mb-3">
+					<div class="form-group" align="left">
 						<label for="content">내용</label>
 						<textarea class="form-control admin-input" rows="5" id="ncontent" name="content"<c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>${notice.content}</textarea>
 					</div>
-					<div class="mb-3">
+					<div class="form-group" align="left">
 						<label for="tag">TAG</label>
 						<input type="text" class="form-control admin-input" id="ntag" name="tag" value="${notice.tag}" <c:if test="${empty userlogin or 100 ne userlogin.role}">readonly</c:if>>
 					</div>
 					<c:if test="${100 eq userlogin.role}">
-						<div class="form-group" align="left">
-							<button type="button" class="btn btn-danger" id="delNotice">삭제</button>
+						<div class="form-group" align="center">
 							<button type="button" class="btn btn-primary" id="updateNotice">수정</button>
+							<button type="button" class="btn btn-danger" id="delNotice">삭제</button>
 						</div>
 					</c:if>
-				<button type="button" class="btn btn-primary" id="mvNotice">목록</button>
+					
+				<div class="form-group" align="right">
+					<button type="button" class="btn btn-secondary" id="mvNotice">목록</button>
+				</div>
 				</div>
 			</form>
 		</div>
