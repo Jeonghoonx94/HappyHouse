@@ -37,6 +37,8 @@
                 let colorArr = ['table-primary','table-success','table-danger'];
                	var storeMarked = false;
                	var pollutionMarked = false;
+               	var cctvMarked = false;
+               	
                 $(document).ready(function(){
                 	
                     $.get("${pageContext.request.contextPath}/map/sido"
@@ -79,7 +81,9 @@
                                 ,function(data, status){
                                 	storeMarked = false;
                                 	pollutionMarked = false;
-                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
+                                	cctvMarked = false;
+                                	
+                                	$("#searchTable").css({"overflow-y":"auto", "height":"340px"});
                                     $("#searchResult").empty();
                                     
                                     $.each(data, function(index, vo) {
@@ -116,7 +120,9 @@
 		            				
                                 	storeMarked = false;
                                 	pollutionMarked = false;
-                                	$("#searchTable").css({"overflow-y":"auto", "height":"300px"});
+                                	cctvMarked = false;
+                                	
+                                	$("#searchTable").css({"overflow-y":"auto", "height":"340px"});
 		                            $("#searchResult").empty();
 		                            
 		                            $.each(data, function(index, vo) {
@@ -144,29 +150,42 @@
                     // 업종 정보 버튼 클릭
                     $("#storeBtn").click(function() {
                     	if(!storeMarked) {
-                    		console.log("업종 정보 버튼 클릭!");
+                    		console.log("주변 상가 버튼 클릭!");
                     		if($("#dong").val() !== "0") {
 	                    		storeMarked = true;
-	                    		console.log("업종 정보 표시!");
+	                    		console.log("주변 상가 표시!");
 	                    		showStoreMarker($("#dong").val());
                     		} else {
                     			alert("읍/면/동 을 확인해주세요!");
                     		}
                     	}
                     }); // end storeBtn
-                    
+
 					$("#pollutionBtn").click(function() {
                     	if(!pollutionMarked) {
-                    		console.log("환경 오염 정보 버튼 클릭!");
+                    		console.log("주변 대기오염 시설 버튼 클릭!");
                     		if($("#dong").val() !== "0") {
 	                    		pollutionMarked = true;
-	                    		console.log("환경 오염 시설 정보 표시!");
+	                    		console.log("대기오염 시설 정보 표시!");
 	                    		showPollutionMarker($("#dong").val());
                     		} else {
                     			alert("읍/면/동 을 확인해주세요!");
                     		}
                     	}
                     }); // end pollutionBtn
+                    
+					$("#cctvBtn").click(function() {
+                    	if(!cctvMarked) {
+                    		console.log("주변 cctv 버튼 클릭!");
+                    		if($("#dong").val() !== "0") {
+	                    		cctvMarked = true;
+	                    		console.log("cctv 표시!");
+	                    		showCctv($("#dong").val());
+                    		} else {
+                    			alert("읍/면/동 을 확인해주세요!");
+                    		}
+                    	}
+                    }); // end cctvBtn
                     
                 });//ready
 
@@ -215,11 +234,13 @@
                 </div>
             </div>
         </div>
+       	
         <div class="row text-center d-flex justify-content-center">
             <div style="width: 320px">
 				<div class="btn-group btn-group-toggle">
 					<Button class="btn btn-light" type="button" id="storeBtn">주변 상가</Button>
-					<Button class="btn btn-light" type="button" id="pollutionBtn"> 주변 대기오염 시설</Button>
+					<Button class="btn btn-light" type="button" id="pollutionBtn">대기오염 시설</Button>
+					<Button class="btn btn-light" type="button" id="cctvBtn">cctv</Button>
 				</div>
 				<div id="searchTable">
 	                <table class="table table-striped" id="table1">
@@ -250,6 +271,9 @@
             </div>
             
             <div class="col-8">
+            	<div class="text-right">
+       				<Button class="btn btn-light" type="button" onclick="deleteMarkers()">마커 지우기</Button>
+       			</div>
                 <div id="map1" style="width: 100%; height: 340px; margin: auto;"></div>
 
             </div>
@@ -443,9 +467,10 @@
     }
 
     $('#table1').on("click", ".clickeTr", function() {
-    	deleteMarkers();
+//     	deleteMarkers();
 		storeMarked = false;
 		pollutionMarked = false;
+		cctvMarked = false;
 		
         var area = $(this).attr("value");
         console.log($(this).attr("no"));
@@ -469,9 +494,7 @@
             	addMarker(officemarker);
 			}, "json");//get
         
-//         let dongVal = $(this).attr("dong");
-//         showStoreMarker(dongVal);
-//         showPollutionMarker(dongVal);
+//         showStoreMarker($(this).attr("dong"));
     });
 
     function showStoreMarker(dongVal) {
@@ -517,6 +540,33 @@
                     };
                 	addMarker2(marker);
 				});//each
+             }//function
+             , "json"
+        );//get
+    }
+    
+    function showCctv(dongVal) {
+    	console.log(dongVal);
+        // 환경정보
+        $.get("${root}/cctv/search"
+			,{dong:dongVal}
+            ,function(data, status){
+             	console.log("cctv!", data.length);
+				$.each(data, function(index, cctv) {
+					console.log(cctv);
+					var circle = new google.maps.Circle({
+					    center : new google.maps.LatLng(cctv.lat, cctv.lon),  // 원의 중심좌표 
+					    radius: 30, // 미터 단위, 원의 반지름
+					    strokeWeight: 3, // 선 두께
+					    strokeColor: '#FDBACB', // 선 색깔
+					    strokeOpacity: 0.7, // 선의 불투명도. 1에서 0 사이의 값으로 0에 가까울수록 투명
+					    strokeStyle: 'none', // 선 스타일
+					    fillColor: '#FDBACB', // 채우기 색깔
+					    fillOpacity: 0.4  // 채우기 불투명도
+					}); 
+					
+					circle.setMap(map);
+				}); // each
              }//function
              , "json"
         );//get
