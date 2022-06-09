@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="root" value="${pageContext.request.contextPath}" />
-
+<spring:eval expression="@property['GOOGLE_API_KEY']" var="GOOGLE_API_KEY" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +33,7 @@
 		var area = $(this).attr("value");
 		console.log("??");
 		$.get("https://maps.googleapis.com/maps/api/geocode/json", {
-			key : 'AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw',
+			key : '${GOOGLE_API_KEY}',
 			address : area
 		}, function(data, status) {
 			console.log(data);

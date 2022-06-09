@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="root" value="${pageContext.request.contextPath}" />
+<spring:eval expression="@property['GOOGLE_API_KEY']" var="GOOGLE_API_KEY" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -175,7 +177,7 @@
 </section>
 <jsp:include page="copyright.jsp"/>
 </body>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXC_mR7U_zy1v0r7xDTpnQK9Uxn4vIAw&callback=initMap"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&callback=initMap"></script>
 <script>
     var multi = {
         lat : 37.5012743,
